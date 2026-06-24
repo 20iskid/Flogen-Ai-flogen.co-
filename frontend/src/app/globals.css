@@ -8,12 +8,16 @@
   }
 
   body {
-    @apply bg-slate-950 text-slate-100 antialiased;
+    @apply bg-brand-white text-brand-navy antialiased;
   }
 }
 
 @layer utilities {
   .text-gradient {
     @apply bg-gradient-to-r from-flogen-400 to-cyan-300 bg-clip-text text-transparent;
+  }
+
+  .mask-reveal {
+    @apply overflow-hidden;
   }
 }

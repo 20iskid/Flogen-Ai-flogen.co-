@@ -9,6 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        brand: {
+          red: "#991B1B",
+          navy: "#0B172A",
+          white: "#FDFAFA",
+        },
         flogen: {
           50: "#f0f9ff",
           100: "#e0f2fe",
@@ -26,6 +31,19 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
+      },
+      animation: {
+        marquee: "marquee 28s linear infinite",
+      },
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      boxShadow: {
+        "brand-hover": "0 10px 40px -10px #991B1B",
+        "brand-card": "0 20px 50px -20px rgba(153, 27, 27, 0.45)",
       },
     },
   },
