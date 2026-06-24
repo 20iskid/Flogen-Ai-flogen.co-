@@ -29,8 +29,8 @@ export function LogoLink({
   href = "/",
 }: LogoLinkProps) {
   return (
-    <Link href={href} className="inline-flex shrink-0">
-      <Logo variant={variant} className={className} />
+    <Link href={href} className="inline-flex max-w-full shrink-0 justify-center">
+      <Logo variant={variant} className={`max-w-full ${className}`} />
     </Link>
   );
 }

@@ -25,7 +25,7 @@ const solutions = [
 
 export default function PasSection() {
   return (
-    <section className="bg-brand-white px-6 py-20 md:py-28">
+    <section className="section-x section-y bg-brand-white">
       <div className="mx-auto max-w-3xl">
         <motion.div
           initial="hidden"
@@ -35,14 +35,14 @@ export default function PasSection() {
         >
           <motion.h2
             variants={revealUp}
-            className="text-3xl font-black tracking-tighter text-brand-navy md:text-5xl"
+            className="text-2xl font-black tracking-tighter text-brand-navy sm:text-3xl md:text-5xl"
           >
             Here&apos;s the brutal truth about your business right now.
           </motion.h2>
 
           <motion.p
             variants={revealUp}
-            className="mt-6 text-lg leading-relaxed text-brand-navy/80"
+            className="mt-5 text-base leading-relaxed text-brand-navy/80 sm:mt-6 sm:text-lg"
           >
             You didn&apos;t build a company to babysit spreadsheets and chase
             leads that ghost you. Yet that&apos;s exactly where most founders
@@ -51,48 +51,45 @@ export default function PasSection() {
 
           <motion.p
             variants={revealUp}
-            className="mt-4 text-lg leading-relaxed text-brand-navy/80"
+            className="mt-4 text-base leading-relaxed text-brand-navy/80 sm:text-lg"
           >
             The gap isn&apos;t talent. It isn&apos;t hustle. It&apos;s systems.
             And until you fix the machine underneath your revenue, every dollar
             you spend on ads is gasoline on a bonfire.
           </motion.p>
 
-          <motion.ul
-            variants={staggerContainer}
-            className="mt-10 space-y-4"
-          >
+          <motion.ul variants={staggerContainer} className="mt-8 space-y-4 sm:mt-10">
             {painPoints.map((point) => (
               <motion.li
                 key={point}
                 variants={revealUp}
-                className="flex gap-3 text-base leading-relaxed text-brand-navy/90"
+                className="flex gap-3 text-sm leading-relaxed text-brand-navy/90 sm:text-base"
               >
-                <span className="mt-1 font-black text-brand-red">—</span>
-                {point}
+                <span className="mt-1 shrink-0 font-black text-brand-red">—</span>
+                <span>{point}</span>
               </motion.li>
             ))}
           </motion.ul>
 
           <motion.p
             variants={revealUp}
-            className="mt-10 text-lg font-bold leading-relaxed text-brand-navy"
+            className="mt-8 text-base font-bold leading-relaxed text-brand-navy sm:mt-10 sm:text-lg"
           >
             Flogen doesn&apos;t sell software. We install profit engines. Here
             is what changes when you work with us:
           </motion.p>
 
-          <motion.ul variants={staggerContainer} className="mt-8 space-y-5">
+          <motion.ul variants={staggerContainer} className="mt-6 space-y-5 sm:mt-8">
             {solutions.map((point) => (
               <motion.li
                 key={point}
                 variants={checkPop}
-                className="flex items-start gap-4 text-base leading-relaxed text-brand-navy"
+                className="flex items-start gap-3 text-sm leading-relaxed text-brand-navy sm:gap-4 sm:text-base"
               >
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-sm bg-brand-red">
-                  <Check className="h-4 w-4 stroke-[3] text-brand-white" />
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-brand-red sm:h-7 sm:w-7">
+                  <Check className="h-3.5 w-3.5 stroke-[3] text-brand-white sm:h-4 sm:w-4" />
                 </span>
-                {point}
+                <span>{point}</span>
               </motion.li>
             ))}
           </motion.ul>

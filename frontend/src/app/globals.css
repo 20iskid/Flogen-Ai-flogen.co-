@@ -5,10 +5,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-brand-white text-brand-navy antialiased;
+    @apply overflow-x-clip bg-brand-white text-brand-navy antialiased;
   }
 }
 
@@ -19,5 +20,13 @@
 
   .mask-reveal {
     @apply overflow-hidden;
+  }
+
+  .section-x {
+    @apply px-4 sm:px-6;
+  }
+
+  .section-y {
+    @apply py-14 sm:py-20 md:py-28;
   }
 }

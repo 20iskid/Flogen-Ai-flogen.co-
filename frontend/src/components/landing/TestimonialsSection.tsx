@@ -29,7 +29,7 @@ const testimonials = [
 
 export default function TestimonialsSection() {
   return (
-    <section className="bg-brand-white px-6 py-20 md:py-28">
+    <section className="section-x section-y bg-brand-white">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial="hidden"
@@ -39,20 +39,20 @@ export default function TestimonialsSection() {
         >
           <motion.h2
             variants={fadeSlideUp}
-            className="text-3xl font-black tracking-tighter text-brand-navy md:text-5xl"
+            className="text-2xl font-black tracking-tighter text-brand-navy sm:text-3xl md:text-5xl"
           >
             From pain to proof.
           </motion.h2>
           <motion.p
             variants={fadeSlideUp}
-            className="mt-4 max-w-2xl text-lg text-brand-navy/70"
+            className="mt-3 max-w-2xl text-base text-brand-navy/70 sm:mt-4 sm:text-lg"
           >
             Real operators. Real numbers. No fabricated stock-photo testimonials.
           </motion.p>
 
           <motion.div
             variants={staggerContainer}
-            className="mt-14 grid gap-6 md:grid-cols-3"
+            className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
           >
             {testimonials.map((t) => (
               <motion.blockquote
@@ -62,15 +62,15 @@ export default function TestimonialsSection() {
                   y: -8,
                   transition: { duration: 0.15, ease: "easeOut" },
                 }}
-                className="flex flex-col rounded-sm border border-brand-navy/10 bg-brand-navy/[0.02] p-8 transition-shadow duration-150 hover:shadow-brand-hover"
+                className="flex flex-col rounded-sm border border-brand-navy/10 bg-brand-navy/[0.02] p-6 transition-shadow duration-150 hover:shadow-brand-hover sm:p-8"
               >
-                <p className="flex-1 text-base leading-relaxed text-brand-navy">
+                <p className="flex-1 text-sm leading-relaxed text-brand-navy sm:text-base">
                   &ldquo;{t.quote}&rdquo;
                 </p>
-                <footer className="mt-8 border-t border-brand-navy/10 pt-6">
+                <footer className="mt-6 border-t border-brand-navy/10 pt-5 sm:mt-8 sm:pt-6">
                   <p className="font-black text-brand-navy">{t.name}</p>
                   <p className="text-sm text-brand-navy/60">{t.role}</p>
-                  <p className="mt-2 text-sm font-black uppercase tracking-wider text-brand-red">
+                  <p className="mt-2 text-xs font-black uppercase tracking-wider text-brand-red sm:text-sm">
                     {t.result}
                   </p>
                 </footer>

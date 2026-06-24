@@ -1,23 +1,33 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import PrimaryButton from "@/components/landing/PrimaryButton";
 import { revealUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
 export default function FinalCtaSection() {
   const ref = useRef<HTMLElement>(null);
+  const [enableScale, setEnableScale] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const update = () => setEnableScale(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end end"],
   });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.04]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, enableScale ? 1.04 : 1]);
 
   return (
     <motion.section
       ref={ref}
       style={{ scale }}
-      className="origin-center bg-brand-red px-6 py-24 md:py-32"
+      className="origin-center bg-brand-red section-x py-16 sm:py-24 md:py-32"
     >
       <motion.div
         initial="hidden"
@@ -28,7 +38,7 @@ export default function FinalCtaSection() {
       >
         <motion.h2
           variants={revealUp}
-          className="text-4xl font-black leading-[0.95] tracking-tighter text-brand-white md:text-6xl"
+          className="text-3xl font-black leading-[0.95] tracking-tighter text-brand-white sm:text-4xl md:text-6xl"
         >
           Stop bleeding revenue.
           <br />
@@ -37,14 +47,14 @@ export default function FinalCtaSection() {
 
         <motion.p
           variants={revealUp}
-          className="mx-auto mt-6 max-w-2xl text-lg text-brand-white/85"
+          className="mx-auto mt-5 max-w-2xl text-base text-brand-white/85 sm:mt-6 sm:text-lg"
         >
           Book your free growth audit now. We&apos;ll map your biggest leaks,
           show you exactly what to fix, and tell you straight if we&apos;re not
           the right fit.
         </motion.p>
 
-        <motion.div variants={revealUp} className="mt-10">
+        <motion.div variants={revealUp} className="mt-8 sm:mt-10">
           <PrimaryButton href="#audit" dark>
             Book my free audit — now
           </PrimaryButton>

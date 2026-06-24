@@ -12,7 +12,7 @@ import WarningBar from "@/components/landing/WarningBar";
 
 export default function LandingPage() {
   return (
-    <>
+    <div className="overflow-x-clip">
       <WarningBar />
       <LandingHeader />
       <HeroSection />
@@ -22,6 +22,6 @@ export default function LandingPage() {
       <TestimonialsSection />
       <FinalCtaSection />
       <LandingFooter />
-    </>
+    </div>
   );
 }

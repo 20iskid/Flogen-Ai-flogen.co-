@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flogen — AI Systems That Print Profit",
+  title: "Flogen — Recover $22,000 in Billable Hours | Law Firm Automation",
   description:
-    "Flogen engineers ruthless automation and conversion infrastructure for businesses that refuse to leave revenue on the table.",
+    "Custom law firm automation that goes live in 30 days. Recover billable hours, never lose a lead to a faster competitor. Pilot includes full NDA and money-back guarantee.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   ),
@@ -32,9 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen overflow-x-clip font-sans`}
       >
-        <main>{children}</main>
+        <main className="overflow-x-clip">{children}</main>
       </body>
     </html>
   );
