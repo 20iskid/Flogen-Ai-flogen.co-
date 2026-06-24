@@ -3,9 +3,15 @@
 import { motion } from "framer-motion";
 import MaskReveal from "@/components/landing/MaskReveal";
 import PrimaryButton from "@/components/landing/PrimaryButton";
+import { renderHeadlineSegment } from "@/components/landing/HeadlineText";
+import type { LandingContent } from "@/lib/landing/types";
 import { float, revealUp, staggerContainer } from "@/lib/motion";
 
-export default function HeroSection() {
+type HeroSectionProps = {
+  content: LandingContent["hero"];
+};
+
+export default function HeroSection({ content }: HeroSectionProps) {
   return (
     <section className="section-x bg-brand-navy pb-14 pt-8 text-brand-white sm:pb-20 sm:pt-10 md:pb-28 md:pt-14">
       <motion.div
@@ -16,30 +22,21 @@ export default function HeroSection() {
       >
         <MaskReveal>
           <h1 className="text-[1.35rem] font-black leading-[1.08] tracking-tighter sm:text-2xl md:text-3xl lg:text-[2.125rem] lg:leading-[1.1] xl:text-4xl">
-            Recover the{" "}
-            <span className="text-brand-red">$22,000 in Billable Hours</span>{" "}
-            Your Firm Is Leaving on the Table Every Year and Never Lose Another
-            Lead to a Competitor Who Answered Faster Using a Custom Law Firm
-            Automation System That Goes Live in{" "}
-            <span className="text-brand-red">30 Days</span> Built Around Your
-            Exact Practice Area and Case Management Software{" "}
-            <span className="text-brand-white/90">
-              (Pilot Includes Full NDA and Money-Back Guarantee)
-            </span>
+            {content.headline.map((segment, index) =>
+              renderHeadlineSegment(segment, index)
+            )}
           </h1>
         </MaskReveal>
 
         <MaskReveal>
           <p className="mt-6 max-w-3xl text-base leading-relaxed text-brand-white/75 sm:mt-8 sm:text-lg">
-            We install intake, follow-up, and case workflow automation around the
-            software you already use — so your firm captures every billable hour
-            and responds to leads before the competition does.
+            {content.subheadline}
           </p>
         </MaskReveal>
 
         <motion.div variants={revealUp} className="mt-8 sm:mt-10">
-          <PrimaryButton href="#audit">
-            Claim your free firm automation audit
+          <PrimaryButton href={content.ctaHref ?? "#audit"}>
+            {content.ctaLabel}
           </PrimaryButton>
         </motion.div>
 

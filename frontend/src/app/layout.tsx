@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flogen — Recover $22,000 in Billable Hours | Law Firm Automation",
+  title: "Flogen — Custom Automation for High-Growth Businesses",
   description:
-    "Custom law firm automation that goes live in 30 days. Recover billable hours, never lose a lead to a faster competitor. Pilot includes full NDA and money-back guarantee.",
+    "Flogen builds custom automation systems for law firms, dental clinics, HVAC, financial advisors, and more. Live in 30 days with NDA and money-back guarantee.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   ),

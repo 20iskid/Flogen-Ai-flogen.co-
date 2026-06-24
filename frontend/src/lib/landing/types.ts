@@ -1,0 +1,86 @@
+export type NicheSlug =
+  | "law-firms"
+  | "dental-clinics"
+  | "hvac-home-services"
+  | "financial-advisors"
+  | "staffing-agencies"
+  | "independent-auto-repair"
+  | "immigration-attorneys"
+  | "commercial-cleaning-b2b"
+  | "funeral-homes"
+  | "independent-insurance-brokers";
+
+export type HeadlineSegment = {
+  text: string;
+  variant?: "default" | "highlight" | "muted";
+};
+
+export type UvpIcon = "bot" | "zap" | "gauge" | "layers" | "shield";
+
+export type LandingUvp = {
+  icon: UvpIcon;
+  title: string;
+  description: string;
+};
+
+export type LandingTestimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  result: string;
+};
+
+export type LandingContent = {
+  slug: NicheSlug;
+  name: string;
+  metadata: {
+    title: string;
+    description: string;
+  };
+  warningBar: {
+    message: string;
+    cta: string;
+  };
+  hero: {
+    headline: HeadlineSegment[];
+    subheadline: string;
+    ctaLabel: string;
+    ctaHref?: string;
+    heroVideo?: string;
+  };
+  socialProof: {
+    label: string;
+    logos: string[];
+  };
+  pas: {
+    title: string;
+    paragraphs: string[];
+    painPoints: string[];
+    bridge: string;
+    solutions: string[];
+  };
+  uvp: {
+    title: string;
+    titleAccent: string;
+    items: LandingUvp[];
+  };
+  testimonials: {
+    title: string;
+    subtitle: string;
+    items: LandingTestimonial[];
+  };
+  finalCta: {
+    title: string;
+    titleLine2: string;
+    description: string;
+    ctaLabel: string;
+    ctaHref?: string;
+  };
+};
+
+export type HubLandingContent = Omit<LandingContent, "slug" | "name"> & {
+  niches: {
+    title: string;
+    subtitle: string;
+  };
+};

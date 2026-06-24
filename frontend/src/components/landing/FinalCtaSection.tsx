@@ -4,8 +4,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import PrimaryButton from "@/components/landing/PrimaryButton";
 import { revealUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import type { LandingContent } from "@/lib/landing/types";
 
-export default function FinalCtaSection() {
+type FinalCtaSectionProps = {
+  content: LandingContent["finalCta"];
+};
+
+export default function FinalCtaSection({ content }: FinalCtaSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const [enableScale, setEnableScale] = useState(false);
 
@@ -40,23 +45,21 @@ export default function FinalCtaSection() {
           variants={revealUp}
           className="text-3xl font-black leading-[0.95] tracking-tighter text-brand-white sm:text-4xl md:text-6xl"
         >
-          Stop bleeding revenue.
+          {content.title}
           <br />
-          Start building the machine.
+          {content.titleLine2}
         </motion.h2>
 
         <motion.p
           variants={revealUp}
           className="mx-auto mt-5 max-w-2xl text-base text-brand-white/85 sm:mt-6 sm:text-lg"
         >
-          Book your free growth audit now. We&apos;ll map your biggest leaks,
-          show you exactly what to fix, and tell you straight if we&apos;re not
-          the right fit.
+          {content.description}
         </motion.p>
 
         <motion.div variants={revealUp} className="mt-8 sm:mt-10">
-          <PrimaryButton href="#audit" dark>
-            Book my free audit — now
+          <PrimaryButton href={content.ctaHref ?? "#audit"} dark>
+            {content.ctaLabel}
           </PrimaryButton>
         </motion.div>
       </motion.div>

@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import { slideDown } from "@/lib/motion";
+import type { LandingContent } from "@/lib/landing/types";
 
-export default function WarningBar() {
+type WarningBarProps = {
+  content: LandingContent["warningBar"];
+};
+
+export default function WarningBar({ content }: WarningBarProps) {
   return (
     <motion.div
       variants={slideDown}
@@ -11,10 +16,8 @@ export default function WarningBar() {
       animate="visible"
       className="sticky top-0 z-50 bg-brand-red px-3 py-2.5 text-center text-[10px] font-bold uppercase leading-snug tracking-[0.12em] text-brand-white sm:px-4 sm:text-xs sm:tracking-[0.18em] md:text-sm md:tracking-[0.2em]"
     >
-      <span className="block sm:inline">
-        Limited capacity — we only onboard 3 new clients per quarter.
-      </span>{" "}
-      <span className="underline underline-offset-4">Book your audit now.</span>
+      <span className="block sm:inline">{content.message}</span>{" "}
+      <span className="underline underline-offset-4">{content.cta}</span>
     </motion.div>
   );
 }

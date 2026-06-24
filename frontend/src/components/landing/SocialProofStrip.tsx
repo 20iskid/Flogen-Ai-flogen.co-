@@ -1,14 +1,23 @@
 "use client";
 
-const logos = ["ACME", "NEXUS", "VERTEX", "ORION", "PULSE"];
+import type { LandingContent } from "@/lib/landing/types";
 
-export default function SocialProofStrip() {
-  const marqueeItems = [...logos, ...logos, ...logos, ...logos];
+type SocialProofStripProps = {
+  content: LandingContent["socialProof"];
+};
+
+export default function SocialProofStrip({ content }: SocialProofStripProps) {
+  const marqueeItems = [
+    ...content.logos,
+    ...content.logos,
+    ...content.logos,
+    ...content.logos,
+  ];
 
   return (
-    <section className="overflow-hidden border-y border-brand-navy/10 bg-brand-white py-8 sm:py-10">
+    <section className="overflow-hidden bg-brand-white py-8 sm:py-10">
       <p className="section-x mb-6 text-center text-[10px] font-black uppercase tracking-[0.25em] text-brand-navy sm:mb-8 sm:text-xs sm:tracking-[0.35em]">
-        Trusted by
+        {content.label}
       </p>
 
       <div className="overflow-hidden">

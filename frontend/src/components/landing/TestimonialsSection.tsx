@@ -2,32 +2,15 @@
 
 import { motion } from "framer-motion";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import type { LandingContent } from "@/lib/landing/types";
 
-const testimonials = [
-  {
-    quote:
-      "We cut ops overhead by 72% in 11 weeks. Flogen didn't pitch us a dream — they installed a machine.",
-    name: "Marcus Chen",
-    role: "CEO, Vertex Labs",
-    result: "+$340K ARR",
-  },
-  {
-    quote:
-      "Every agency promised AI. Flogen was the only one that showed up with a P&L impact in black and white.",
-    name: "Sarah Okonkwo",
-    role: "Founder, Pulse Health",
-    result: "3.2x ROAS",
-  },
-  {
-    quote:
-      "Our lead response time went from 4 hours to 90 seconds. The pipeline hasn't been this full in years.",
-    name: "James Whitfield",
-    role: "COO, Orion Digital",
-    result: "+218% leads",
-  },
-];
+type TestimonialsSectionProps = {
+  content: LandingContent["testimonials"];
+};
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({
+  content,
+}: TestimonialsSectionProps) {
   return (
     <section className="section-x section-y bg-brand-white">
       <div className="mx-auto max-w-6xl">
@@ -41,20 +24,20 @@ export default function TestimonialsSection() {
             variants={fadeSlideUp}
             className="text-2xl font-black tracking-tighter text-brand-navy sm:text-3xl md:text-5xl"
           >
-            From pain to proof.
+            {content.title}
           </motion.h2>
           <motion.p
             variants={fadeSlideUp}
             className="mt-3 max-w-2xl text-base text-brand-navy/70 sm:mt-4 sm:text-lg"
           >
-            Real operators. Real numbers. No fabricated stock-photo testimonials.
+            {content.subtitle}
           </motion.p>
 
           <motion.div
             variants={staggerContainer}
             className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
           >
-            {testimonials.map((t) => (
+            {content.items.map((t) => (
               <motion.blockquote
                 key={t.name}
                 variants={fadeSlideUp}
