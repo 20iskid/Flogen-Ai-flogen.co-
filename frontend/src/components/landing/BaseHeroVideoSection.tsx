@@ -90,7 +90,7 @@ export default function BaseHeroVideoSection({
       >
         <button
           type="button"
-          className="hub-hero-menu flex items-center gap-3 justify-self-start text-brand-white transition-opacity hover:opacity-80"
+          className="hub-hero-menu flex items-center gap-3 justify-self-start font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
           aria-label="Open menu"
         >
           <Image
@@ -111,7 +111,7 @@ export default function BaseHeroVideoSection({
         >
           <LogoLink
             variant="full"
-            className="h-9 w-auto max-w-[10.5rem] sm:h-10 lg:h-11 lg:max-w-[12rem]"
+            className="h-11 w-auto max-w-[13rem] sm:h-12 lg:h-14 lg:max-w-[15rem]"
           />
         </motion.div>
 
@@ -170,7 +170,7 @@ export default function BaseHeroVideoSection({
             transition={{ ...springReveal, delay: 0.5 }}
             className="w-full max-w-3xl"
           >
-            <div className="flex min-h-[56px] items-center rounded-full border border-white/10 bg-black/45 p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-[2px] md:min-h-[60px]">
+            <div className="flex min-h-[56px] items-center rounded-full border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md md:min-h-[60px]">
               <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-5 pr-2 md:gap-3.5 md:py-4 md:pl-6">
                 <span className="shrink-0 text-lg leading-none md:text-xl" aria-hidden>
                   👋
