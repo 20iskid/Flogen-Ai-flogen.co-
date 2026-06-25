@@ -147,10 +147,10 @@ export default function BaseHeroVideoSection({
               <motion.span variants={revealUp} className="hub-hero-headline-line">
                 {content.headlineBefore}
                 <span className="hub-hero-amount">{content.headlineAmount}</span>
-                {content.headlineMiddle.trimEnd()}
+                {content.headlineMiddle}
               </motion.span>
               <motion.span variants={revealUp} className="hub-hero-headline-line">
-                {content.headlineAfter}
+                {content.headlineLine2}
               </motion.span>
             </h1>
 

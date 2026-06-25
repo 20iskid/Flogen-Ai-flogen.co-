@@ -82,7 +82,7 @@ export type BaseHubHero = {
   headlineBefore: string;
   headlineAmount: string;
   headlineMiddle: string;
-  headlineAfter: string;
+  headlineLine2: string;
   subheadline: string;
   emailPlaceholder: string;
   navCtaLabel: string;

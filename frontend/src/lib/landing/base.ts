@@ -42,8 +42,8 @@ export const baseLandingContent: HubLandingContent = {
   hero: {
     headlineBefore: "That ",
     headlineAmount: "$22,000",
-    headlineMiddle: " You Lost Last Month ",
-    headlineAfter: "Did Not Have To Leave!",
+    headlineMiddle: " You Lost ",
+    headlineLine2: "Last Month Did Not Have To Leave!",
     subheadline:
       "Less manual, less slow, less losing, more closed,\nmore you doing what you are actually good at",
     emailPlaceholder:
