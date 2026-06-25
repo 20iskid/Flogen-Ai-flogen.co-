@@ -12,7 +12,7 @@ export const baseLandingContent: HubLandingContent = {
     headlineMiddle: " You Lost Last Month ",
     headlineAfter: "Did Not Have To Leave!",
     subheadline:
-      "Less manual, less slow, less losing, more closed, more you doing what you are actually good at",
+      "Less manual, less slow, less losing, more closed,\nmore you doing what you are actually good at",
     emailPlaceholder:
       "Enter your email here and we'll send some 'magic'...",
     navCtaLabel: "Get Your Free Audit Today!",
