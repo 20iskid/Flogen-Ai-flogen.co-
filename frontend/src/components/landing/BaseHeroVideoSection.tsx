@@ -209,39 +209,40 @@ export default function BaseHeroVideoSection({
             variants={starStagger}
             initial="hidden"
             animate="visible"
-            className="flex w-full items-center justify-between gap-3 px-1 sm:gap-4"
+            className="flex w-full items-center justify-between gap-4 px-1"
           >
             <motion.p
               variants={revealUp}
-              className="hub-hero-trust min-w-0 flex-1 text-left text-brand-white/90"
+              className="hub-hero-trust min-w-0 text-left text-brand-white/90"
             >
               {content.disclaimer}
             </motion.p>
 
             <motion.div
-              variants={starStagger}
-              className="flex shrink-0 items-center gap-[6px]"
-              aria-label="4.8 out of 5 stars"
-            >
-              {Array.from({ length: 5 }).map((_, i) => (
-                <motion.span key={i} variants={starPop}>
-                  <Image
-                    src="/icons/star.svg"
-                    alt=""
-                    width={18}
-                    height={17}
-                    className="h-[15px] w-[16px] sm:h-[17px] sm:w-[18px]"
-                  />
-                </motion.span>
-              ))}
-            </motion.div>
-
-            <motion.p
               variants={revealUp}
-              className="hub-hero-trust min-w-0 flex-1 text-right text-brand-white/90"
+              className="flex shrink-0 items-center gap-2 sm:gap-2.5"
             >
-              {content.rating}
-            </motion.p>
+              <motion.div
+                variants={starStagger}
+                className="flex items-center gap-[6px]"
+                aria-label="4.8 out of 5 stars"
+              >
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <motion.span key={i} variants={starPop}>
+                    <Image
+                      src="/icons/star.svg"
+                      alt=""
+                      width={18}
+                      height={17}
+                      className="h-[15px] w-[16px] sm:h-[17px] sm:w-[18px]"
+                    />
+                  </motion.span>
+                ))}
+              </motion.div>
+              <span className="hub-hero-trust whitespace-nowrap text-brand-white/90">
+                {content.rating}
+              </span>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
