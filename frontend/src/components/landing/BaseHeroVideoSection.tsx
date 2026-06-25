@@ -220,12 +220,12 @@ export default function BaseHeroVideoSection({
 
             <motion.div
               variants={revealUp}
-              className="flex shrink-0 items-center gap-2 sm:gap-2.5"
+              className="flex shrink-0 items-center gap-1.5 sm:gap-2"
             >
               <motion.div
                 variants={starStagger}
-                className="flex items-center gap-[6px]"
-                aria-label="4.8 out of 5 stars"
+                className="flex items-center gap-[5px]"
+                aria-hidden
               >
                 {Array.from({ length: 5 }).map((_, i) => (
                   <motion.span key={i} variants={starPop}>
@@ -239,7 +239,7 @@ export default function BaseHeroVideoSection({
                   </motion.span>
                 ))}
               </motion.div>
-              <span className="hub-hero-trust whitespace-nowrap text-brand-white/90">
+              <span className="hub-hero-trust text-brand-white/90">
                 {content.rating}
               </span>
             </motion.div>

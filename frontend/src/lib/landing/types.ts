@@ -98,4 +98,13 @@ export type HubLandingContent = {
     description: string;
   };
   hero: BaseHubHero;
+  socialProof: LandingContent["socialProof"];
+  niches: {
+    title: string;
+    subtitle: string;
+  };
+  pas: LandingContent["pas"];
+  uvp: LandingContent["uvp"];
+  testimonials: LandingContent["testimonials"];
+  finalCta: LandingContent["finalCta"];
 };
