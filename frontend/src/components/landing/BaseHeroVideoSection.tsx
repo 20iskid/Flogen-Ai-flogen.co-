@@ -136,18 +136,18 @@ export default function BaseHeroVideoSection({
         </motion.a>
       </motion.header>
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-20 pb-14 sm:px-10 sm:py-24 md:py-32 lg:px-14">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-20 pb-14 sm:px-6 sm:py-24 md:px-8 md:py-32 lg:px-10">
         <motion.div
           variants={headlineStagger}
           initial="hidden"
           animate="visible"
-          className="hub-hero-center"
+          className="hub-hero-center gap-8"
         >
-          <div className="w-full text-center">
-            <h1 className="hub-hero-headline mx-auto max-w-5xl font-archivo text-6xl font-black uppercase leading-[0.9] tracking-tighter text-brand-white md:text-7xl lg:text-[7rem]">
+          <div className="mx-auto w-full max-w-6xl text-center">
+            <h1 className="hub-hero-headline mx-auto w-full max-w-6xl font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
               <motion.span variants={revealUp} className="inline">
                 {content.headlineBefore}
-                <span className="hub-hero-amount text-[1em] leading-[0.9] tracking-tighter">
+                <span className="hub-hero-amount text-[1em] leading-[1.1] tracking-tighter">
                   {content.headlineAmount}
                 </span>
                 {content.headlineMiddle}
@@ -158,7 +158,7 @@ export default function BaseHeroVideoSection({
 
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline mx-auto mt-8 max-w-2xl text-xl font-normal leading-relaxed text-gray-200 md:mt-10 md:text-2xl"
+              className="hub-hero-subheadline mx-auto mt-4 max-w-2xl text-xl font-normal leading-relaxed text-gray-200 md:mt-6 md:text-2xl"
             >
               {subheadlineLines.map((line, index) => (
                 <span key={line} className="block">

@@ -57,15 +57,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 48rem;
-    gap: 2rem;
-  }
-
-  @media (min-width: 768px) {
-    .hub-hero-center {
-      max-width: 64rem;
-      gap: 2.5rem;
-    }
+    max-width: 72rem;
   }
 
   .hub-hero-email {
