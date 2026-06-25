@@ -82,14 +82,6 @@ export default function BaseHeroVideoSection({
       />
       <div className="absolute inset-0 bg-black/50" aria-hidden />
 
-      <motion.div
-        aria-hidden
-        initial={{ opacity: 0, x: -80, y: 80 }}
-        animate={{ opacity: 0.9, x: 0, y: 0 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="pointer-events-none absolute -bottom-24 -left-16 h-56 w-[28rem] rotate-[-8deg] rounded-[3rem] bg-brand-red sm:-bottom-32 sm:-left-8 sm:h-72 sm:w-[36rem]"
-      />
-
       <motion.header
         variants={slideDown}
         initial="hidden"
@@ -147,10 +139,13 @@ export default function BaseHeroVideoSection({
             <h1 className="hub-hero-headline mx-auto w-full max-w-6xl font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
               <motion.span variants={revealUp} className="inline">
                 {content.headlineBefore}
-                <span className="hub-hero-amount text-[1em] leading-[1.1] tracking-tighter">
+                <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
                   {content.headlineAmount}
                 </span>
                 {content.headlineMiddle}
+                {content.headlineNoWrap ? (
+                  <span className="whitespace-nowrap">{content.headlineNoWrap}</span>
+                ) : null}
                 <br className="hidden md:block" />
                 {content.headlineLine2}
               </motion.span>
@@ -211,11 +206,11 @@ export default function BaseHeroVideoSection({
             variants={starStagger}
             initial="hidden"
             animate="visible"
-            className="flex w-full items-center justify-between gap-4 px-1"
+            className="flex w-full max-w-3xl items-center justify-between gap-4 px-1"
           >
             <motion.p
               variants={revealUp}
-              className="hub-hero-trust min-w-0 text-left text-brand-white/90"
+              className="min-w-0 text-left text-sm text-gray-400"
             >
               {content.disclaimer}
             </motion.p>

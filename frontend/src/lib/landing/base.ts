@@ -42,7 +42,8 @@ export const baseLandingContent: HubLandingContent = {
   hero: {
     headlineBefore: "That ",
     headlineAmount: "$22,000",
-    headlineMiddle: " You Lost Last Month ",
+    headlineMiddle: " You Lost ",
+    headlineNoWrap: "Last Month",
     headlineLine2: "Did Not Have To Leave!",
     subheadline:
       "Less manual, less slow, less losing, more closed,\nmore you doing what you are actually good at",

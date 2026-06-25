@@ -96,6 +96,7 @@ export type BaseHubHero = {
   headlineBefore: string;
   headlineAmount: string;
   headlineMiddle: string;
+  headlineNoWrap?: string;
   headlineLine2: string;
   subheadline: string;
   emailPlaceholder: string;
