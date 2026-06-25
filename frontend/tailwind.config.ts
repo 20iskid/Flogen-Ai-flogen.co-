@@ -33,7 +33,7 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "monospace"],
         archivo: ["var(--font-archivo)", "sans-serif"],
         tiny5: ["var(--font-tiny5)", "monospace"],
-        jockey: ["var(--font-jockey)", "cursive"],
+        jockey: ["var(--font-jockey)", "sans-serif"],
         snpro: ['"SN Pro"', "sans-serif"],
         tiktok: ['"TikTok Sans"', "sans-serif"],
       },
