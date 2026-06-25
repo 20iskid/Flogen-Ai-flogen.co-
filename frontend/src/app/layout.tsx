@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { landingFontVariables } from "@/lib/fonts/landing";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen overflow-x-clip font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} ${landingFontVariables} min-h-screen overflow-x-clip font-sans`}
       >
         <main className="overflow-x-clip">{children}</main>
       </body>

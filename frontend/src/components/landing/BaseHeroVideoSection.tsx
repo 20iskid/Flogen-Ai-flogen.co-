@@ -1,28 +1,49 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { LogoLink } from "@/components/landing/Logo";
-import MaskReveal from "@/components/landing/MaskReveal";
-import PrimaryButton from "@/components/landing/PrimaryButton";
-import { renderHeadlineSegment } from "@/components/landing/HeadlineText";
-import type { LandingContent } from "@/lib/landing/types";
-import { revealUp, staggerContainer } from "@/lib/motion";
+import type { BaseHubHero } from "@/lib/landing/types";
+import { revealUp, slideDown, springReveal, staggerContainer } from "@/lib/motion";
 
-const DEFAULT_HERO_VIDEO = "/videos/hero-bg.mp4";
+const HERO_VIDEO = "/videos/hero-bg.mp4";
+
+const headlineStagger: typeof staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.35 },
+  },
+};
+
+const starStagger: typeof staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.9 },
+  },
+};
+
+const starPop = {
+  hidden: { scale: 0, opacity: 0, rotate: -20 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    rotate: 0,
+    transition: { type: "spring" as const, stiffness: 520, damping: 18 },
+  },
+};
 
 type BaseHeroVideoSectionProps = {
-  content: LandingContent["hero"];
+  content: BaseHubHero;
   videoSrc?: string;
-  ctaFallback?: string;
 };
 
 export default function BaseHeroVideoSection({
   content,
-  videoSrc = DEFAULT_HERO_VIDEO,
-  ctaFallback = "#industries",
+  videoSrc = HERO_VIDEO,
 }: BaseHeroVideoSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const video = videoRef.current;
@@ -31,8 +52,14 @@ export default function BaseHeroVideoSection({
     video.play().catch(() => {});
   }, []);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    window.location.href = content.ctaHref ?? "#audit";
+  };
+
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden text-brand-white">
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden text-brand-white">
       <video
         ref={videoRef}
         autoPlay
@@ -54,38 +81,170 @@ export default function BaseHeroVideoSection({
       />
 
       <motion.div
-        variants={staggerContainer}
+        aria-hidden
+        initial={{ opacity: 0, x: -80, y: 80 }}
+        animate={{ opacity: 0.9, x: 0, y: 0 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        className="pointer-events-none absolute -bottom-24 -left-16 h-56 w-[28rem] rotate-[-8deg] rounded-[3rem] bg-brand-red sm:-bottom-32 sm:-left-8 sm:h-72 sm:w-[36rem]"
+      />
+
+      <motion.header
+        variants={slideDown}
         initial="hidden"
         animate="visible"
-        className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-16 text-center sm:px-6 sm:py-20"
+        className="relative z-20 grid w-full grid-cols-[1fr_auto_1fr] items-center px-5 py-5 sm:px-8 sm:py-6 md:px-12"
       >
-        <motion.div variants={revealUp} className="mb-10 sm:mb-14">
+        <button
+          type="button"
+          className="flex items-center gap-3 justify-self-start font-archivo text-sm text-brand-white transition-opacity hover:opacity-80 sm:text-base"
+          aria-label="Open menu"
+        >
+          <Image
+            src="/icons/menu.svg"
+            alt=""
+            width={26}
+            height={23}
+            className="h-[18px] w-auto sm:h-[23px]"
+          />
+          <span>Menu</span>
+        </button>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ ...springReveal, delay: 0.15 }}
+          className="justify-self-center"
+        >
           <LogoLink
             variant="full"
-            className="mx-auto h-12 w-auto max-w-[min(100%,22rem)] sm:h-14 md:h-16"
+            className="h-8 w-auto max-w-[9rem] sm:h-10 sm:max-w-[11rem] md:h-11 md:max-w-[12rem]"
           />
         </motion.div>
 
-        <MaskReveal className="w-full">
-          <h1 className="mx-auto max-w-5xl text-[1.35rem] font-black leading-[1.08] tracking-tighter sm:text-2xl md:text-3xl lg:text-[2.125rem] lg:leading-[1.1] xl:text-4xl">
-            {content.headline.map((segment, index) =>
-              renderHeadlineSegment(segment, index)
-            )}
+        <motion.a
+          href={content.ctaHref ?? "#audit"}
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ ...springReveal, delay: 0.2 }}
+          whileHover={{ scale: 1.03, boxShadow: "0 8px 32px rgba(153,27,27,0.45)" }}
+          whileTap={{ scale: 0.98 }}
+          className="justify-self-end rounded-full bg-brand-red px-4 py-2.5 text-center font-archivo text-[10px] font-extrabold leading-tight tracking-wide text-brand-white sm:px-5 sm:py-3 sm:text-xs md:px-6 md:text-sm"
+        >
+          {content.navCtaLabel}
+        </motion.a>
+      </motion.header>
+
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 pb-10 pt-4 sm:px-8 sm:pb-14 md:px-12">
+        <motion.div
+          variants={headlineStagger}
+          initial="hidden"
+          animate="visible"
+          className="mx-auto max-w-5xl text-center"
+        >
+          <h1 className="font-archivo text-[1.65rem] font-normal leading-[1.12] tracking-tight sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.08]">
+            <motion.span variants={revealUp} className="inline">
+              {content.headlineBefore}
+            </motion.span>
+            <motion.span
+              variants={revealUp}
+              className="font-tiny5 text-[2rem] text-brand-red sm:text-[2.75rem] md:text-[3.5rem] lg:text-[4rem]"
+            >
+              {content.headlineAmount}
+            </motion.span>
+            <motion.span variants={revealUp} className="inline">
+              {content.headlineMiddle}
+            </motion.span>
+            <motion.span variants={revealUp} className="inline">
+              {content.headlineAfter}
+            </motion.span>
           </h1>
-        </MaskReveal>
 
-        <MaskReveal className="w-full">
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-brand-white/80 sm:mt-8 sm:text-lg">
+          <motion.p
+            variants={revealUp}
+            className="mx-auto mt-5 max-w-3xl font-tiktok text-sm font-normal leading-relaxed text-brand-white/95 sm:mt-7 sm:text-base md:text-lg"
+          >
             {content.subheadline}
-          </p>
-        </MaskReveal>
-
-        <motion.div variants={revealUp} className="mt-8 w-full max-w-md sm:mt-10">
-          <PrimaryButton href={content.ctaHref ?? ctaFallback}>
-            {content.ctaLabel}
-          </PrimaryButton>
+          </motion.p>
         </motion.div>
-      </motion.div>
+
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 32, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ ...springReveal, delay: 0.55 }}
+          className="mx-auto mt-8 w-full max-w-2xl sm:mt-10"
+        >
+          <div className="flex items-stretch overflow-hidden rounded-full border border-white/10 bg-black/35 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-sm">
+            <label className="flex min-w-0 flex-1 items-center gap-2 px-4 py-3 sm:gap-3 sm:px-5 sm:py-3.5">
+              <span className="shrink-0 text-lg sm:text-xl" aria-hidden>
+                👋
+              </span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={content.emailPlaceholder}
+                required
+                className="w-full bg-transparent font-snpro text-xs font-light text-brand-white placeholder:text-brand-white/55 focus:outline-none sm:text-sm"
+              />
+            </label>
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex shrink-0 items-center gap-2 rounded-full bg-brand-red px-5 py-3 font-jockey text-sm tracking-wide text-brand-white sm:px-6 sm:py-3.5 sm:text-base"
+            >
+              {content.submitLabel}
+              <Image
+                src="/icons/arrow-doit.svg"
+                alt=""
+                width={14}
+                height={23}
+                className="h-4 w-auto sm:h-[18px]"
+              />
+            </motion.button>
+          </div>
+        </motion.form>
+
+        <motion.div
+          variants={starStagger}
+          initial="hidden"
+          animate="visible"
+          className="mx-auto mt-6 flex w-full max-w-2xl flex-col items-center gap-3 text-center sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-left"
+        >
+          <motion.p
+            variants={revealUp}
+            className="font-snpro text-[10px] font-light leading-snug text-brand-white/90 sm:max-w-[11rem] sm:text-xs"
+          >
+            {content.disclaimer}
+          </motion.p>
+
+          <motion.div
+            variants={starStagger}
+            className="flex items-center gap-1.5 sm:gap-2"
+            aria-label="4.8 out of 5 stars"
+          >
+            {Array.from({ length: 5 }).map((_, i) => (
+              <motion.span key={i} variants={starPop}>
+                <Image
+                  src="/icons/star.svg"
+                  alt=""
+                  width={18}
+                  height={17}
+                  className="h-4 w-auto sm:h-[17px]"
+                />
+              </motion.span>
+            ))}
+          </motion.div>
+
+          <motion.p
+            variants={revealUp}
+            className="font-snpro text-[10px] font-light text-brand-white/90 sm:max-w-[9rem] sm:text-xs"
+          >
+            {content.rating}
+          </motion.p>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import BaseHeroVideoSection from "@/components/landing/BaseHeroVideoSection";
+import NicheHeroVideoSection from "@/components/landing/NicheHeroVideoSection";
 import FinalCtaSection from "@/components/landing/FinalCtaSection";
 import HeroSection from "@/components/landing/HeroSection";
 import LandingFooter from "@/components/landing/LandingFooter";
@@ -23,7 +23,7 @@ export default function LandingPage({ content }: LandingPageProps) {
     <div className="overflow-x-clip">
       <WarningBar content={content.warningBar} />
       {hasVideoHero ? (
-        <BaseHeroVideoSection
+        <NicheHeroVideoSection
           content={content.hero}
           videoSrc={content.hero.heroVideo}
           ctaFallback="#audit"

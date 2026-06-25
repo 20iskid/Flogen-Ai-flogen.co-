@@ -78,9 +78,24 @@ export type LandingContent = {
   };
 };
 
-export type HubLandingContent = Omit<LandingContent, "slug" | "name"> & {
-  niches: {
+export type BaseHubHero = {
+  headlineBefore: string;
+  headlineAmount: string;
+  headlineMiddle: string;
+  headlineAfter: string;
+  subheadline: string;
+  emailPlaceholder: string;
+  navCtaLabel: string;
+  submitLabel: string;
+  disclaimer: string;
+  rating: string;
+  ctaHref?: string;
+};
+
+export type HubLandingContent = {
+  metadata: {
     title: string;
-    subtitle: string;
+    description: string;
   };
+  hero: BaseHubHero;
 };

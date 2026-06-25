@@ -31,6 +31,11 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
+        archivo: ["var(--font-archivo)", "sans-serif"],
+        tiny5: ["var(--font-tiny5)", "monospace"],
+        jockey: ["var(--font-jockey)", "cursive"],
+        snpro: ['"SN Pro"', "sans-serif"],
+        tiktok: ['"TikTok Sans"', "sans-serif"],
       },
       animation: {
         marquee: "marquee 28s linear infinite",

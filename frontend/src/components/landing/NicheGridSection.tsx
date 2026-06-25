@@ -5,10 +5,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
 import { getNicheList } from "@/lib/landing/niches";
-import type { HubLandingContent } from "@/lib/landing/types";
-
 type NicheGridSectionProps = {
-  content: HubLandingContent["niches"];
+  content: {
+    title: string;
+    subtitle: string;
+  };
 };
 
 export default function NicheGridSection({ content }: NicheGridSectionProps) {
