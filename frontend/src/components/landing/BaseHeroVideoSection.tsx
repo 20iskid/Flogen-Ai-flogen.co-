@@ -60,7 +60,7 @@ export default function BaseHeroVideoSection({
   };
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden text-brand-white">
+    <section className="relative flex min-h-[85vh] flex-col overflow-hidden text-brand-white md:min-h-[90vh]">
       <video
         ref={videoRef}
         autoPlay
@@ -77,9 +77,10 @@ export default function BaseHeroVideoSection({
       </video>
 
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,23,42,0.92)_0%,rgba(11,23,42,0.78)_45%,rgba(11,23,42,0.94)_100%),radial-gradient(ellipse_at_center,transparent_0%,rgba(11,23,42,0.5)_100%)]"
+        className="absolute inset-0 bg-zinc-950/80"
         aria-hidden
       />
+      <div className="absolute inset-0 bg-black/50" aria-hidden />
 
       <motion.div
         aria-hidden
@@ -129,13 +130,13 @@ export default function BaseHeroVideoSection({
           transition={{ ...springReveal, delay: 0.2 }}
           whileHover={{ scale: 1.03, boxShadow: "0 8px 32px rgba(153,27,27,0.45)" }}
           whileTap={{ scale: 0.98 }}
-          className="hub-hero-nav-cta justify-self-end rounded-full bg-brand-red px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
+          className="hub-hero-nav-cta justify-self-end rounded-full bg-[#991B1B] px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
         >
           {content.navCtaLabel}
         </motion.a>
       </motion.header>
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-10 pt-0 sm:px-10 lg:px-14">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-20 pb-14 sm:px-10 sm:py-24 md:py-32 lg:px-14">
         <motion.div
           variants={headlineStagger}
           initial="hidden"
@@ -143,20 +144,21 @@ export default function BaseHeroVideoSection({
           className="hub-hero-center"
         >
           <div className="w-full text-center">
-            <h1 className="hub-hero-headline text-brand-white">
-              <motion.span variants={revealUp} className="hub-hero-headline-line">
+            <h1 className="hub-hero-headline mx-auto max-w-5xl font-archivo text-6xl font-black uppercase leading-[0.9] tracking-tighter text-brand-white md:text-7xl lg:text-[7rem]">
+              <motion.span variants={revealUp} className="inline">
                 {content.headlineBefore}
-                <span className="hub-hero-amount">{content.headlineAmount}</span>
+                <span className="hub-hero-amount text-[1em] leading-[0.9] tracking-tighter">
+                  {content.headlineAmount}
+                </span>
                 {content.headlineMiddle}
-              </motion.span>
-              <motion.span variants={revealUp} className="hub-hero-headline-line">
+                <br className="hidden md:block" />
                 {content.headlineLine2}
               </motion.span>
             </h1>
 
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline mx-auto mt-3 max-w-[30rem] text-brand-white sm:mt-3.5"
+              className="hub-hero-subheadline mx-auto mt-8 max-w-2xl text-xl font-normal leading-relaxed text-gray-200 md:mt-10 md:text-2xl"
             >
               {subheadlineLines.map((line, index) => (
                 <span key={line} className="block">
@@ -171,11 +173,11 @@ export default function BaseHeroVideoSection({
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ ...springReveal, delay: 0.5 }}
-            className="w-full"
+            className="w-full max-w-3xl"
           >
-            <div className="flex h-[50px] items-center rounded-full border border-white/10 bg-[rgba(0,0,0,0.42)] p-1 shadow-[0_12px_40px_rgba(0,0,0,0.28)] backdrop-blur-[2px] sm:h-[52px]">
-              <label className="flex min-w-0 flex-1 items-center gap-2 pl-4 pr-1 sm:gap-2.5 sm:pl-5">
-                <span className="shrink-0 text-base leading-none sm:text-[17px]" aria-hidden>
+            <div className="flex min-h-[56px] items-center rounded-full border border-white/10 bg-black/45 p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-[2px] md:min-h-[60px]">
+              <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-5 pr-2 md:gap-3.5 md:py-4 md:pl-6">
+                <span className="shrink-0 text-lg leading-none md:text-xl" aria-hidden>
                   👋
                 </span>
                 <input
@@ -184,14 +186,14 @@ export default function BaseHeroVideoSection({
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={content.emailPlaceholder}
                   required
-                  className="hub-hero-email w-full min-w-0 bg-transparent text-brand-white focus:outline-none"
+                  className="hub-hero-email w-full min-w-0 bg-transparent px-1 text-lg font-normal text-white placeholder:text-gray-400 focus:outline-none"
                 />
               </label>
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className="hub-hero-submit flex h-full shrink-0 items-center gap-2 rounded-full bg-brand-red px-5 text-brand-white sm:gap-2.5 sm:px-6"
+                className="hub-hero-submit flex h-full min-h-[44px] shrink-0 items-center gap-2.5 rounded-full bg-[#991B1B] px-6 font-archivo text-xl font-extrabold uppercase text-brand-white md:min-h-[48px] md:gap-3 md:px-8 md:text-2xl"
               >
                 {content.submitLabel}
                 <Image

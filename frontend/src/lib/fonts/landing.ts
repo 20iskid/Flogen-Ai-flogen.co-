@@ -3,7 +3,7 @@ import { Archivo, Jockey_One, Tiny5 } from "next/font/google";
 export const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
-  weight: ["400", "800"],
+  weight: ["400", "800", "900"],
   display: "swap",
 });
 
