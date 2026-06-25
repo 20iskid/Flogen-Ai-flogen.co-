@@ -48,26 +48,21 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       cta: "Book your audit now.",
     },
     hero: {
-      headline: [
-        { text: "Recover the " },
-        { text: "$22,000 in Billable Hours", variant: "highlight" },
-        {
-          text: " Your Firm Is Leaving on the Table Every Year and Never Lose Another Lead to a Competitor Who Answered Faster Using a Custom Law Firm Automation System That Goes Live in ",
-        },
-        { text: "30 Days", variant: "highlight" },
-        {
-          text: " Built Around Your Exact Practice Area and Case Management Software ",
-        },
-        {
-          text: "(Pilot Includes Full NDA and Money-Back Guarantee)",
-          variant: "muted",
-        },
-      ],
-      subheadline:
-        "We install intake, follow-up, and case workflow automation around the software you already use — so your firm captures every billable hour and responds to leads before the competition does.",
-      ctaLabel: "Claim your free firm automation audit",
-      ctaHref: "#audit",
+      layout: "hub",
       heroVideo: "/videos/law-hero-bg.mp4",
+      headlineBefore: "Recover the ",
+      headlineAmount: "$22,000",
+      headlineMiddle: " in Billable Hours ",
+      headlineLine2: "Your Firm Is Leaving on the Table Every Year",
+      subheadline:
+        "We install intake, follow-up, and case workflow automation around the software you already use —\nso your firm captures every billable hour and responds to leads before the competition does.",
+      emailPlaceholder:
+        "Enter your email here and we'll send some 'magic'...",
+      navCtaLabel: "Get Your Free Firm Audit Today!",
+      submitLabel: "Do it",
+      disclaimer: "*The audit is free. The leads you are losing are not.",
+      rating: "4.8 stars out of 93+ clients",
+      ctaHref: "#audit",
     },
     socialProof: {
       label: "Trusted by forward-thinking firms",

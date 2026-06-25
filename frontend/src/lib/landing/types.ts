@@ -30,6 +30,26 @@ export type LandingTestimonial = {
   result: string;
 };
 
+export type ClassicHero = {
+  layout?: "classic";
+  headline: HeadlineSegment[];
+  subheadline: string;
+  ctaLabel: string;
+  ctaHref?: string;
+  heroVideo?: string;
+};
+
+export type HubHero = BaseHubHero & {
+  layout: "hub";
+  heroVideo?: string;
+};
+
+export type LandingHero = ClassicHero | HubHero;
+
+export function isHubHero(hero: LandingHero): hero is HubHero {
+  return hero.layout === "hub";
+}
+
 export type LandingContent = {
   slug: NicheSlug;
   name: string;
@@ -41,13 +61,7 @@ export type LandingContent = {
     message: string;
     cta: string;
   };
-  hero: {
-    headline: HeadlineSegment[];
-    subheadline: string;
-    ctaLabel: string;
-    ctaHref?: string;
-    heroVideo?: string;
-  };
+  hero: LandingHero;
   socialProof: {
     label: string;
     logos: string[];

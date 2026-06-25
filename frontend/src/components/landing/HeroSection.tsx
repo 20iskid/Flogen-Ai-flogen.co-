@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import MaskReveal from "@/components/landing/MaskReveal";
 import PrimaryButton from "@/components/landing/PrimaryButton";
 import { renderHeadlineSegment } from "@/components/landing/HeadlineText";
-import type { LandingContent } from "@/lib/landing/types";
+import type { ClassicHero } from "@/lib/landing/types";
 import { float, revealUp, staggerContainer } from "@/lib/motion";
 
 type HeroSectionProps = {
-  content: LandingContent["hero"];
+  content: ClassicHero;
 };
 
 export default function HeroSection({ content }: HeroSectionProps) {

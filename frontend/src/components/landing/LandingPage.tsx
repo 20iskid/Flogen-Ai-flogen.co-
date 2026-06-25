@@ -1,6 +1,6 @@
 "use client";
 
-import NicheHeroVideoSection from "@/components/landing/NicheHeroVideoSection";
+import BaseHeroVideoSection from "@/components/landing/BaseHeroVideoSection";
 import FinalCtaSection from "@/components/landing/FinalCtaSection";
 import HeroSection from "@/components/landing/HeroSection";
 import LandingFooter from "@/components/landing/LandingFooter";
@@ -11,27 +11,24 @@ import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import UvpGrid from "@/components/landing/UvpGrid";
 import WarningBar from "@/components/landing/WarningBar";
 import type { LandingContent } from "@/lib/landing/types";
+import { isHubHero } from "@/lib/landing/types";
 
 type LandingPageProps = {
   content: LandingContent;
 };
 
 export default function LandingPage({ content }: LandingPageProps) {
-  const hasVideoHero = Boolean(content.hero.heroVideo);
+  const { hero } = content;
 
   return (
     <div className="overflow-x-clip">
-      <WarningBar content={content.warningBar} />
-      {hasVideoHero ? (
-        <NicheHeroVideoSection
-          content={content.hero}
-          videoSrc={content.hero.heroVideo}
-          ctaFallback="#audit"
-        />
+      {!isHubHero(hero) && <WarningBar content={content.warningBar} />}
+      {isHubHero(hero) ? (
+        <BaseHeroVideoSection content={hero} videoSrc={hero.heroVideo} />
       ) : (
         <>
           <LandingHeader />
-          <HeroSection content={content.hero} />
+          <HeroSection content={hero} />
         </>
       )}
       <SocialProofStrip content={content.socialProof} />
