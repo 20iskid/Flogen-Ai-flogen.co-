@@ -5,7 +5,9 @@ import FinalCtaSection from "@/components/landing/FinalCtaSection";
 import HeroSection from "@/components/landing/HeroSection";
 import LandingFooter from "@/components/landing/LandingFooter";
 import LandingHeader from "@/components/landing/LandingHeader";
+import HubTestimonialsSection from "@/components/landing/HubTestimonialsSection";
 import PasSection from "@/components/landing/PasSection";
+import ScrollRevealVideoPlaceholder from "@/components/landing/ScrollRevealVideoPlaceholder";
 import SocialProofStrip from "@/components/landing/SocialProofStrip";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import UvpGrid from "@/components/landing/UvpGrid";
@@ -24,7 +26,11 @@ export default function LandingPage({ content }: LandingPageProps) {
     <div className="overflow-x-clip">
       {!isHubHero(hero) && <WarningBar content={content.warningBar} />}
       {isHubHero(hero) ? (
-        <BaseHeroVideoSection content={hero} videoSrc={hero.heroVideo} />
+        <>
+          <BaseHeroVideoSection content={hero} videoSrc={hero.heroVideo} />
+          <ScrollRevealVideoPlaceholder />
+          <HubTestimonialsSection />
+        </>
       ) : (
         <>
           <LandingHeader />
@@ -34,7 +40,7 @@ export default function LandingPage({ content }: LandingPageProps) {
       <SocialProofStrip content={content.socialProof} />
       <PasSection content={content.pas} />
       <UvpGrid content={content.uvp} />
-      <TestimonialsSection content={content.testimonials} />
+      {!isHubHero(hero) && <TestimonialsSection content={content.testimonials} />}
       <FinalCtaSection content={content.finalCta} />
       <LandingFooter />
     </div>
