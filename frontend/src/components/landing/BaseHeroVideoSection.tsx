@@ -170,7 +170,7 @@ export default function BaseHeroVideoSection({
             transition={{ ...springReveal, delay: 0.5 }}
             className="w-full max-w-3xl"
           >
-            <div className="flex min-h-[56px] items-center rounded-full border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] p-1.5 shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md md:min-h-[60px]">
+            <div className="flex min-h-[56px] items-stretch overflow-hidden rounded-full border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md md:min-h-[60px]">
               <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-5 pr-2 md:gap-3.5 md:py-4 md:pl-6">
                 <span className="shrink-0 text-lg leading-none md:text-xl" aria-hidden>
                   👋
@@ -186,9 +186,9 @@ export default function BaseHeroVideoSection({
               </label>
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                className="hub-hero-submit flex h-full min-h-[44px] shrink-0 items-center gap-2.5 rounded-full bg-[#991B1B] px-6 font-archivo text-xl font-extrabold uppercase text-brand-white md:min-h-[48px] md:gap-3 md:px-8 md:text-2xl"
+                whileHover={{ filter: "brightness(1.08)" }}
+                whileTap={{ filter: "brightness(0.95)" }}
+                className="hub-hero-submit flex shrink-0 items-center justify-center gap-2.5 self-stretch bg-[#991B1B] px-6 font-archivo text-xl font-extrabold uppercase text-brand-white md:gap-3 md:px-8 md:text-2xl"
               >
                 {content.submitLabel}
                 <Image
