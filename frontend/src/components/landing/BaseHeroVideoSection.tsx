@@ -132,47 +132,46 @@ export default function BaseHeroVideoSection({
         </div>
       </motion.header>
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center py-8 sm:py-10">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-8 sm:py-10">
         <motion.div
           variants={headlineStagger}
           initial="hidden"
           animate="visible"
-          className="flex w-full max-w-7xl flex-col items-center justify-center gap-8 px-4 mx-auto"
+          className="mx-auto flex w-full max-w-7xl flex-col items-center gap-8"
         >
-          <div className="w-full text-center">
-            <h1 className="hub-hero-headline mx-auto w-full max-w-6xl text-center font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
-              <motion.span variants={revealUp} className="block">
-                <span className="whitespace-normal md:whitespace-nowrap">
-                  {content.headlineBefore}
-                  <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
-                    {content.headlineAmount}
-                  </span>
-                  {content.headlineMiddle}
-                  {content.headlineNoWrap ?? ""}
+          <h1 className="hub-hero-headline w-full max-w-6xl text-center font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+            <motion.span variants={revealUp} className="mx-auto block text-center">
+              <span className="inline-block whitespace-normal text-center md:whitespace-nowrap">
+                {content.headlineBefore}
+                <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
+                  {content.headlineAmount}
                 </span>
-                <br className="hidden md:block" />
-                {content.headlineLine2}
-              </motion.span>
-            </h1>
+                {content.headlineMiddle}
+                {content.headlineNoWrap ?? ""}
+              </span>
+              <br className="hidden md:block" />
+              <span className="inline-block w-full text-center">{content.headlineLine2}</span>
+            </motion.span>
+          </h1>
 
+          <div className="flex w-full max-w-3xl flex-col gap-8">
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline mx-auto mt-4 w-full max-w-3xl text-center text-xl font-normal leading-relaxed text-gray-200 md:mt-6 md:text-2xl"
+              className="hub-hero-subheadline w-full text-center text-xl font-normal leading-relaxed text-gray-200 md:text-2xl"
             >
-              {subheadlineLines.map((line, index) => (
+              {subheadlineLines.map((line) => (
                 <span key={line} className="block">
                   {line}
                 </span>
               ))}
             </motion.p>
-          </div>
 
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ ...springReveal, delay: 0.5 }}
-            className="mx-auto w-full max-w-3xl"
+            className="w-full"
           >
             <div className="flex min-h-[56px] items-stretch overflow-hidden rounded-full border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md md:min-h-[60px]">
               <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-5 pr-2 md:gap-3.5 md:py-4 md:pl-6">
@@ -210,7 +209,7 @@ export default function BaseHeroVideoSection({
             variants={starStagger}
             initial="hidden"
             animate="visible"
-            className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-1"
+            className="flex w-full items-center justify-between gap-4 px-1"
           >
             <motion.p
               variants={revealUp}
@@ -246,6 +245,7 @@ export default function BaseHeroVideoSection({
               </span>
             </motion.a>
           </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
