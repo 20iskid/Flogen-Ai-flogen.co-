@@ -1,4 +1,28 @@
-import type { LandingContent, NicheSlug } from "@/lib/landing/types";
+import type { HubHero, LandingContent, NicheSlug } from "@/lib/landing/types";
+
+const HUB_HERO_DEFAULTS = {
+  layout: "hub" as const,
+  emailPlaceholder: "Enter your email here and we'll send some 'magic'...",
+  submitLabel: "Do it",
+  disclaimer: "*The audit is free. The leads you are losing are not.",
+  rating: "4.8 stars out of 93+ clients",
+  ctaHref: "#audit",
+};
+
+function hubHero(
+  fields: Pick<
+    HubHero,
+    | "headlineBefore"
+    | "headlineAmount"
+    | "headlineMiddle"
+    | "headlineLine2"
+    | "subheadline"
+    | "navCtaLabel"
+  > &
+    Partial<Pick<HubHero, "headlineNoWrap" | "heroVideo">>
+): HubHero {
+  return { ...HUB_HERO_DEFAULTS, ...fields };
+}
 
 const defaultUvpItems = (
   nicheLabel: string
@@ -47,8 +71,7 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       message: "Limited capacity — we only onboard 3 new law firm clients per quarter.",
       cta: "Book your audit now.",
     },
-    hero: {
-      layout: "hub",
+    hero: hubHero({
       heroVideo: "/videos/law-hero-bg.mp4",
       headlineBefore: "Recover the ",
       headlineAmount: "$22,000",
@@ -56,14 +79,8 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       headlineLine2: "Your Firm Is Leaving on the Table Every Year",
       subheadline:
         "We install intake, follow-up, and case workflow automation around the software you already use —\nso your firm captures every billable hour and responds to leads before the competition does.",
-      emailPlaceholder:
-        "Enter your email here and we'll send some 'magic'...",
       navCtaLabel: "Get Your Free Firm Audit Today!",
-      submitLabel: "Do it",
-      disclaimer: "*The audit is free. The leads you are losing are not.",
-      rating: "4.8 stars out of 93+ clients",
-      ctaHref: "#audit",
-    },
+    }),
     socialProof: {
       label: "Trusted by forward-thinking firms",
       logos: ["BAKER & CO", "STERLING LLP", "NORTHLINE", "HARTMAN", "CLEARVIEW"],
@@ -142,26 +159,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       message: "Limited capacity — we only onboard 3 new dental clients per quarter.",
       cta: "Book your audit now.",
     },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$18,000+ in Lost Chair Time", variant: "highlight" },
-        {
-          text: " Your Practice Leaves on the Table Every Year and Never Lose Another New Patient to a Clinic That Answered Faster Using a Custom Dental Automation System That Goes Live in ",
-        },
-        { text: "30 Days", variant: "highlight" },
-        {
-          text: " Built Around Your PMS and Scheduling Software ",
-        },
-        {
-          text: "(Pilot Includes Full NDA and Money-Back Guarantee)",
-          variant: "muted",
-        },
-      ],
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$18,000+",
+      headlineMiddle: " in Lost Chair Time ",
+      headlineLine2: "Your Practice Leaves on the Table Every Year",
       subheadline:
-        "We automate recall, intake, insurance follow-up, and appointment reminders around Dentrix, Eaglesoft, or Open Dental — so chairs stay full and your front desk stops drowning.",
-      ctaLabel: "Claim your free practice automation audit",
-    },
+        "We automate recall, intake, insurance follow-up, and appointment reminders around Dentrix, Eaglesoft, or Open Dental —\nso chairs stay full and your front desk stops drowning.",
+      navCtaLabel: "Get Your Free Practice Audit Today!",
+    }),
     socialProof: { label: "Trusted by growing practices", logos: ["SMILECO", "BRIGHTDENT", "PARKVIEW", "LAKESIDE", "APEX"] },
     pas: {
       title: "Here's the brutal truth about your practice right now.",
@@ -209,18 +215,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom HVAC and home services automation in 30 days. Book more jobs, dispatch faster, and stop losing calls to competitors.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new home service clients per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$25,000+ in Missed Service Calls", variant: "highlight" },
-        { text: " Your Company Loses Every Year and Never Lose Another Job to a Competitor Who Dispatched Faster Using a Custom HVAC & Home Services Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around ServiceTitan, Housecall Pro, or Your CRM " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate call intake, dispatch alerts, estimate follow-up, and maintenance plan renewals — so every lead gets answered and every truck stays booked.",
-      ctaLabel: "Claim your free operations automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$25,000+",
+      headlineMiddle: " in Missed Service Calls ",
+      headlineLine2: "Your Company Loses Every Year",
+      subheadline:
+        "We automate call intake, dispatch alerts, estimate follow-up, and maintenance plan renewals —\nso every lead gets answered and every truck stays booked.",
+      navCtaLabel: "Get Your Free Operations Audit Today!",
+    }),
     socialProof: { label: "Trusted by top contractors", logos: ["COOLAIR", "SUMMIT HVAC", "PROFLOW", "ALLSTAR", "NEXGEN"] },
     pas: {
       title: "Here's the brutal truth about your operation right now.",
@@ -250,18 +253,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom automation for RIAs and financial advisors. Nurture prospects, book consultations, and go live in 30 days.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new advisory firms per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$30,000+ in Lost AUM Pipeline", variant: "highlight" },
-        { text: " Your Practice Leaves on the Table Every Year and Never Lose Another Prospect to an Advisor Who Followed Up Faster Using a Custom Financial Advisory Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your CRM and Compliance Workflow " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate prospect nurture, meeting booking, onboarding intake, and follow-up sequences — compliant, documented, and built around Redtail, Wealthbox, or Salesforce.",
-      ctaLabel: "Claim your free practice automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$30,000+",
+      headlineMiddle: " in Lost AUM Pipeline ",
+      headlineLine2: "Your Practice Leaves on the Table Every Year",
+      subheadline:
+        "We automate prospect nurture, meeting booking, onboarding intake, and follow-up sequences —\ncompliant, documented, and built around Redtail, Wealthbox, or Salesforce.",
+      navCtaLabel: "Get Your Free Practice Audit Today!",
+    }),
     socialProof: { label: "Trusted by growing advisory firms", logos: ["APEX WM", "NORTHSTAR", "LEGACY", "SUMMIT", "HARBOR"] },
     pas: {
       title: "Here's the brutal truth about your practice right now.",
@@ -291,18 +291,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom staffing automation in 30 days. Match candidates faster, nurture clients, and never lose a req to a faster agency.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new staffing clients per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$20,000+ in Lost Placement Fees", variant: "highlight" },
-        { text: " Your Agency Leaves on the Table Every Year and Never Lose Another Req to a Competitor Who Submitted Faster Using a Custom Staffing Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your ATS and CRM " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate candidate outreach, client follow-up, interview scheduling, and pipeline updates — so your recruiters sell instead of admin.",
-      ctaLabel: "Claim your free agency automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$20,000+",
+      headlineMiddle: " in Lost Placement Fees ",
+      headlineLine2: "Your Agency Leaves on the Table Every Year",
+      subheadline:
+        "We automate candidate outreach, client follow-up, interview scheduling, and pipeline updates —\nso your recruiters sell instead of admin.",
+      navCtaLabel: "Get Your Free Agency Audit Today!",
+    }),
     socialProof: { label: "Trusted by recruiting firms", logos: ["TALENTCO", "APEX STAFF", "WORKFORCE", "PRIMESTAFF", "NEXUS"] },
     pas: {
       title: "Here's the brutal truth about your agency right now.",
@@ -332,18 +329,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom automation for independent auto repair shops. Book more jobs, reduce no-shows, go live in 30 days.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new shop clients per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$15,000+ in Empty Bay Revenue", variant: "highlight" },
-        { text: " Your Shop Leaves on the Table Every Year and Never Lose Another Customer to a Shop That Booked Them Faster Using a Custom Auto Repair Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your Shop Management Software " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate appointment booking, estimate follow-up, service reminders, and review requests — integrated with Shop-Ware, Tekmetric, or Mitchell 1.",
-      ctaLabel: "Claim your free shop automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$15,000+",
+      headlineMiddle: " in Empty Bay Revenue ",
+      headlineLine2: "Your Shop Leaves on the Table Every Year",
+      subheadline:
+        "We automate appointment booking, estimate follow-up, service reminders, and review requests —\nintegrated with Shop-Ware, Tekmetric, or Mitchell 1.",
+      navCtaLabel: "Get Your Free Shop Audit Today!",
+    }),
     socialProof: { label: "Trusted by independent shops", logos: ["BAYTECH", "ROADREADY", "PRECISION", "MAINST", "AUTOCARE"] },
     pas: {
       title: "Here's the brutal truth about your shop right now.",
@@ -373,18 +367,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom automation for immigration law practices. Intake, follow-up, and case workflows live in 30 days.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new immigration practices per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$20,000+ in Lost Immigration Cases", variant: "highlight" },
-        { text: " Your Practice Leaves on the Table Every Year and Never Lose Another Consultation to a Firm That Responded Faster Using a Custom Immigration Law Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your Practice Area and Case Management Software " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate multilingual intake, consultation booking, document collection, and case status updates — so you capture every lead and move cases faster.",
-      ctaLabel: "Claim your free practice automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$20,000+",
+      headlineMiddle: " in Lost Immigration Cases ",
+      headlineLine2: "Your Practice Leaves on the Table Every Year",
+      subheadline:
+        "We automate multilingual intake, consultation booking, document collection, and case status updates —\nso you capture every lead and move cases faster.",
+      navCtaLabel: "Get Your Free Practice Audit Today!",
+    }),
     socialProof: { label: "Trusted by immigration practices", logos: ["GLOBAL LAW", "BRIDGE", "PATHWAY", "LIBERTY", "NORTHSTAR"] },
     pas: {
       title: "Here's the brutal truth about your practice right now.",
@@ -414,18 +405,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom B2B automation for commercial cleaning companies. Prospect, quote, and close contracts faster in 30 days.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new cleaning companies per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$18,000+ in Lost Contracts", variant: "highlight" },
-        { text: " Your Cleaning Company Leaves on the Table Every Year and Never Lose Another Bid to a Competitor Who Followed Up Faster Using a Custom Commercial Cleaning B2B Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your CRM and Quoting Workflow " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate B2B prospecting, quote follow-up, site walk scheduling, and contract renewal — so your sales team closes instead of chases.",
-      ctaLabel: "Claim your free sales automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$18,000+",
+      headlineMiddle: " in Lost Contracts ",
+      headlineLine2: "Your Cleaning Company Leaves on the Table Every Year",
+      subheadline:
+        "We automate B2B prospecting, quote follow-up, site walk scheduling, and contract renewal —\nso your sales team closes instead of chases.",
+      navCtaLabel: "Get Your Free Sales Audit Today!",
+    }),
     socialProof: { label: "Trusted by commercial cleaners", logos: ["CLEANGROUP", "FACILITY", "SPARKLE", "PROSHINE", "APEX"] },
     pas: {
       title: "Here's the brutal truth about your company right now.",
@@ -455,18 +443,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Sensitive, compliant automation for funeral homes. Family follow-up, pre-need nurture, and admin workflows in 30 days.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new funeral home clients per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$12,000+ in Pre-Need & Aftercare Revenue", variant: "highlight" },
-        { text: " Your Funeral Home Leaves on the Table Every Year and Never Lose Another Family to a Home That Followed Up With More Care, Faster Using a Custom Funeral Home Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your Case Management and Family Communication Workflow " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate compassionate follow-up, pre-need nurture, document collection, and staff coordination — respectful, compliant, and built around the software you already use.",
-      ctaLabel: "Claim your free operations automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$12,000+",
+      headlineMiddle: " in Pre-Need & Aftercare Revenue ",
+      headlineLine2: "Your Funeral Home Leaves on the Table Every Year",
+      subheadline:
+        "We automate compassionate follow-up, pre-need nurture, document collection, and staff coordination —\nrespectful, compliant, and built around the software you already use.",
+      navCtaLabel: "Get Your Free Operations Audit Today!",
+    }),
     socialProof: { label: "Trusted by family-owned homes", logos: ["HERITAGE", "PEACEFUL", "GRACE", "MEMORIAL", "EVERGREEN"] },
     pas: {
       title: "Here's the honest truth about your home right now.",
@@ -496,18 +481,15 @@ export const nicheLandingPages: Record<NicheSlug, LandingContent> = {
       description: "Custom automation for independent insurance brokers. Quote follow-up, renewal nurture, and intake live in 30 days.",
     },
     warningBar: { message: "Limited capacity — we only onboard 3 new brokerages per quarter.", cta: "Book your audit now." },
-    hero: {
-      headline: [
-        { text: "Recover " },
-        { text: "$22,000+ in Lost Premium", variant: "highlight" },
-        { text: " Your Brokerage Leaves on the Table Every Year and Never Lose Another Quote to a Broker Who Followed Up Faster Using a Custom Independent Insurance Automation System That Goes Live in " },
-        { text: "30 Days", variant: "highlight" },
-        { text: " Built Around Your AMS and CRM " },
-        { text: "(Pilot Includes Full NDA and Money-Back Guarantee)", variant: "muted" },
-      ],
-      subheadline: "We automate quote follow-up, renewal reminders, cross-sell nurture, and intake — integrated with HawkSoft, Applied Epic, or your AMS.",
-      ctaLabel: "Claim your free brokerage automation audit",
-    },
+    hero: hubHero({
+      headlineBefore: "Recover ",
+      headlineAmount: "$22,000+",
+      headlineMiddle: " in Lost Premium ",
+      headlineLine2: "Your Brokerage Leaves on the Table Every Year",
+      subheadline:
+        "We automate quote follow-up, renewal reminders, cross-sell nurture, and intake —\nintegrated with HawkSoft, Applied Epic, or your AMS.",
+      navCtaLabel: "Get Your Free Brokerage Audit Today!",
+    }),
     socialProof: { label: "Trusted by independent brokerages", logos: ["SHIELD", "COVERAGE", "APEX INS", "GUARDIAN", "SUMMIT"] },
     pas: {
       title: "Here's the brutal truth about your brokerage right now.",

@@ -2,16 +2,12 @@
 
 import BaseHeroVideoSection from "@/components/landing/BaseHeroVideoSection";
 import FinalCtaSection from "@/components/landing/FinalCtaSection";
-import HeroSection from "@/components/landing/HeroSection";
 import LandingFooter from "@/components/landing/LandingFooter";
-import LandingHeader from "@/components/landing/LandingHeader";
 import HubTestimonialsSection from "@/components/landing/HubTestimonialsSection";
 import PasSection from "@/components/landing/PasSection";
 import ScrollRevealVideoPlaceholder from "@/components/landing/ScrollRevealVideoPlaceholder";
 import SocialProofStrip from "@/components/landing/SocialProofStrip";
-import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import UvpGrid from "@/components/landing/UvpGrid";
-import WarningBar from "@/components/landing/WarningBar";
 import type { LandingContent } from "@/lib/landing/types";
 import { isHubHero } from "@/lib/landing/types";
 
@@ -22,25 +18,18 @@ type LandingPageProps = {
 export default function LandingPage({ content }: LandingPageProps) {
   const { hero } = content;
 
+  if (!isHubHero(hero)) {
+    throw new Error(`Niche "${content.slug}" must use hub hero layout.`);
+  }
+
   return (
     <div className="overflow-x-clip">
-      {!isHubHero(hero) && <WarningBar content={content.warningBar} />}
-      {isHubHero(hero) ? (
-        <>
-          <BaseHeroVideoSection content={hero} videoSrc={hero.heroVideo} />
-          <ScrollRevealVideoPlaceholder />
-          <HubTestimonialsSection />
-        </>
-      ) : (
-        <>
-          <LandingHeader />
-          <HeroSection content={hero} />
-        </>
-      )}
+      <BaseHeroVideoSection content={hero} videoSrc={hero.heroVideo} />
+      <ScrollRevealVideoPlaceholder />
+      <HubTestimonialsSection />
       <SocialProofStrip content={content.socialProof} />
       <PasSection content={content.pas} />
       <UvpGrid content={content.uvp} />
-      {!isHubHero(hero) && <TestimonialsSection content={content.testimonials} />}
       <FinalCtaSection content={content.finalCta} />
       <LandingFooter />
     </div>
