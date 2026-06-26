@@ -139,7 +139,7 @@ export default function BaseHeroVideoSection({
           animate="visible"
           className="mx-auto flex w-full max-w-7xl flex-col items-center gap-8"
         >
-          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-4xl font-normal uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-3xl font-normal leading-[1.1] tracking-tight text-brand-white sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem]">
             <motion.span
               variants={revealUp}
               className="flex w-full flex-col items-center gap-0 text-center"
