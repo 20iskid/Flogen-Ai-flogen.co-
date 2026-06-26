@@ -155,15 +155,16 @@ export default function BaseHeroVideoSection({
             </motion.span>
           </h1>
 
-          <div className="flex w-full max-w-3xl flex-col gap-8 self-stretch">
+          <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-8">
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline w-full self-stretch text-center text-xl font-normal leading-relaxed text-gray-200 md:text-2xl"
+              className="hub-hero-subheadline w-full text-center text-xl font-normal leading-relaxed text-gray-200 md:text-2xl"
             >
               {content.subheadline}
             </motion.p>
 
-          <motion.form
+            <div className="flex w-full flex-col items-center gap-3">
+              <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -206,11 +207,11 @@ export default function BaseHeroVideoSection({
             variants={starStagger}
             initial="hidden"
             animate="visible"
-            className="flex w-full items-center justify-between gap-4 px-1"
+            className="-mt-1 flex w-full items-center justify-between gap-4 px-1 py-2 sm:-mt-2 sm:py-2.5"
           >
             <motion.p
               variants={revealUp}
-              className="min-w-0 text-left text-sm text-gray-400"
+              className="min-w-0 text-left text-base leading-snug text-gray-400 sm:text-[15px]"
             >
               {content.disclaimer}
             </motion.p>
@@ -218,11 +219,11 @@ export default function BaseHeroVideoSection({
             <motion.a
               href="#stories"
               variants={revealUp}
-              className="flex shrink-0 cursor-pointer items-center gap-1.5 transition-opacity duration-200 hover:opacity-75 sm:gap-2"
+              className="flex shrink-0 cursor-pointer items-center gap-2 transition-opacity duration-200 hover:opacity-75 sm:gap-2.5"
             >
               <motion.div
                 variants={starStagger}
-                className="flex items-center gap-[5px]"
+                className="flex items-center gap-1 sm:gap-1.5"
                 aria-hidden
               >
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -230,18 +231,19 @@ export default function BaseHeroVideoSection({
                     <Image
                       src="/icons/star.svg"
                       alt=""
-                      width={18}
-                      height={17}
-                      className="h-[15px] w-[16px] sm:h-[17px] sm:w-[18px]"
+                      width={20}
+                      height={19}
+                      className="h-[17px] w-[18px] sm:h-5 sm:w-5"
                     />
                   </motion.span>
                 ))}
               </motion.div>
-              <span className="hub-hero-trust text-brand-white/90">
+              <span className="hub-hero-trust text-sm text-brand-white/90 sm:text-base">
                 {content.rating}
               </span>
-            </motion.a>
-          </motion.div>
+              </motion.a>
+            </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
