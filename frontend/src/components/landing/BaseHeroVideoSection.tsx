@@ -60,7 +60,7 @@ export default function BaseHeroVideoSection({
   };
 
   return (
-    <section className="relative flex min-h-[85vh] flex-col overflow-hidden text-brand-white md:min-h-[90vh]">
+    <section className="relative flex min-h-[100dvh] flex-col overflow-hidden text-brand-white">
       <video
         ref={videoRef}
         autoPlay
@@ -70,27 +70,27 @@ export default function BaseHeroVideoSection({
         preload="auto"
         // @ts-expect-error fetchPriority is valid on video elements
         fetchPriority="high"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover"
         aria-hidden
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
 
       <div
-        className="absolute inset-0 bg-zinc-950/80"
+        className="absolute inset-0 z-0 bg-zinc-950/80"
         aria-hidden
       />
-      <div className="absolute inset-0 bg-black/50" aria-hidden />
+      <div className="absolute inset-0 z-0 bg-black/50" aria-hidden />
 
       <motion.header
         variants={slideDown}
         initial="hidden"
         animate="visible"
-        className="relative z-20 grid w-full grid-cols-[1fr_auto_1fr] items-center px-6 py-5 sm:px-10 sm:py-6 lg:px-14"
+        className="relative z-20 flex w-full items-center justify-between px-6 py-5 sm:px-10 sm:py-6 lg:px-14"
       >
         <button
           type="button"
-          className="hub-hero-menu flex items-center gap-3 justify-self-start font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
+          className="hub-hero-menu relative z-10 flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
           aria-label="Open menu"
         >
           <Image
@@ -107,11 +107,11 @@ export default function BaseHeroVideoSection({
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ ...springReveal, delay: 0.15 }}
-          className="justify-self-center"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
           <LogoLink
             variant="full"
-            className="h-11 w-auto max-w-[13rem] sm:h-12 lg:h-14 lg:max-w-[15rem]"
+            className="h-14 w-auto max-w-[15rem] sm:h-16 sm:max-w-[17rem] lg:h-[4.5rem] lg:max-w-[19rem]"
           />
         </motion.div>
 
@@ -122,30 +122,30 @@ export default function BaseHeroVideoSection({
           transition={{ ...springReveal, delay: 0.2 }}
           whileHover={{ scale: 1.03, boxShadow: "0 8px 32px rgba(153,27,27,0.45)" }}
           whileTap={{ scale: 0.98 }}
-          className="hub-hero-nav-cta justify-self-end rounded-full bg-[#991B1B] px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
+          className="hub-hero-nav-cta relative z-10 shrink-0 rounded-full bg-[#991B1B] px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
         >
           {content.navCtaLabel}
         </motion.a>
       </motion.header>
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-20 pb-14 sm:px-6 sm:py-24 md:px-8 md:py-32 lg:px-10">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:px-10">
         <motion.div
           variants={headlineStagger}
           initial="hidden"
           animate="visible"
           className="hub-hero-center gap-8"
         >
-          <div className="mx-auto w-full max-w-6xl text-center">
-            <h1 className="hub-hero-headline mx-auto w-full max-w-6xl font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
-              <motion.span variants={revealUp} className="inline">
-                {content.headlineBefore}
-                <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
-                  {content.headlineAmount}
+          <div className="mx-auto w-full max-w-[90vw] text-center md:max-w-6xl">
+            <h1 className="hub-hero-headline mx-auto w-full max-w-[90vw] font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:max-w-6xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+              <motion.span variants={revealUp} className="block">
+                <span className="whitespace-normal md:whitespace-nowrap">
+                  {content.headlineBefore}
+                  <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
+                    {content.headlineAmount}
+                  </span>
+                  {content.headlineMiddle}
+                  {content.headlineNoWrap ?? ""}
                 </span>
-                {content.headlineMiddle}
-                {content.headlineNoWrap ? (
-                  <span className="whitespace-nowrap">{content.headlineNoWrap}</span>
-                ) : null}
                 <br className="hidden md:block" />
                 {content.headlineLine2}
               </motion.span>
@@ -153,7 +153,7 @@ export default function BaseHeroVideoSection({
 
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline mx-auto mt-4 max-w-2xl text-xl font-normal leading-relaxed text-gray-200 md:mt-6 md:text-2xl"
+              className="hub-hero-subheadline mx-auto mt-4 max-w-3xl text-xl font-normal leading-relaxed text-gray-200 md:mt-6 md:text-2xl"
             >
               {subheadlineLines.map((line, index) => (
                 <span key={line} className="block">

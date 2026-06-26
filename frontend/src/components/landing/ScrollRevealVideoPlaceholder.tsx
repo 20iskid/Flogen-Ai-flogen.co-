@@ -37,7 +37,7 @@ export default function ScrollRevealVideoPlaceholder() {
   return (
     <section
       ref={sectionRef}
-      className="relative -mt-12 overflow-hidden bg-brand-white pb-16 pt-8 sm:-mt-16 sm:pb-20 sm:pt-10 md:-mt-20 md:pb-24 md:pt-12"
+      className="relative overflow-hidden bg-brand-white pb-16 pt-8 sm:pb-20 sm:pt-10 md:pb-24 md:pt-12"
       aria-label="Video presentation"
     >
       <div
