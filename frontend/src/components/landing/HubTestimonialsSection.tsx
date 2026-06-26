@@ -1,69 +1,295 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BadgeCheck, Star } from "lucide-react";
+import { BadgeCheck, Star, StarHalf } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
 const reviews = [
   {
-    name: "Marcus T.",
-    initials: "MT",
-    quote:
-      "That was an amazing experience! Now we have new partners for life THANK YOU FLOGEN!",
+    name: "Michael T.",
+    category: "Agency",
+    date: "May 14, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
+    text: "That was an amazing experience! Now we have new partners for life THANK YOU FLOGEN!",
   },
   {
-    name: "Sarah Chen",
-    initials: "SC",
-    quote:
-      "I've worked with a lot of developers, and this team is in a completely different category. They don't just build what you ask for, they understand what you're trying to achieve and make it better. They think like product owners, not just developers. I came in with my vision..and they improved it, and executed it at a level I wasn't even expecting! From day one, they were fast, responsive, and incredibly detail-oriented. Every feature was thought through, every edge case considered, and everything delivered cleanly and professionally. No hand-holding, no chasing, no confusion, which was very important to me. What stood out most was their ability to take a complex concept and execute it in a way that actually works in the real world. They ask the right questions, anticipate problems before they happen, and come back with solutions...not excuses as to why it can't be done. Communication was seamless, timelines were respected, and the quality of work exceeded expectations across the board. If you care about building something properly, this is the team you want. Highly, highly recommended!",
+    name: "Sarah Jenkins",
+    category: "SaaS",
+    date: "April 28, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+    text: "I've worked with a lot of developers, and this team is in a completely different category. They don't just build what you ask for, they understand what you're trying to achieve and make it better. They think like product owners, not just developers. I came in with my vision..and they improved it, and executed it at a level I wasn't even expecting! From day one, they were fast, responsive, and incredibly detail-oriented. Every feature was thought through, every edge case considered, and everything delivered cleanly and professionally. No hand-holding, no chasing, no confusion, which was very important to me. What stood out most was their ability to take a complex concept and execute it in a way that actually works in the real world. They ask the right questions, anticipate problems before they happen, and come back with solutions...not excuses as to why it can't be done. Communication was seamless, timelines were respected, and the quality of work exceeded expectations across the board. If you care about building something properly, this is the team you want. Highly, highly recommended!",
   },
   {
-    name: "James R.",
-    initials: "JR",
-    quote: "Great results. Already planning our next build.",
+    name: "David R.",
+    category: "E-Commerce",
+    date: "April 12, 2026",
+    rating: 4,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+    text: "Great results. Already planning our next build.",
   },
   {
-    name: "Northline Ventures",
-    initials: "NV",
-    quote:
-      "Working with the team was an outstanding experience. They were incredibly easy to collaborate with, always solution-oriented and ready to adapt to any challenge that came up. Their ability to think creatively and find practical effective fixes demonstrated massive skill and deep expertise. The team consistently delivered high-quality work, communicated clearly, and showed genuine commitment to achieving the best outcome. Truly exceptional work. Highly recommended.",
+    name: "Elena Rostova",
+    category: "Law Firm",
+    date: "March 30, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80",
+    text: "Working with the team was an outstanding experience. They were incredibly easy to collaborate with, always solution-oriented and ready to adapt to any challenge that came up. Their ability to think creatively and find practical effective fixes demonstrated massive skill and deep expertise. The team consistently delivered high-quality work, communicated clearly, and showed genuine commitment to achieving the best outcome. Truly exceptional work. Highly recommended.",
   },
   {
-    name: "David K.",
-    initials: "DK",
-    quote: "Very ambitious, hard working, easy communication. Highly recommended!",
+    name: "Marcus Chen",
+    category: "Consulting",
+    date: "March 15, 2026",
+    rating: 4.5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+    text: "Very ambitious, hard working, easy communication. Highly recommended!",
   },
   {
-    name: "Rachel M.",
-    initials: "RM",
-    quote:
-      "While searching for the right team to help grow my business, I never imagined I would find someone this competent, dedicated, and genuinely invested in my success. I would recommend Flogen to anyone.",
+    name: "Rachel Dawes",
+    category: "Real Estate",
+    date: "February 22, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?auto=format&fit=crop&w=150&q=80",
+    text: "While searching for the right team to help grow my business, I never imagined I would find someone this competent, dedicated, and genuinely invested in my success. I would recommend Flogen to anyone.",
   },
   {
-    name: "Alex P.",
-    initials: "AP",
-    quote:
-      "Amazing, the most talented team I've ever worked with, I highly suggest them!",
+    name: "James Wilson",
+    category: "Tech Startup",
+    date: "February 08, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80",
+    text: "Amazing, the most talented team I've ever worked with, I highly suggest them!",
+  },
+  {
+    name: "Priya N.",
+    category: "Healthcare",
+    date: "June 02, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=150&q=80",
+    text: "Love working with Flogen. Great team that deeply understands what your business actually needs. Thank you.",
+  },
+  {
+    name: "Thomas Lee",
+    category: "Finance",
+    date: "May 28, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
+    text: "Working with Flogen was an absolute pleasure. Their attention to detail, professionalism, and genuine commitment made the entire process seamless. They truly went above and beyond. Highly recommended.",
+  },
+  {
+    name: "Angela Brooks",
+    category: "Marketing",
+    date: "May 19, 2026",
+    rating: 4.5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80",
+    text: "Wonderful first experience. Very knowledgeable, quick to respond, and efficient in every way. Looking forward to many more projects together.",
+  },
+  {
+    name: "Chris Alvarez",
+    category: "Construction",
+    date: "May 08, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80",
+    text: "Great communication throughout. They jumped on a call, made sure everything was clear, and kept things moving. Would absolutely work with them again.",
+  },
+  {
+    name: "Nathan Price",
+    category: "Logistics",
+    date: "April 22, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+    text: "The kind of team you work with your eyes closed. Fast, clear, asked the right questions, and took the time to explain every step. Just go for it.",
+  },
+  {
+    name: "Lisa Hart",
+    category: "Retail",
+    date: "April 05, 2026",
+    rating: 4,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
+    text: "Thank you for the quick delivery. Exactly what we needed.",
+  },
+  {
+    name: "Omar Hassan",
+    category: "FinTech",
+    date: "March 22, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=150&q=80",
+    text: "Exceptionally sharp team. Gave them a really difficult project and they delivered without hesitation. Already on our third project together.",
+  },
+  {
+    name: "Victoria Lane",
+    category: "Insurance",
+    date: "March 08, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=150&q=80",
+    text: "Solved every problem that came up without a single excuse. Real expertise, perfect communication, and results we are genuinely proud of.",
+  },
+  {
+    name: "Kevin O'Brien",
+    category: "Hospitality",
+    date: "February 18, 2026",
+    rating: 4,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1492566660923-9fdd56c10327?auto=format&fit=crop&w=150&q=80",
+    text: "Good work. Does a great job.",
+  },
+  {
+    name: "Patricia Gomez",
+    category: "Manufacturing",
+    date: "February 02, 2026",
+    rating: 5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1531123897720-8f129e1688ce?auto=format&fit=crop&w=150&q=80",
+    text: "Flogen completed our project with complete professionalism and in record time. They understood every requirement before starting, delivered ahead of deadline, and exceeded expectations entirely. Highly recommended to anyone who wants fast reliable exceptional work.",
+  },
+  {
+    name: "Brian Foster",
+    category: "EdTech",
+    date: "January 20, 2026",
+    rating: 4.5,
+    avatarUrl:
+      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=150&q=80",
+    text: "They asked the right questions, fully understood our needs, and went the extra mile to make sure everything matched our expectations.",
   },
 ] as const;
 
-function StarRating() {
+const CLAMP_CHAR_THRESHOLD = 160;
+
+function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="mt-4 flex items-center gap-0.5" aria-label="5 out of 5 stars">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className="h-4 w-4 fill-[#991B1B] text-[#991B1B]"
-          strokeWidth={0}
-        />
-      ))}
+    <div
+      className="mt-4 flex items-center gap-0.5"
+      aria-label={`${rating} out of 5 stars`}
+    >
+      {Array.from({ length: 5 }).map((_, i) => {
+        const starValue = i + 1;
+
+        if (rating >= starValue) {
+          return (
+            <Star
+              key={i}
+              className="h-4 w-4 fill-current text-[#991B1B]"
+              strokeWidth={0}
+            />
+          );
+        }
+
+        if (rating >= starValue - 0.5) {
+          return (
+            <StarHalf
+              key={i}
+              className="h-4 w-4 fill-current text-[#991B1B]"
+              strokeWidth={0}
+            />
+          );
+        }
+
+        return (
+          <Star
+            key={i}
+            className="h-4 w-4 fill-current text-gray-300"
+            strokeWidth={0}
+          />
+        );
+      })}
     </div>
   );
 }
 
-export default function HubTestimonialsSection() {
+type ReviewCardProps = {
+  review: (typeof reviews)[number];
+  index: number;
+  expanded: boolean;
+  onToggle: () => void;
+};
+
+function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
+  const isTruncatable = review.text.length > CLAMP_CHAR_THRESHOLD;
+
   return (
-    <section className="bg-[#FDFAFA] py-24 md:py-32">
+    <motion.article
+      variants={fadeSlideUp}
+      className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-[0_8px_30px_rgba(11,23,42,0.06)] transition-colors duration-300 hover:bg-[#FDF8F8] hover:shadow-[0_16px_48px_rgba(11,23,42,0.12)]"
+    >
+      <header className="flex items-center gap-3">
+        <Image
+          src={review.avatarUrl}
+          alt={review.name}
+          width={48}
+          height={48}
+          className="h-12 w-12 shrink-0 rounded-full object-cover"
+        />
+        <div className="flex min-w-0 flex-1 items-center gap-1.5">
+          <p className="truncate font-bold text-[#0B172A]">{review.name}</p>
+          <BadgeCheck
+            className="h-4 w-4 shrink-0 text-[#991B1B]"
+            aria-label="Verified client"
+          />
+        </div>
+      </header>
+
+      <StarRating rating={review.rating} />
+
+      <div className="mt-4 flex flex-1 flex-col">
+        <p
+          id={`review-text-${index}`}
+          className={`text-sm leading-relaxed text-gray-700 transition-all duration-300 md:text-base ${
+            isTruncatable && !expanded ? "line-clamp-4" : ""
+          }`}
+        >
+          &ldquo;{review.text}&rdquo;
+        </p>
+
+        {isTruncatable ? (
+          <button
+            type="button"
+            onClick={onToggle}
+            className="pt-2 text-left text-sm font-bold text-[#991B1B] hover:underline"
+            aria-expanded={expanded}
+            aria-controls={`review-text-${index}`}
+          >
+            {expanded ? "Read less" : "Read more"}
+          </button>
+        ) : null}
+      </div>
+
+      <footer className="mt-auto flex items-center justify-between pt-6">
+        <span className="text-xs font-bold text-[#0B172A]/70">{review.date}</span>
+        <span className="text-xs font-black uppercase tracking-wider text-[#991B1B]">
+          {review.category}
+        </span>
+      </footer>
+    </motion.article>
+  );
+}
+
+export default function HubTestimonialsSection() {
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+
+  const toggleExpanded = (index: number) => {
+    setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  return (
+    <section id="stories" className="scroll-mt-24 bg-[#FDFAFA] py-24 md:py-32">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -99,38 +325,17 @@ export default function HubTestimonialsSection() {
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="mx-auto mt-16 max-w-7xl columns-1 gap-6 px-4 md:columns-2 lg:columns-3"
+        className="mx-auto mt-16 grid max-w-7xl auto-rows-fr grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3"
       >
-          {reviews.map((review) => (
-            <motion.article
-              key={review.name}
-              variants={fadeSlideUp}
-              whileHover={{ y: -4 }}
-              className="mb-6 break-inside-avoid rounded-2xl border border-gray-100 bg-white p-6 shadow-[0_8px_30px_rgba(11,23,42,0.06)] transition-shadow duration-200 hover:shadow-[0_16px_48px_rgba(11,23,42,0.12)]"
-            >
-              <header className="flex items-center gap-3">
-                <div
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0B172A] text-sm font-bold text-white"
-                  aria-hidden
-                >
-                  {review.initials}
-                </div>
-                <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                  <p className="truncate font-bold text-[#0B172A]">{review.name}</p>
-                  <BadgeCheck
-                    className="h-4 w-4 shrink-0 text-[#991B1B]"
-                    aria-label="Verified client"
-                  />
-                </div>
-              </header>
-
-              <StarRating />
-
-              <p className="mt-4 text-sm leading-relaxed text-gray-700 md:text-base">
-                &ldquo;{review.quote}&rdquo;
-              </p>
-            </motion.article>
-          ))}
+        {reviews.map((review, index) => (
+          <ReviewCard
+            key={`${review.name}-${index}`}
+            review={review}
+            index={index}
+            expanded={Boolean(expanded[index])}
+            onToggle={() => toggleExpanded(index)}
+          />
+        ))}
       </motion.div>
     </section>
   );

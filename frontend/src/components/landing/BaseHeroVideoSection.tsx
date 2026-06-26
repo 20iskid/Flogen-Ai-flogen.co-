@@ -86,28 +86,30 @@ export default function BaseHeroVideoSection({
         variants={slideDown}
         initial="hidden"
         animate="visible"
-        className="relative z-20 flex w-full items-center justify-between px-6 py-5 sm:px-10 sm:py-6 lg:px-14"
+        className="relative z-20 flex w-full items-center justify-between px-4 py-5 md:px-8 sm:py-6"
       >
-        <button
-          type="button"
-          className="hub-hero-menu relative z-10 flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
-          aria-label="Open menu"
-        >
-          <Image
-            src="/icons/menu.svg"
-            alt=""
-            width={26}
-            height={23}
-            className="h-[23px] w-[26px]"
-          />
-          <span>Menu</span>
-        </button>
+        <div className="flex flex-1 items-center justify-start">
+          <button
+            type="button"
+            className="hub-hero-menu flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
+            aria-label="Open menu"
+          >
+            <Image
+              src="/icons/menu.svg"
+              alt=""
+              width={26}
+              height={23}
+              className="h-[23px] w-[26px]"
+            />
+            <span>Menu</span>
+          </button>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ ...springReveal, delay: 0.15 }}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="flex flex-none items-center justify-center"
         >
           <LogoLink
             variant="full"
@@ -115,28 +117,30 @@ export default function BaseHeroVideoSection({
           />
         </motion.div>
 
-        <motion.a
-          href={content.ctaHref ?? "#audit"}
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ ...springReveal, delay: 0.2 }}
-          whileHover={{ scale: 1.03, boxShadow: "0 8px 32px rgba(153,27,27,0.45)" }}
-          whileTap={{ scale: 0.98 }}
-          className="hub-hero-nav-cta relative z-10 shrink-0 rounded-full bg-[#991B1B] px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
-        >
-          {content.navCtaLabel}
-        </motion.a>
+        <div className="flex flex-1 items-center justify-end">
+          <motion.a
+            href={content.ctaHref ?? "#audit"}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ ...springReveal, delay: 0.2 }}
+            whileHover={{ scale: 1.03, boxShadow: "0 8px 32px rgba(153,27,27,0.45)" }}
+            whileTap={{ scale: 0.98 }}
+            className="hub-hero-nav-cta shrink-0 rounded-full bg-[#991B1B] px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
+          >
+            {content.navCtaLabel}
+          </motion.a>
+        </div>
       </motion.header>
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:px-10">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center py-8 sm:py-10">
         <motion.div
           variants={headlineStagger}
           initial="hidden"
           animate="visible"
-          className="hub-hero-center gap-8"
+          className="flex w-full max-w-7xl flex-col items-center justify-center gap-8 px-4 mx-auto"
         >
-          <div className="mx-auto w-full max-w-[90vw] text-center md:max-w-6xl">
-            <h1 className="hub-hero-headline mx-auto w-full max-w-[90vw] font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:max-w-6xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+          <div className="w-full text-center">
+            <h1 className="hub-hero-headline mx-auto w-full max-w-6xl text-center font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
               <motion.span variants={revealUp} className="block">
                 <span className="whitespace-normal md:whitespace-nowrap">
                   {content.headlineBefore}
@@ -153,7 +157,7 @@ export default function BaseHeroVideoSection({
 
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline mx-auto mt-4 max-w-3xl text-xl font-normal leading-relaxed text-gray-200 md:mt-6 md:text-2xl"
+              className="hub-hero-subheadline mx-auto mt-4 w-full max-w-3xl text-center text-xl font-normal leading-relaxed text-gray-200 md:mt-6 md:text-2xl"
             >
               {subheadlineLines.map((line, index) => (
                 <span key={line} className="block">
@@ -168,7 +172,7 @@ export default function BaseHeroVideoSection({
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ ...springReveal, delay: 0.5 }}
-            className="w-full max-w-3xl"
+            className="mx-auto w-full max-w-3xl"
           >
             <div className="flex min-h-[56px] items-stretch overflow-hidden rounded-full border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md md:min-h-[60px]">
               <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-5 pr-2 md:gap-3.5 md:py-4 md:pl-6">
@@ -206,7 +210,7 @@ export default function BaseHeroVideoSection({
             variants={starStagger}
             initial="hidden"
             animate="visible"
-            className="flex w-full max-w-3xl items-center justify-between gap-4 px-1"
+            className="mx-auto flex w-full max-w-3xl items-center justify-between gap-4 px-1"
           >
             <motion.p
               variants={revealUp}
@@ -215,9 +219,10 @@ export default function BaseHeroVideoSection({
               {content.disclaimer}
             </motion.p>
 
-            <motion.div
+            <motion.a
+              href="#stories"
               variants={revealUp}
-              className="flex shrink-0 items-center gap-1.5 sm:gap-2"
+              className="flex shrink-0 cursor-pointer items-center gap-1.5 transition-opacity duration-200 hover:opacity-75 sm:gap-2"
             >
               <motion.div
                 variants={starStagger}
@@ -239,7 +244,7 @@ export default function BaseHeroVideoSection({
               <span className="hub-hero-trust text-brand-white/90">
                 {content.rating}
               </span>
-            </motion.div>
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
