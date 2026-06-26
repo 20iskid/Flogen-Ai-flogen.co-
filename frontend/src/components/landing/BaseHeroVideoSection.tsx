@@ -91,7 +91,7 @@ export default function BaseHeroVideoSection({
         <div className="flex flex-1 -translate-y-1 items-center justify-start sm:-translate-y-1.5">
           <button
             type="button"
-            className="hub-hero-menu flex items-center gap-2 font-normal text-[#FDFAFA] transition-opacity hover:opacity-80"
+            className="hub-hero-menu flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
             aria-label="Open menu"
           >
             <Image
@@ -139,7 +139,7 @@ export default function BaseHeroVideoSection({
           animate="visible"
           className="mx-auto flex w-full max-w-7xl flex-col items-center gap-8"
         >
-          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-3xl font-normal leading-[1.1] tracking-tight text-brand-white sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem]">
+          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-3xl font-black leading-[1.1] tracking-tight text-brand-white sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem]">
             <motion.span
               variants={revealUp}
               className="flex w-full flex-col items-center gap-0 text-center"
