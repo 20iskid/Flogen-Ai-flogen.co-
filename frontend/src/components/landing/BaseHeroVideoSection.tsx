@@ -44,7 +44,6 @@ export default function BaseHeroVideoSection({
 }: BaseHeroVideoSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [email, setEmail] = useState("");
-  const subheadlineLines = content.subheadline.split("\n");
 
   useEffect(() => {
     const video = videoRef.current;
@@ -88,7 +87,7 @@ export default function BaseHeroVideoSection({
         animate="visible"
         className="relative z-20 flex w-full items-center justify-between px-4 py-5 md:px-8 sm:py-6"
       >
-        <div className="flex flex-1 items-center justify-start">
+        <div className="flex flex-1 -translate-y-1 items-center justify-start sm:-translate-y-1.5">
           <button
             type="button"
             className="hub-hero-menu flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
@@ -117,7 +116,7 @@ export default function BaseHeroVideoSection({
           />
         </motion.div>
 
-        <div className="flex flex-1 items-center justify-end">
+        <div className="flex flex-1 -translate-y-1 items-center justify-end sm:-translate-y-1.5">
           <motion.a
             href={content.ctaHref ?? "#audit"}
             initial={{ opacity: 0, x: 24 }}
@@ -139,9 +138,12 @@ export default function BaseHeroVideoSection({
           animate="visible"
           className="mx-auto flex w-full max-w-7xl flex-col items-center gap-8"
         >
-          <h1 className="hub-hero-headline w-full max-w-6xl text-center font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
-            <motion.span variants={revealUp} className="mx-auto block text-center">
-              <span className="inline-block whitespace-normal text-center md:whitespace-nowrap">
+          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+            <motion.span
+              variants={revealUp}
+              className="flex w-full flex-col items-center gap-0 text-center"
+            >
+              <span className="block w-full text-center md:whitespace-nowrap">
                 {content.headlineBefore}
                 <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
                   {content.headlineAmount}
@@ -149,21 +151,16 @@ export default function BaseHeroVideoSection({
                 {content.headlineMiddle}
                 {content.headlineNoWrap ?? ""}
               </span>
-              <br className="hidden md:block" />
-              <span className="inline-block w-full text-center">{content.headlineLine2}</span>
+              <span className="block w-full text-center">{content.headlineLine2}</span>
             </motion.span>
           </h1>
 
-          <div className="flex w-full max-w-3xl flex-col gap-8">
+          <div className="flex w-full max-w-3xl flex-col gap-8 self-stretch">
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline w-full text-center text-xl font-normal leading-relaxed text-gray-200 md:text-2xl"
+              className="hub-hero-subheadline w-full self-stretch text-center text-xl font-normal leading-relaxed text-gray-200 md:text-2xl"
             >
-              {subheadlineLines.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
+              {content.subheadline}
             </motion.p>
 
           <motion.form

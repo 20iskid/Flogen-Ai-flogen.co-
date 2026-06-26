@@ -42,9 +42,8 @@
     font-family: var(--font-tiny5), monospace;
     font-weight: 400;
     color: #991b1b;
+    display: inline;
     vertical-align: baseline;
-    position: relative;
-    top: 0.04em;
   }
 
   .hub-hero-subheadline {

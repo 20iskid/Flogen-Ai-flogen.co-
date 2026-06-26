@@ -227,14 +227,7 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
   return (
     <motion.article
       variants={fadeSlideUp}
-      whileHover={{
-        y: -6,
-        borderColor: "rgba(153, 27, 27, 0.35)",
-        backgroundColor: "rgba(153, 27, 27, 0.05)",
-        boxShadow: "0 20px 50px rgba(153, 27, 27, 0.14)",
-      }}
-      transition={{ type: "spring", stiffness: 380, damping: 28 }}
-      className="flex h-full cursor-default flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-[0_8px_30px_rgba(11,23,42,0.06)] transition-colors duration-300"
+      className="flex h-full cursor-default flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-[0_8px_30px_rgba(11,23,42,0.06)] transition-[transform,background-color,border-color,box-shadow] duration-150 ease-out hover:-translate-y-1 hover:border-[#991B1B]/35 hover:bg-[#991B1B]/[0.06] hover:shadow-[0_20px_50px_rgba(153,27,27,0.14)]"
     >
       <header className="flex items-center gap-3">
         <Image
@@ -320,12 +313,23 @@ export default function HubTestimonialsSection() {
 
         <motion.p
           variants={fadeSlideUp}
-          className="mx-auto mt-6 max-w-3xl text-xl text-gray-600"
+          className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-gray-600"
         >
-          Every client came to us tired of leads going cold, budgets disappearing into thin
-          air, and watching competitors win deals they should have lost. They were not failing
-          because they lacked ambition. They were failing because they lacked the right system.
-          We built that system. We fixed that problem. We do it every single time.
+          Every client came to us tired of{" "}
+          <span className="font-semibold text-[#991B1B]">leads going cold</span>,{" "}
+          <span className="font-semibold text-[#991B1B]">
+            budgets disappearing into thin air
+          </span>
+          , and{" "}
+          <span className="font-semibold text-[#991B1B]">
+            watching competitors win deals they should have lost
+          </span>
+          . They were not failing because they lacked ambition. They were failing because they
+          lacked{" "}
+          <span className="font-semibold text-[#991B1B]">the right system</span>.{" "}
+          <span className="font-semibold text-[#991B1B]">We built that system.</span>{" "}
+          <span className="font-semibold text-[#991B1B]">We fixed that problem.</span>{" "}
+          <span className="font-semibold text-[#991B1B]">We do it every single time.</span>
         </motion.p>
       </motion.div>
 
