@@ -44,6 +44,7 @@ export default function BaseHeroVideoSection({
 }: BaseHeroVideoSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [email, setEmail] = useState("");
+  const subheadlineLines = content.subheadline.split("\n");
 
   useEffect(() => {
     const video = videoRef.current;
@@ -90,7 +91,7 @@ export default function BaseHeroVideoSection({
         <div className="flex flex-1 -translate-y-1 items-center justify-start sm:-translate-y-1.5">
           <button
             type="button"
-            className="hub-hero-menu flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
+            className="hub-hero-menu flex items-center gap-2 font-normal text-[#FDFAFA] transition-opacity hover:opacity-80"
             aria-label="Open menu"
           >
             <Image
@@ -138,7 +139,7 @@ export default function BaseHeroVideoSection({
           animate="visible"
           className="mx-auto flex w-full max-w-7xl flex-col items-center gap-8"
         >
-          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-4xl font-black uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
+          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-4xl font-normal uppercase leading-[1.1] tracking-tighter text-brand-white sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
             <motion.span
               variants={revealUp}
               className="flex w-full flex-col items-center gap-0 text-center"
@@ -158,9 +159,13 @@ export default function BaseHeroVideoSection({
           <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-8">
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline w-full text-center text-xl font-normal leading-relaxed text-gray-200 md:text-2xl"
+              className="hub-hero-subheadline w-full text-center font-archivo text-2xl font-normal leading-relaxed text-gray-200 md:text-3xl"
             >
-              {content.subheadline}
+              {subheadlineLines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </motion.p>
 
             <div className="flex w-full flex-col items-center gap-3">

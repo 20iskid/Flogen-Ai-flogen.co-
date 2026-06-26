@@ -47,7 +47,8 @@
   }
 
   .hub-hero-subheadline {
-    font-family: "TikTok Sans", sans-serif;
+    font-family: var(--font-archivo), sans-serif;
+    font-weight: 400;
     letter-spacing: 0.002em;
   }
 
