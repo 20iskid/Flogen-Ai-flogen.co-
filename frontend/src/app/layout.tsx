@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@fontsource/sn-pro/300.css";
+import "@fontsource/sn-pro/latin-300.css";
 import "@fontsource/tiktok-sans/400.css";
 import { landingFontVariables } from "@/lib/fonts/landing";
 import "./globals.css";

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Sora } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { LogoLink } from "@/components/landing/Logo";
 import type { BaseHubHero } from "@/lib/landing/types";
@@ -33,6 +34,11 @@ const starPop = {
   },
 };
 
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+});
+
 type BaseHeroVideoSectionProps = {
   content: BaseHubHero;
   videoSrc?: string;
@@ -44,6 +50,7 @@ export default function BaseHeroVideoSection({
 }: BaseHeroVideoSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [email, setEmail] = useState("");
+  const [isAmountHovered, setIsAmountHovered] = useState(false);
   const subheadlineLines = content.subheadline.split("\n");
 
   useEffect(() => {
@@ -86,9 +93,9 @@ export default function BaseHeroVideoSection({
         variants={slideDown}
         initial="hidden"
         animate="visible"
-        className="relative z-20 flex w-full items-center justify-between px-4 py-5 md:px-8 sm:py-6"
+        className="relative z-20 flex w-full items-center justify-between px-3 py-4 sm:px-4 sm:py-5 md:px-8 md:py-6"
       >
-        <div className="flex flex-1 -translate-y-1 items-center justify-start sm:-translate-y-1.5">
+        <div className="flex flex-1 items-center justify-start">
           <button
             type="button"
             className="hub-hero-menu flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
@@ -99,9 +106,9 @@ export default function BaseHeroVideoSection({
               alt=""
               width={26}
               height={23}
-              className="h-[23px] w-[26px]"
+              className="h-[20px] w-[22px] sm:h-[23px] sm:w-[26px]"
             />
-            <span>Menu</span>
+            <span className="hidden sm:inline">Menu</span>
           </button>
         </div>
 
@@ -113,11 +120,11 @@ export default function BaseHeroVideoSection({
         >
           <LogoLink
             variant="full"
-            className="h-14 w-auto max-w-[15rem] sm:h-16 sm:max-w-[17rem] lg:h-[4.5rem] lg:max-w-[19rem]"
+            className="h-10 w-auto max-w-[10.5rem] sm:h-14 sm:max-w-[15rem] lg:h-[4.5rem] lg:max-w-[19rem]"
           />
         </motion.div>
 
-        <div className="flex flex-1 -translate-y-1 items-center justify-end sm:-translate-y-1.5">
+        <div className="flex flex-1 items-center justify-end">
           <motion.a
             href={content.ctaHref ?? "#audit"}
             initial={{ opacity: 0, x: 24 }}
@@ -125,9 +132,10 @@ export default function BaseHeroVideoSection({
             transition={{ ...springReveal, delay: 0.2 }}
             whileHover={{ scale: 1.03, boxShadow: "0 8px 32px rgba(153,27,27,0.45)" }}
             whileTap={{ scale: 0.98 }}
-            className="hub-hero-nav-cta shrink-0 rounded-full bg-[#991B1B] px-5 py-2.5 text-brand-white sm:px-6 sm:py-3"
+            className="hub-hero-nav-cta shrink-0 rounded-full bg-[#991B1B] px-3 py-2 text-[12px] text-brand-white sm:px-6 sm:py-3 sm:text-sm"
           >
-            {content.navCtaLabel}
+            <span className="sm:hidden">Audit</span>
+            <span className="hidden sm:inline">{content.navCtaLabel}</span>
           </motion.a>
         </div>
       </motion.header>
@@ -139,17 +147,41 @@ export default function BaseHeroVideoSection({
           animate="visible"
           className="mx-auto flex w-full max-w-7xl flex-col items-center gap-8"
         >
-          <h1 className="hub-hero-headline flex w-full flex-col items-center text-center font-archivo text-3xl font-black leading-[1.1] tracking-tight text-brand-white sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem]">
+          <h1
+            className={`hub-hero-headline ${sora.className} flex w-full flex-col items-center text-center text-[1.9rem] font-black leading-[1.08] tracking-tight text-brand-white sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.5rem]`}
+          >
             <motion.span
               variants={revealUp}
               className="flex w-full flex-col items-center gap-0 text-center"
             >
               <span className="block w-full text-center md:whitespace-nowrap">
                 {content.headlineBefore}
-                <span className="hub-hero-amount text-[1.2em] leading-[1.1] tracking-tighter">
-                  {content.headlineAmount}
+                <span
+                  className="hub-hero-amount relative mx-[0.14em] inline-flex cursor-default items-center justify-center text-[1.35em] leading-[1.1] tracking-tighter"
+                  onMouseEnter={() => setIsAmountHovered(true)}
+                  onMouseLeave={() => setIsAmountHovered(false)}
+                >
+                  <span className="invisible">{content.headlineAmount}</span>
+                  <span
+                    className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${
+                      isAmountHovered
+                        ? "opacity-30 line-through decoration-[0.08em] decoration-current"
+                        : "opacity-100"
+                    }`}
+                  >
+                    {content.headlineAmount}
+                  </span>
+                  <span
+                    className={`absolute bottom-full left-1/2 mb-[0.08em] -translate-x-1/2 whitespace-nowrap text-[0.26em] font-semibold uppercase tracking-[0.08em] text-white/85 transition-opacity duration-200 ${
+                      isAmountHovered
+                        ? "opacity-100"
+                        : "opacity-0"
+                    }`}
+                  >
+                    Lost Revenue!
+                  </span>
                 </span>
-                {content.headlineMiddle}
+                {content.headlineMiddle.trimStart()}
                 {content.headlineNoWrap ?? ""}
               </span>
               <span className="block w-full text-center">{content.headlineLine2}</span>
@@ -159,7 +191,7 @@ export default function BaseHeroVideoSection({
           <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-8">
             <motion.p
               variants={revealUp}
-              className="hub-hero-subheadline w-full text-center font-archivo text-2xl font-normal leading-relaxed text-gray-200 md:text-3xl"
+              className="hub-hero-subheadline w-full text-center font-archivo text-lg font-normal leading-relaxed text-gray-200 sm:text-2xl md:text-3xl"
             >
               {subheadlineLines.map((line) => (
                 <span key={line} className="block">
@@ -176,8 +208,8 @@ export default function BaseHeroVideoSection({
             transition={{ ...springReveal, delay: 0.5 }}
             className="w-full"
           >
-            <div className="flex min-h-[56px] items-stretch overflow-hidden rounded-full border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md md:min-h-[60px]">
-              <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-5 pr-2 md:gap-3.5 md:py-4 md:pl-6">
+            <div className="flex min-h-[56px] flex-col items-stretch overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-[#991B1B]/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.2)] backdrop-blur-md sm:min-h-[60px] sm:flex-row sm:rounded-full">
+              <label className="flex min-w-0 flex-1 items-center gap-3 py-3 pl-4 pr-3 sm:gap-3.5 sm:py-4 sm:pl-6">
                 <span className="shrink-0 text-lg leading-none md:text-xl" aria-hidden>
                   👋
                 </span>
@@ -187,14 +219,14 @@ export default function BaseHeroVideoSection({
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={content.emailPlaceholder}
                   required
-                  className="hub-hero-email w-full min-w-0 bg-transparent px-1 text-lg font-normal text-white placeholder:text-gray-400 focus:outline-none"
+                  className="hub-hero-email w-full min-w-0 bg-transparent px-1 text-base font-normal text-white placeholder:text-gray-400 focus:outline-none sm:text-lg"
                 />
               </label>
               <motion.button
                 type="submit"
                 whileHover={{ filter: "brightness(1.08)" }}
                 whileTap={{ filter: "brightness(0.95)" }}
-                className="hub-hero-submit flex shrink-0 items-center justify-center gap-2.5 self-stretch bg-[#991B1B] px-6 font-archivo text-xl font-extrabold uppercase text-brand-white md:gap-3 md:px-8 md:text-2xl"
+                className="hub-hero-submit flex h-12 shrink-0 items-center justify-center gap-2 self-stretch bg-[#991B1B] px-4 font-archivo text-lg font-extrabold uppercase text-brand-white sm:h-auto sm:gap-3 sm:px-8 sm:text-2xl"
               >
                 {content.submitLabel}
                 <Image
@@ -212,11 +244,11 @@ export default function BaseHeroVideoSection({
             variants={starStagger}
             initial="hidden"
             animate="visible"
-            className="-mt-1 flex w-full items-center justify-between gap-4 px-1 py-2 sm:-mt-2 sm:py-2.5"
+            className="-mt-1 flex w-full flex-col items-start gap-3 px-1 py-2 sm:-mt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-2.5"
           >
             <motion.p
               variants={revealUp}
-              className="min-w-0 text-left text-base leading-snug text-gray-400 sm:text-[15px]"
+              className="min-w-0 text-left text-sm leading-snug text-gray-400 sm:text-[15px]"
             >
               {content.disclaimer}
             </motion.p>
