@@ -41,14 +41,16 @@ export default function PasSection({ content }: PasSectionProps) {
             </motion.p>
           ))}
 
-          <motion.ul variants={staggerContainer} className="mt-8 space-y-4 sm:mt-10">
+          <motion.ul variants={staggerContainer} className="mt-8 space-y-3 sm:mt-10 sm:space-y-4">
             {content.painPoints.map((point) => (
               <motion.li
                 key={point}
                 variants={revealUp}
-                className="flex gap-3 text-sm leading-relaxed text-brand-navy/90 sm:text-base"
+                className="flex items-start gap-3 rounded-xl border border-brand-red/20 bg-brand-red/[0.06] px-4 py-3 text-sm font-medium leading-relaxed text-brand-navy sm:gap-4 sm:text-base"
               >
-                <span className="mt-1 shrink-0 font-black text-brand-red">—</span>
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-red text-xs font-black text-brand-white sm:h-6 sm:w-6 sm:text-sm">
+                  !
+                </span>
                 <span>{point}</span>
               </motion.li>
             ))}

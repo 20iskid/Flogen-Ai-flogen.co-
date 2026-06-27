@@ -35,7 +35,7 @@ const baseUvpItems: LandingUvp[] = [
 
 export const baseLandingContent: HubLandingContent = {
   metadata: {
-    title: "Flogen — Recover Lost Revenue With Custom Automation",
+    title: "Flogen — Absolute System Autonomy",
     description:
       "That revenue you lost last month didn't have to leave. Get your free audit and see how Flogen helps you close more with less manual work.",
   },

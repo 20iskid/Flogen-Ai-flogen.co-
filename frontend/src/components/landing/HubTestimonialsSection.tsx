@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { BadgeCheck, Star, StarHalf } from "lucide-react";
 import Image from "next/image";
+import { Sora } from "next/font/google";
 import { useState } from "react";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
@@ -19,7 +20,7 @@ const reviews = [
   {
     name: "Sarah Jenkins",
     category: "SaaS",
-    date: "April 28, 2026",
+    date: "April 28, 2025",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
@@ -28,7 +29,7 @@ const reviews = [
   {
     name: "David R.",
     category: "E-Commerce",
-    date: "April 12, 2026",
+    date: "April 12, 2024",
     rating: 4,
     avatarUrl:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
@@ -37,7 +38,7 @@ const reviews = [
   {
     name: "Elena Rostova",
     category: "Law Firm",
-    date: "March 30, 2026",
+    date: "March 30, 2023",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80",
@@ -55,7 +56,7 @@ const reviews = [
   {
     name: "Rachel Dawes",
     category: "Real Estate",
-    date: "February 22, 2026",
+    date: "February 22, 2025",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?auto=format&fit=crop&w=150&q=80",
@@ -64,7 +65,7 @@ const reviews = [
   {
     name: "James Wilson",
     category: "Tech Startup",
-    date: "February 08, 2026",
+    date: "February 08, 2024",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80",
@@ -82,7 +83,7 @@ const reviews = [
   {
     name: "Thomas Lee",
     category: "Finance",
-    date: "May 28, 2026",
+    date: "May 28, 2023",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
@@ -91,7 +92,7 @@ const reviews = [
   {
     name: "Angela Brooks",
     category: "Marketing",
-    date: "May 19, 2026",
+    date: "May 19, 2025",
     rating: 4.5,
     avatarUrl:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80",
@@ -100,7 +101,7 @@ const reviews = [
   {
     name: "Chris Alvarez",
     category: "Construction",
-    date: "May 08, 2026",
+    date: "May 08, 2024",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80",
@@ -118,7 +119,7 @@ const reviews = [
   {
     name: "Lisa Hart",
     category: "Retail",
-    date: "April 05, 2026",
+    date: "April 05, 2023",
     rating: 4,
     avatarUrl:
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
@@ -127,7 +128,7 @@ const reviews = [
   {
     name: "Omar Hassan",
     category: "FinTech",
-    date: "March 22, 2026",
+    date: "March 22, 2025",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=150&q=80",
@@ -136,7 +137,7 @@ const reviews = [
   {
     name: "Victoria Lane",
     category: "Insurance",
-    date: "March 08, 2026",
+    date: "March 08, 2024",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=150&q=80",
@@ -154,7 +155,7 @@ const reviews = [
   {
     name: "Patricia Gomez",
     category: "Manufacturing",
-    date: "February 02, 2026",
+    date: "February 02, 2023",
     rating: 5,
     avatarUrl:
       "https://images.unsplash.com/photo-1531123897720-8f129e1688ce?auto=format&fit=crop&w=150&q=80",
@@ -163,7 +164,7 @@ const reviews = [
   {
     name: "Brian Foster",
     category: "EdTech",
-    date: "January 20, 2026",
+    date: "January 20, 2025",
     rating: 4.5,
     avatarUrl:
       "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=150&q=80",
@@ -172,6 +173,29 @@ const reviews = [
 ] as const;
 
 const CLAMP_CHAR_THRESHOLD = 160;
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+});
+
+const STAR_FIELD = [
+  { top: "4%", left: "8%", size: "text-2xl", opacity: "opacity-20" },
+  { top: "10%", left: "22%", size: "text-xl", opacity: "opacity-35" },
+  { top: "3%", left: "39%", size: "text-3xl", opacity: "opacity-25" },
+  { top: "15%", left: "56%", size: "text-lg", opacity: "opacity-40" },
+  { top: "6%", left: "73%", size: "text-2xl", opacity: "opacity-30" },
+  { top: "14%", left: "88%", size: "text-xl", opacity: "opacity-20" },
+  { top: "24%", left: "13%", size: "text-lg", opacity: "opacity-45" },
+  { top: "29%", left: "31%", size: "text-2xl", opacity: "opacity-25" },
+  { top: "22%", left: "48%", size: "text-xl", opacity: "opacity-30" },
+  { top: "31%", left: "66%", size: "text-3xl", opacity: "opacity-20" },
+  { top: "25%", left: "82%", size: "text-lg", opacity: "opacity-40" },
+  { top: "39%", left: "18%", size: "text-xl", opacity: "opacity-25" },
+  { top: "42%", left: "37%", size: "text-lg", opacity: "opacity-35" },
+  { top: "45%", left: "54%", size: "text-2xl", opacity: "opacity-30" },
+  { top: "40%", left: "72%", size: "text-xl", opacity: "opacity-20" },
+  { top: "50%", left: "87%", size: "text-lg", opacity: "opacity-45" },
+] as const;
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -227,31 +251,39 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
   return (
     <motion.article
       variants={fadeSlideUp}
-      className="flex h-full cursor-default flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-[0_8px_30px_rgba(11,23,42,0.06)] transition-[transform,background-color,border-color,box-shadow] duration-150 ease-out hover:-translate-y-1 hover:border-[#991B1B]/35 hover:bg-[#991B1B]/[0.06] hover:shadow-[0_20px_50px_rgba(153,27,27,0.14)]"
+      className="flex h-full cursor-default flex-col rounded-3xl border border-[#0B172A]/10 bg-white/90 p-6 shadow-[0_10px_30px_rgba(11,23,42,0.07)] backdrop-blur-[2px] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[#991B1B]/25 hover:shadow-[0_20px_52px_rgba(11,23,42,0.14)]"
     >
-      <header className="flex items-center gap-3">
+      <header className="flex items-start gap-3">
         <Image
           src={review.avatarUrl}
           alt={review.name}
           width={48}
           height={48}
-          className="h-12 w-12 shrink-0 rounded-full object-cover"
+          className="h-12 w-12 shrink-0 rounded-full border border-white object-cover shadow-[0_4px_14px_rgba(11,23,42,0.14)]"
         />
-        <div className="flex min-w-0 flex-1 items-center gap-1.5">
-          <p className="truncate font-bold text-[#0B172A]">{review.name}</p>
-          <BadgeCheck
-            className="h-4 w-4 shrink-0 text-[#991B1B]"
-            aria-label="Verified client"
-          />
+        <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 items-center gap-2">
+            <p className="truncate text-[15px] font-semibold text-[#0B172A]">{review.name}</p>
+            <BadgeCheck
+              className="h-3.5 w-3.5 shrink-0 text-[#991B1B]"
+              aria-label="Verified client"
+            />
+          </div>
+          <p className="mt-1 text-xs font-medium text-[#0B172A]/55">
+            {review.category} - {review.date}
+          </p>
         </div>
       </header>
 
-      <StarRating rating={review.rating} />
+      <div className="mt-4 flex items-center gap-2.5">
+        <StarRating rating={review.rating} />
+        <span className="text-xs font-semibold text-[#0B172A]/55">{review.rating.toFixed(1)}</span>
+      </div>
 
       <div className="mt-4 flex flex-1 flex-col">
         <p
           id={`review-text-${index}`}
-          className={`text-sm leading-relaxed text-gray-700 transition-all duration-300 md:text-base ${
+          className={`text-sm leading-relaxed text-[#0B172A]/75 transition-all duration-300 md:text-base ${
             isTruncatable && !expanded ? "line-clamp-4" : ""
           }`}
         >
@@ -262,7 +294,7 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
           <button
             type="button"
             onClick={onToggle}
-            className="pt-2 text-left text-sm font-bold text-[#991B1B] hover:underline"
+            className="pt-2 text-left text-sm font-semibold text-[#991B1B] underline-offset-4 hover:underline"
             aria-expanded={expanded}
             aria-controls={`review-text-${index}`}
           >
@@ -271,11 +303,8 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
         ) : null}
       </div>
 
-      <footer className="mt-auto flex items-center justify-between pt-6">
-        <span className="text-xs font-bold text-[#0B172A]/70">{review.date}</span>
-        <span className="text-xs font-black uppercase tracking-wider text-[#991B1B]">
-          {review.category}
-        </span>
+      <footer className="mt-auto flex items-center justify-end border-t border-[#0B172A]/8 pt-4">
+        <span className="text-[11px] font-medium text-[#0B172A]/50">Verified review</span>
       </footer>
     </motion.article>
   );
@@ -295,41 +324,64 @@ export default function HubTestimonialsSection() {
         whileInView="visible"
         viewport={viewportOnce}
         variants={staggerContainer}
-        className="mx-auto max-w-7xl px-4 text-center"
+        className="relative mx-auto max-w-7xl overflow-hidden px-4 text-center"
       >
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="pointer-events-none absolute inset-x-0 top-0 h-[340px] md:h-[380px]"
+          aria-hidden
+        >
+          {STAR_FIELD.map((star, index) => (
+            <span
+              key={`${star.top}-${star.left}-${index}`}
+              className={`absolute ${star.size} ${star.opacity} select-none font-[var(--font-tiny5)] text-[#991B1B]`}
+              style={{ top: star.top, left: star.left }}
+            >
+              *
+            </span>
+          ))}
+        </motion.div>
+
         <motion.span
           variants={fadeSlideUp}
-          className="inline-block rounded-full bg-[#991B1B] px-4 py-1 text-sm font-bold uppercase tracking-widest text-[#FDFAFA]"
+          className="relative z-10 inline-block rounded-full bg-[#991B1B] px-4 py-1 text-sm font-bold uppercase tracking-widest text-[#FDFAFA]"
         >
           We&apos;re seeing stars
         </motion.span>
 
         <motion.h2
           variants={fadeSlideUp}
-          className="mx-auto mt-6 max-w-4xl text-5xl font-black uppercase leading-[0.9] tracking-tighter text-[#0B172A] md:text-7xl"
+          className={`relative z-10 mx-auto mt-6 max-w-4xl text-5xl font-black uppercase leading-[0.9] tracking-tighter text-[#0B172A] md:text-7xl ${sora.className}`}
         >
-          Stories like these are why we exist
+          Stories like these are{" "}
+          <span className="inline-block bg-gradient-to-r from-[#7F1111] via-[#991B1B] to-[#B42323] bg-clip-text text-transparent">
+            why we exist
+          </span>
         </motion.h2>
 
         <motion.p
           variants={fadeSlideUp}
-          className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-gray-600"
+          className="relative z-10 mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-gray-600"
         >
           Every client came to us tired of{" "}
-          <span className="font-semibold text-[#991B1B]">leads going cold</span>,{" "}
-          <span className="font-semibold text-[#991B1B]">
+          <span className="rounded bg-[#991B1B]/10 px-1">leads going cold</span>,{" "}
+          <span className="rounded bg-[#991B1B]/10 px-1">
             budgets disappearing into thin air
           </span>
           , and{" "}
-          <span className="font-semibold text-[#991B1B]">
+          <span className="rounded bg-[#991B1B]/10 px-1">
             watching competitors win deals they should have lost
           </span>
-          . They were not failing because they lacked ambition. They were failing because they
-          lacked{" "}
-          <span className="font-semibold text-[#991B1B]">the right system</span>.{" "}
-          <span className="font-semibold text-[#991B1B]">We built that system.</span>{" "}
-          <span className="font-semibold text-[#991B1B]">We fixed that problem.</span>{" "}
-          <span className="font-semibold text-[#991B1B]">We do it every single time.</span>
+          . They were not failing because they{" "}
+          <span className="rounded bg-[#991B1B]/10 px-1">lacked ambition</span>. They were
+          failing because they lacked{" "}
+          <span className="rounded bg-[#991B1B]/10 px-1">the right system</span>.{" "}
+          <span className="font-semibold text-[#991B1B]">
+            We built that system. We fixed that problem. We do it every single time.
+          </span>
         </motion.p>
       </motion.div>
 
