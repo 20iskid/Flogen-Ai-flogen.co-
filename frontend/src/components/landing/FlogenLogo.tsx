@@ -6,45 +6,25 @@ const MotionSvg = motion.create("svg");
 
 type FlogenLogoProps = {
   className?: string;
-  layoutId?: string;
-  intro?: boolean;
 } & Pick<MotionProps, "initial" | "animate" | "transition">;
 
 export default function FlogenLogo({
   className = "",
-  layoutId,
-  intro = false,
   initial,
   animate,
   transition,
   ...rest
 }: FlogenLogoProps) {
-  const introProps = intro
-    ? {
-        initial: initial ?? {
-          filter: "blur(10px)",
-          opacity: 0,
-          scale: 0.9,
-        },
-        animate: animate ?? {
-          filter: "blur(0px)",
-          opacity: 1,
-          scale: 1,
-        },
-        transition: transition ?? { duration: 0.9, ease: "easeOut" },
-      }
-    : { initial, animate, transition };
-
   return (
     <MotionSvg
       viewBox="0 0 796.13 343.61"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      layout={layoutId ? "position" : false}
-      layoutId={layoutId}
       role="img"
       aria-label="Flogen"
-      {...introProps}
+      initial={initial}
+      animate={animate}
+      transition={transition}
       {...rest}
     >
       <path

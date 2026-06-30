@@ -94,26 +94,22 @@ export default function BaseHeroVideoSection({
   };
 
   return (
-    <section className="relative isolate flex min-h-[100dvh] w-full flex-col overflow-hidden text-brand-white">
+    <section className="relative isolate flex h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden text-brand-white">
       <MenuOverlay isOpen={menuOpen} onClose={closeMenu} />
-      <div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      <video
+        ref={videoRef}
+        key={videoSrc}
+        src={videoSrc}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        // @ts-expect-error fetchPriority is valid on video elements
+        fetchPriority="high"
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover"
         aria-hidden
-      >
-        <video
-          ref={videoRef}
-          key={videoSrc}
-          src={videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          // @ts-expect-error fetchPriority is valid on video elements
-          fetchPriority="high"
-          className="absolute left-1/2 top-1/2 block h-auto w-auto min-h-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center"
-        />
-      </div>
+      />
 
       <div className="absolute inset-0 z-[1] bg-zinc-950/80" aria-hidden />
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
@@ -143,31 +139,24 @@ export default function BaseHeroVideoSection({
           </button>
         </div>
 
-        <div className="flex h-10 flex-none items-center justify-center sm:h-14 lg:h-[4.5rem]">
+        <div className="flex flex-none items-center justify-center">
           {splashComplete ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35, duration: 0.45, ease: "easeOut" }}
-              className="flex items-center justify-center"
+            <Link
+              href="/"
+              className="inline-flex max-w-full shrink-0 justify-center"
             >
-              <Link
-                href="/"
-                className="inline-flex max-w-full shrink-0 justify-center"
+              <motion.div
+                layoutId="flogen-brand-logo"
+                className="z-50 flex w-32 items-center justify-center md:w-40"
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 28,
+                }}
               >
-                <FlogenLogo
-                  layoutId="flogen-logo"
-                  className="h-10 w-auto max-w-[10.5rem] sm:h-14 sm:max-w-[15rem] lg:h-[4.5rem] lg:max-w-[19rem]"
-                  transition={{
-                    layout: {
-                      type: "spring",
-                      stiffness: 260,
-                      damping: 28,
-                    },
-                  }}
-                />
-              </Link>
-            </motion.div>
+                <FlogenLogo className="h-auto w-full" />
+              </motion.div>
+            </Link>
           ) : null}
         </div>
 

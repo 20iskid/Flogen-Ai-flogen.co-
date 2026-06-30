@@ -31,19 +31,20 @@ export default function SplashLandingPage({ content }: SplashLandingPageProps) {
   }, []);
 
   return (
-    <LayoutGroup id="flogen-splash">
+    <LayoutGroup>
       <motion.div
         initial={false}
         animate={{ opacity: isSplashing ? 0 : 1 }}
         transition={{ duration: 0.5, delay: isSplashing ? 0 : 0.15 }}
-        className={isSplashing ? "pointer-events-none" : undefined}
+        className="flex min-h-screen w-full flex-col"
+        style={{ pointerEvents: isSplashing ? "none" : "auto" }}
         aria-hidden={isSplashing}
       >
         <BaseLandingPage content={content} splashComplete={!isSplashing} />
       </motion.div>
 
       <AnimatePresence mode="popLayout">
-        {isSplashing ? <SplashLoader key="splash" /> : null}
+        {isSplashing && <SplashLoader key="splash" />}
       </AnimatePresence>
     </LayoutGroup>
   );
