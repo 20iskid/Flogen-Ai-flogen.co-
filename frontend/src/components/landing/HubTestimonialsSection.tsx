@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BadgeCheck, Star, StarHalf } from "lucide-react";
 import Image from "next/image";
 import { Sora } from "next/font/google";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
 const reviews = [
@@ -178,25 +178,6 @@ const sora = Sora({
   weight: ["700", "800"],
 });
 
-const STAR_FIELD = [
-  { top: "4%", left: "8%", size: "text-2xl", opacity: "opacity-20" },
-  { top: "10%", left: "22%", size: "text-xl", opacity: "opacity-35" },
-  { top: "3%", left: "39%", size: "text-3xl", opacity: "opacity-25" },
-  { top: "15%", left: "56%", size: "text-lg", opacity: "opacity-40" },
-  { top: "6%", left: "73%", size: "text-2xl", opacity: "opacity-30" },
-  { top: "14%", left: "88%", size: "text-xl", opacity: "opacity-20" },
-  { top: "24%", left: "13%", size: "text-lg", opacity: "opacity-45" },
-  { top: "29%", left: "31%", size: "text-2xl", opacity: "opacity-25" },
-  { top: "22%", left: "48%", size: "text-xl", opacity: "opacity-30" },
-  { top: "31%", left: "66%", size: "text-3xl", opacity: "opacity-20" },
-  { top: "25%", left: "82%", size: "text-lg", opacity: "opacity-40" },
-  { top: "39%", left: "18%", size: "text-xl", opacity: "opacity-25" },
-  { top: "42%", left: "37%", size: "text-lg", opacity: "opacity-35" },
-  { top: "45%", left: "54%", size: "text-2xl", opacity: "opacity-30" },
-  { top: "40%", left: "72%", size: "text-xl", opacity: "opacity-20" },
-  { top: "50%", left: "87%", size: "text-lg", opacity: "opacity-45" },
-] as const;
-
 function StarRating({ rating }: { rating: number }) {
   return (
     <div
@@ -310,41 +291,27 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
   );
 }
 
-export default function HubTestimonialsSection() {
+const HubTestimonialsSection = forwardRef<HTMLElement>(
+  function HubTestimonialsSection(_, ref) {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
 
   const toggleExpanded = (index: number) => {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
+  // No background colour and no static star layer here.  The page wrapper supplies
+  // the #FDFAFA, and the * elements that land in this section's background are the
+  // SAME ones that converted from the video section's words — driven by the
+  // coordinator in BaseLandingPage.  Content is z-10 so it sits above those stars.
   return (
-    <section id="stories" className="scroll-mt-24 bg-[#FDFAFA] py-24 md:py-32">
+    <section ref={ref} id="stories" className="relative scroll-mt-24 py-24 md:py-32">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
         variants={staggerContainer}
-        className="relative mx-auto max-w-7xl overflow-hidden px-4 text-center"
+        className="relative z-10 mx-auto max-w-7xl px-4 text-center"
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="pointer-events-none absolute inset-x-0 top-0 h-[340px] md:h-[380px]"
-          aria-hidden
-        >
-          {STAR_FIELD.map((star, index) => (
-            <span
-              key={`${star.top}-${star.left}-${index}`}
-              className={`absolute ${star.size} ${star.opacity} select-none font-[var(--font-tiny5)] text-[#991B1B]`}
-              style={{ top: star.top, left: star.left }}
-            >
-              *
-            </span>
-          ))}
-        </motion.div>
-
         <motion.span
           variants={fadeSlideUp}
           className="relative z-10 inline-block rounded-full bg-[#991B1B] px-4 py-1 text-sm font-bold uppercase tracking-widest text-[#FDFAFA]"
@@ -390,7 +357,7 @@ export default function HubTestimonialsSection() {
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="mx-auto mt-16 grid max-w-7xl auto-rows-fr grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3"
+        className="relative z-10 mx-auto mt-16 grid max-w-7xl auto-rows-fr grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3"
       >
         {reviews.map((review, index) => (
           <ReviewCard
@@ -404,4 +371,6 @@ export default function HubTestimonialsSection() {
       </motion.div>
     </section>
   );
-}
+});
+
+export default HubTestimonialsSection;

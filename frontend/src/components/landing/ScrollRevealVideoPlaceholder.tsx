@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 const VIDEO_SRC = "/videos/hero-bg.mp4";
 
@@ -29,12 +29,21 @@ const WORDS = [
   { label: "Exhausted", top: "92%", left: "80%",  opacity: 0.22, speed: 0.88, size: "1.45rem", rotate: -2   },
 ] as const;
 
-export default function ScrollRevealVideoPlaceholder() {
+// Exposes the <section> so BaseLandingPage can drive the cross-section star drift.
+const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
+  function ScrollRevealVideoPlaceholder(_, fwdRef) {
   const sectionRef  = useRef<HTMLElement>(null);
   const shellRef    = useRef<HTMLDivElement>(null);
   const playRef     = useRef<HTMLButtonElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   const [videoOpen, setVideoOpen] = useState(false);
+
+  // Mirror the internal ref out to the forwarded ref.
+  const setRef: React.RefCallback<HTMLElement> = (el) => {
+    (sectionRef as React.MutableRefObject<HTMLElement | null>).current = el;
+    if (typeof fwdRef === "function") fwdRef(el);
+    else if (fwdRef) (fwdRef as React.MutableRefObject<HTMLElement | null>).current = el;
+  };
 
   // Close modal on Escape
   useEffect(() => {
@@ -69,15 +78,14 @@ export default function ScrollRevealVideoPlaceholder() {
       gsap.registerPlugin(ScrollTrigger);
 
       const ctx = gsap.context(() => {
-        const wordEls = gsap.utils.toArray<HTMLElement>("[data-word]");
-        const n       = wordEls.length;
+        // Animate the INNER element (rise + word→star crossfade).  The outer
+        // [data-word] parent is left untouched here — BaseLandingPage's coordinator
+        // owns the parent's transform so it can carry the * down into the
+        // testimonials section without fighting this timeline.
+        const innerEls = gsap.utils.toArray<HTMLElement>("[data-word-inner]", sectionRef.current);
+        const n        = innerEls.length;
 
-        if (wordEls.length) {
-          // Three-phase scrubbed timeline:
-          // Enter  0 → 0.38  (staggered rise + fade in)
-          // Plateau 0.38 → 0.52 (visible)
-          // Exit   0.52 → 0.80  (staggered drift up + fade out — all gone by 80% so
-          //                       words clear the screen before the section exits)
+        if (innerEls.length) {
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: sectionRef.current,
@@ -86,35 +94,51 @@ export default function ScrollRevealVideoPlaceholder() {
               scrub: 1.25,
               invalidateOnRefresh: true,
               onToggle: ({ isActive }) => {
-                wordEls.forEach((el) => {
+                innerEls.forEach((el) => {
                   el.style.willChange = isActive ? "transform, opacity" : "auto";
                 });
               },
             },
           });
 
-          wordEls.forEach((el, i) => {
-            const speed   = Number(el.dataset.speed   ?? "1");
-            const opacity = Number(el.dataset.opacity ?? "0.2");
+          innerEls.forEach((inner, i) => {
+            const speed   = Number(inner.dataset.speed   ?? "1");
+            const opacity = Number(inner.dataset.opacity ?? "0.2");
+            const rotate  = Number(inner.dataset.rotate  ?? "0");
 
-            // Enter stagger: index 0 at t=0, last at t=0.36
-            const enterAt = (i / n) * 0.36;
-            // Exit stagger: reversed — first word exits last (nice cascade)
-            // All exits complete by t ≈ 0.80
-            const exitAt  = 0.50 + ((n - 1 - i) / n) * 0.22;
+            const labelEl = inner.querySelector<HTMLElement>("[data-word-label]");
+            const starEl  = inner.querySelector<HTMLElement>("[data-word-star]");
 
+            // GSAP owns the base rotation so the inline transform never collides.
+            gsap.set(inner,  { rotation: rotate, transformOrigin: "center center" });
+            gsap.set(labelEl, { autoAlpha: 1 });
+            // xPercent/yPercent keep the * centered on the word's anchor point
+            // (GSAP owns the transform, so no inline translate to collide with).
+            gsap.set(starEl,  { autoAlpha: 0, scale: 2, rotation: 20, xPercent: -50, yPercent: -50 });
+
+            // ENTER: rise + fade up to the word's faint resting opacity.
+            const enterAt = (i / n) * 0.16;
             tl.fromTo(
-              el,
-              { y: 38 * speed, autoAlpha: 0, scale: 0.88 },
-              { y: 0, autoAlpha: opacity, scale: 1, ease: "power2.out", duration: 0.18 },
+              inner,
+              { y: 40 * speed, autoAlpha: 0, scale: 0.9 },
+              { y: 0, autoAlpha: opacity, scale: 1, ease: "power2.out", duration: 0.14 },
               enterAt,
             );
 
-            tl.to(
-              el,
-              { y: -36 * speed, autoAlpha: 0, ease: "power2.in", duration: 0.18 },
-              exitAt,
-            );
+            // CONVERT: word label dissolves, asterisk pops + untwists into place.
+            // Finishes well before ~0.4 (when the cross-section travel begins) so
+            // the elements are already * — not words — while they fan out.
+            const convertAt = 0.22 + (i / n) * 0.05;
+            if (labelEl) {
+              tl.to(labelEl, { autoAlpha: 0, duration: 0.07, ease: "none" }, convertAt);
+            }
+            if (starEl) {
+              tl.to(
+                starEl,
+                { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.1, ease: "power2.out" },
+                convertAt,
+              );
+            }
           });
         }
 
@@ -160,30 +184,54 @@ export default function ScrollRevealVideoPlaceholder() {
   return (
     <>
       <section
-        ref={sectionRef}
-        className="relative overflow-hidden bg-[#FDFAFA] pb-16 pt-8 sm:pb-20 sm:pt-10 md:pb-24 md:pt-12"
+        ref={setRef}
+        className="relative bg-[#FDFAFA] pb-16 pt-8 sm:pb-20 sm:pt-10 md:pb-24 md:pt-12"
         aria-label="Video presentation"
       >
-        {/* Background word layer */}
+        {/*
+          Background word layer.  overflow is NOT clipped on this section, so the
+          asterisks can drift past the bottom edge into the testimonials section.
+          Structure per word:
+            [data-word]        ← outer: position only; coordinator drifts this down
+              [data-word-inner] ← rotation + enter rise + word→star crossfade
+                [data-word-label] the word
+                [data-word-star]  the *
+        */}
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
           {WORDS.map((w, i) => (
             <span
               key={`${w.label}-${i}`}
               data-word
-              data-speed={w.speed}
-              data-opacity={w.opacity}
-              className="absolute select-none whitespace-nowrap text-[#991B1B]"
-              style={{
-                top:           w.top,
-                left:          w.left,
-                fontSize:      w.size,
-                opacity:       0,
-                transform:     `rotate(${w.rotate}deg)`,
-                fontFamily:    "var(--font-tiny5), monospace",
-                letterSpacing: "0.06em",
-              }}
+              className="absolute"
+              style={{ top: w.top, left: w.left }}
             >
-              {w.label}
+              <span
+                data-word-inner
+                data-speed={w.speed}
+                data-opacity={w.opacity}
+                data-rotate={w.rotate}
+                className="relative block select-none whitespace-nowrap text-[#991B1B]"
+                style={{
+                  fontSize:      w.size,
+                  opacity:       0,
+                  fontFamily:    "var(--font-tiny5), monospace",
+                  letterSpacing: "0.06em",
+                }}
+              >
+                <span data-word-label className="block">
+                  {w.label}
+                </span>
+                <span
+                  data-word-star
+                  className="absolute left-1/2 top-1/2"
+                  style={{
+                    fontSize:   `calc(${w.size} * 1.1)`,
+                    lineHeight: 1,
+                  }}
+                >
+                  *
+                </span>
+              </span>
             </span>
           ))}
         </div>
@@ -271,4 +319,6 @@ export default function ScrollRevealVideoPlaceholder() {
       </AnimatePresence>
     </>
   );
-}
+});
+
+export default ScrollRevealVideoPlaceholder;
