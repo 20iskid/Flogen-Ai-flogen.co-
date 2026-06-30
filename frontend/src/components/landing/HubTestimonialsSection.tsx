@@ -169,26 +169,16 @@ const reviews = [
 ] as const;
 
 const CLAMP_CHAR_THRESHOLD = 160;
-
-const CARD_HOVER_THEMES = [
-  { bg: "#FFF1F1", border: "#E52521", shadow: "rgba(229, 37, 33, 0.32)", accent: "#E52521" },
-  { bg: "#FFF8E6", border: "#F5A623", shadow: "rgba(245, 166, 35, 0.34)", accent: "#F5A623" },
-  { bg: "#EDF5FF", border: "#1E6FD9", shadow: "rgba(30, 111, 217, 0.3)", accent: "#1E6FD9" },
-  { bg: "#EDFFF1", border: "#2E9E44", shadow: "rgba(46, 158, 68, 0.3)", accent: "#2E9E44" },
-] as const;
+const HOVER_CARD_BG = "#FFF7F7";
+const HOVER_CARD_BORDER = "rgba(153, 27, 27, 0.28)";
+const HOVER_CARD_SHADOW = "0 18px 42px rgba(153, 27, 27, 0.12)";
 
 const sora = Sora({
   subsets: ["latin"],
   weight: ["700", "800"],
 });
 
-function StarRating({
-  rating,
-  accent = "#991B1B",
-}: {
-  rating: number;
-  accent?: string;
-}) {
+function StarRating({ rating }: { rating: number }) {
   return (
     <div
       className="mt-4 flex items-center gap-0.5"
@@ -201,8 +191,7 @@ function StarRating({
           return (
             <Star
               key={i}
-              className="h-4 w-4 fill-current transition-colors duration-200"
-              style={{ color: accent }}
+              className="h-4 w-4 fill-current text-[#991B1B]"
               strokeWidth={0}
             />
           );
@@ -212,8 +201,7 @@ function StarRating({
           return (
             <StarHalf
               key={i}
-              className="h-4 w-4 fill-current transition-colors duration-200"
-              style={{ color: accent }}
+              className="h-4 w-4 fill-current text-[#991B1B]"
               strokeWidth={0}
             />
           );
@@ -273,33 +261,24 @@ type ReviewCardProps = {
 
 function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
   const isTruncatable = review.text.length > CLAMP_CHAR_THRESHOLD;
-  const theme = CARD_HOVER_THEMES[index % CARD_HOVER_THEMES.length];
-  const [isHovered, setIsHovered] = useState(false);
-  const accent = isHovered ? theme.accent : "#991B1B";
 
   return (
     <motion.article
       variants={fadeSlideUp}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
       whileHover={{
-        rotate: [0, 6, -6, 360, 720, 1080],
-        scale: [1, 1.07, 1.05],
-        y: -8,
-        backgroundColor: theme.bg,
-        borderColor: theme.border,
-        boxShadow: `0 24px 56px ${theme.shadow}`,
+        rotateX: 5,
+        y: -4,
+        backgroundColor: HOVER_CARD_BG,
+        borderColor: HOVER_CARD_BORDER,
+        boxShadow: HOVER_CARD_SHADOW,
       }}
       transition={{
-        rotate: { duration: 0.65, ease: [0.34, 1.35, 0.64, 1] },
-        scale: { duration: 0.4, ease: "easeOut" },
-        y: { type: "spring", stiffness: 400, damping: 16 },
-        backgroundColor: { duration: 0.18 },
-        borderColor: { duration: 0.18 },
-        boxShadow: { duration: 0.22 },
+        type: "spring",
+        stiffness: 380,
+        damping: 28,
+        mass: 0.85,
       }}
-      style={{ willChange: isHovered ? "transform" : "auto" }}
-      className="flex cursor-default flex-col rounded-3xl border border-[#0B172A]/10 bg-white/90 p-6 shadow-[0_10px_30px_rgba(11,23,42,0.07)] backdrop-blur-[2px] transform-gpu [transform-style:preserve-3d]"
+      className="flex origin-center cursor-default flex-col rounded-3xl border border-[#0B172A]/10 bg-white/90 p-6 shadow-[0_10px_30px_rgba(11,23,42,0.07)] backdrop-blur-[2px] transform-gpu [transform-style:preserve-3d]"
     >
       <header className="flex items-start gap-3">
         <ReviewAvatar review={review} />
@@ -307,8 +286,7 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
           <div className="flex min-w-0 items-center gap-2">
             <p className="truncate text-[15px] font-semibold text-[#0B172A]">{review.name}</p>
             <BadgeCheck
-              className="h-3.5 w-3.5 shrink-0 transition-colors duration-200"
-              style={{ color: accent }}
+              className="h-3.5 w-3.5 shrink-0 text-[#991B1B]"
               aria-label="Verified client"
             />
           </div>
@@ -319,7 +297,7 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
       </header>
 
       <div className="mt-4 flex items-center gap-2.5">
-        <StarRating rating={review.rating} accent={accent} />
+        <StarRating rating={review.rating} />
         <span className="text-xs font-semibold text-[#0B172A]/55">{review.rating.toFixed(1)}</span>
       </div>
 
@@ -421,7 +399,7 @@ const HubTestimonialsSection = forwardRef<HTMLElement>(
           variants={staggerContainer}
           initial="hidden"
           animate={cardsInView ? "visible" : "hidden"}
-          className="relative z-10 mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-6 overflow-visible px-4 [perspective:900px] md:grid-cols-2 lg:grid-cols-3"
+          className="relative z-10 mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-6 overflow-visible px-4 [perspective:1200px] md:grid-cols-2 lg:grid-cols-3"
         >
           {reviews.map((review, index) => (
             <ReviewCard
