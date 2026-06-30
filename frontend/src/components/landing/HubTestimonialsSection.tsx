@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { BadgeCheck, Star, StarHalf } from "lucide-react";
 import Image from "next/image";
 import { Sora } from "next/font/google";
-import { forwardRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
 const reviews = [
@@ -148,8 +148,6 @@ const reviews = [
     category: "Hospitality",
     date: "February 18, 2026",
     rating: 4,
-    avatarUrl:
-      "https://images.unsplash.com/photo-1492566660923-9fdd56c10327?auto=format&fit=crop&w=150&q=80",
     text: "Good work. Does a great job.",
   },
   {
@@ -157,8 +155,6 @@ const reviews = [
     category: "Manufacturing",
     date: "February 02, 2023",
     rating: 5,
-    avatarUrl:
-      "https://images.unsplash.com/photo-1531123897720-8f129e1688ce?auto=format&fit=crop&w=150&q=80",
     text: "Flogen completed our project with complete professionalism and in record time. They understood every requirement before starting, delivered ahead of deadline, and exceeded expectations entirely. Highly recommended to anyone who wants fast reliable exceptional work.",
   },
   {
@@ -173,12 +169,26 @@ const reviews = [
 ] as const;
 
 const CLAMP_CHAR_THRESHOLD = 160;
+
+const CARD_HOVER_THEMES = [
+  { bg: "#FFF1F1", border: "#E52521", shadow: "rgba(229, 37, 33, 0.32)", accent: "#E52521" },
+  { bg: "#FFF8E6", border: "#F5A623", shadow: "rgba(245, 166, 35, 0.34)", accent: "#F5A623" },
+  { bg: "#EDF5FF", border: "#1E6FD9", shadow: "rgba(30, 111, 217, 0.3)", accent: "#1E6FD9" },
+  { bg: "#EDFFF1", border: "#2E9E44", shadow: "rgba(46, 158, 68, 0.3)", accent: "#2E9E44" },
+] as const;
+
 const sora = Sora({
   subsets: ["latin"],
   weight: ["700", "800"],
 });
 
-function StarRating({ rating }: { rating: number }) {
+function StarRating({
+  rating,
+  accent = "#991B1B",
+}: {
+  rating: number;
+  accent?: string;
+}) {
   return (
     <div
       className="mt-4 flex items-center gap-0.5"
@@ -191,7 +201,8 @@ function StarRating({ rating }: { rating: number }) {
           return (
             <Star
               key={i}
-              className="h-4 w-4 fill-current text-[#991B1B]"
+              className="h-4 w-4 fill-current transition-colors duration-200"
+              style={{ color: accent }}
               strokeWidth={0}
             />
           );
@@ -201,7 +212,8 @@ function StarRating({ rating }: { rating: number }) {
           return (
             <StarHalf
               key={i}
-              className="h-4 w-4 fill-current text-[#991B1B]"
+              className="h-4 w-4 fill-current transition-colors duration-200"
+              style={{ color: accent }}
               strokeWidth={0}
             />
           );
@@ -219,6 +231,39 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+function getNameInitial(name: string) {
+  return name.trim().charAt(0).toUpperCase();
+}
+
+function ReviewAvatar({ review }: { review: (typeof reviews)[number] }) {
+  const sharedClassName =
+    "h-12 w-12 shrink-0 rounded-full border border-white shadow-[0_4px_14px_rgba(11,23,42,0.14)]";
+
+  if ("avatarUrl" in review && review.avatarUrl) {
+    return (
+      <Image
+        src={review.avatarUrl}
+        alt={review.name}
+        width={48}
+        height={48}
+        className={`${sharedClassName} object-cover`}
+      />
+    );
+  }
+
+  const initial = getNameInitial(review.name);
+
+  return (
+    <div
+      className={`${sharedClassName} flex items-center justify-center bg-[#991B1B] text-lg font-bold text-[#FDFAFA]`}
+      role="img"
+      aria-label={`${review.name} avatar`}
+    >
+      {initial}
+    </div>
+  );
+}
+
 type ReviewCardProps = {
   review: (typeof reviews)[number];
   index: number;
@@ -228,25 +273,42 @@ type ReviewCardProps = {
 
 function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
   const isTruncatable = review.text.length > CLAMP_CHAR_THRESHOLD;
+  const theme = CARD_HOVER_THEMES[index % CARD_HOVER_THEMES.length];
+  const [isHovered, setIsHovered] = useState(false);
+  const accent = isHovered ? theme.accent : "#991B1B";
 
   return (
     <motion.article
       variants={fadeSlideUp}
-      className="flex h-full cursor-default flex-col rounded-3xl border border-[#0B172A]/10 bg-white/90 p-6 shadow-[0_10px_30px_rgba(11,23,42,0.07)] backdrop-blur-[2px] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[#991B1B]/25 hover:shadow-[0_20px_52px_rgba(11,23,42,0.14)]"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{
+        rotate: [0, 6, -6, 360, 720, 1080],
+        scale: [1, 1.07, 1.05],
+        y: -8,
+        backgroundColor: theme.bg,
+        borderColor: theme.border,
+        boxShadow: `0 24px 56px ${theme.shadow}`,
+      }}
+      transition={{
+        rotate: { duration: 0.65, ease: [0.34, 1.35, 0.64, 1] },
+        scale: { duration: 0.4, ease: "easeOut" },
+        y: { type: "spring", stiffness: 400, damping: 16 },
+        backgroundColor: { duration: 0.18 },
+        borderColor: { duration: 0.18 },
+        boxShadow: { duration: 0.22 },
+      }}
+      style={{ willChange: isHovered ? "transform" : "auto" }}
+      className="flex cursor-default flex-col rounded-3xl border border-[#0B172A]/10 bg-white/90 p-6 shadow-[0_10px_30px_rgba(11,23,42,0.07)] backdrop-blur-[2px] transform-gpu [transform-style:preserve-3d]"
     >
       <header className="flex items-start gap-3">
-        <Image
-          src={review.avatarUrl}
-          alt={review.name}
-          width={48}
-          height={48}
-          className="h-12 w-12 shrink-0 rounded-full border border-white object-cover shadow-[0_4px_14px_rgba(11,23,42,0.14)]"
-        />
+        <ReviewAvatar review={review} />
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 items-center gap-2">
             <p className="truncate text-[15px] font-semibold text-[#0B172A]">{review.name}</p>
             <BadgeCheck
-              className="h-3.5 w-3.5 shrink-0 text-[#991B1B]"
+              className="h-3.5 w-3.5 shrink-0 transition-colors duration-200"
+              style={{ color: accent }}
               aria-label="Verified client"
             />
           </div>
@@ -257,7 +319,7 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
       </header>
 
       <div className="mt-4 flex items-center gap-2.5">
-        <StarRating rating={review.rating} />
+        <StarRating rating={review.rating} accent={accent} />
         <span className="text-xs font-semibold text-[#0B172A]/55">{review.rating.toFixed(1)}</span>
       </div>
 
@@ -293,84 +355,87 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
 
 const HubTestimonialsSection = forwardRef<HTMLElement>(
   function HubTestimonialsSection(_, ref) {
-  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+    const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+    const gridRef = useRef<HTMLDivElement>(null);
+    const cardsInView = useInView(gridRef, {
+      once: true,
+      amount: 0.05,
+      initial: true,
+    });
 
-  const toggleExpanded = (index: number) => {
-    setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
+    const toggleExpanded = (index: number) => {
+      setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
+    };
 
-  // No background colour and no static star layer here.  The page wrapper supplies
-  // the #FDFAFA, and the * elements that land in this section's background are the
-  // SAME ones that converted from the video section's words — driven by the
-  // coordinator in BaseLandingPage.  Content is z-10 so it sits above those stars.
-  return (
-    <section ref={ref} id="stories" className="relative scroll-mt-24 py-24 md:py-32">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        variants={staggerContainer}
-        className="relative z-10 mx-auto max-w-7xl px-4 text-center"
-      >
-        <motion.span
-          variants={fadeSlideUp}
-          className="relative z-10 inline-block rounded-full bg-[#991B1B] px-4 py-1 text-sm font-bold uppercase tracking-widest text-[#FDFAFA]"
+    return (
+      <section ref={ref} id="stories" className="relative scroll-mt-24 py-24 md:py-32">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
+          className="relative z-10 mx-auto max-w-7xl px-4 text-center"
         >
-          We&apos;re seeing stars
-        </motion.span>
+          <motion.span
+            variants={fadeSlideUp}
+            className="relative z-10 inline-block rounded-full bg-[#991B1B] px-4 py-1 text-sm font-bold uppercase tracking-widest text-[#FDFAFA]"
+          >
+            We&apos;re seeing stars
+          </motion.span>
 
-        <motion.h2
-          variants={fadeSlideUp}
-          className={`relative z-10 mx-auto mt-6 max-w-4xl text-5xl font-black uppercase leading-[0.9] tracking-tighter text-[#0B172A] md:text-7xl ${sora.className}`}
+          <motion.h2
+            variants={fadeSlideUp}
+            className={`relative z-10 mx-auto mt-6 max-w-4xl text-5xl font-black uppercase leading-[0.9] tracking-tighter text-[#0B172A] md:text-7xl ${sora.className}`}
+          >
+            Stories like these are{" "}
+            <span className="inline-block bg-gradient-to-r from-[#7F1111] via-[#991B1B] to-[#B42323] bg-clip-text text-transparent">
+              why we exist
+            </span>
+          </motion.h2>
+
+          <motion.p
+            variants={fadeSlideUp}
+            className="relative z-10 mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-gray-600"
+          >
+            Every client came to us tired of{" "}
+            <span className="rounded bg-[#991B1B]/10 px-1">leads going cold</span>,{" "}
+            <span className="rounded bg-[#991B1B]/10 px-1">
+              budgets disappearing into thin air
+            </span>
+            , and{" "}
+            <span className="rounded bg-[#991B1B]/10 px-1">
+              watching competitors win deals they should have lost
+            </span>
+            . They were not failing because they{" "}
+            <span className="rounded bg-[#991B1B]/10 px-1">lacked ambition</span>. They were
+            failing because they lacked{" "}
+            <span className="rounded bg-[#991B1B]/10 px-1">the right system</span>.{" "}
+            <span className="font-semibold text-[#991B1B]">
+              We built that system. We fixed that problem. We do it every single time.
+            </span>
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          ref={gridRef}
+          variants={staggerContainer}
+          initial="hidden"
+          animate={cardsInView ? "visible" : "hidden"}
+          className="relative z-10 mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-6 overflow-visible px-4 [perspective:900px] md:grid-cols-2 lg:grid-cols-3"
         >
-          Stories like these are{" "}
-          <span className="inline-block bg-gradient-to-r from-[#7F1111] via-[#991B1B] to-[#B42323] bg-clip-text text-transparent">
-            why we exist
-          </span>
-        </motion.h2>
-
-        <motion.p
-          variants={fadeSlideUp}
-          className="relative z-10 mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-gray-600"
-        >
-          Every client came to us tired of{" "}
-          <span className="rounded bg-[#991B1B]/10 px-1">leads going cold</span>,{" "}
-          <span className="rounded bg-[#991B1B]/10 px-1">
-            budgets disappearing into thin air
-          </span>
-          , and{" "}
-          <span className="rounded bg-[#991B1B]/10 px-1">
-            watching competitors win deals they should have lost
-          </span>
-          . They were not failing because they{" "}
-          <span className="rounded bg-[#991B1B]/10 px-1">lacked ambition</span>. They were
-          failing because they lacked{" "}
-          <span className="rounded bg-[#991B1B]/10 px-1">the right system</span>.{" "}
-          <span className="font-semibold text-[#991B1B]">
-            We built that system. We fixed that problem. We do it every single time.
-          </span>
-        </motion.p>
-      </motion.div>
-
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        className="relative z-10 mx-auto mt-16 grid max-w-7xl auto-rows-fr grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3"
-      >
-        {reviews.map((review, index) => (
-          <ReviewCard
-            key={`${review.name}-${index}`}
-            review={review}
-            index={index}
-            expanded={Boolean(expanded[index])}
-            onToggle={() => toggleExpanded(index)}
-          />
-        ))}
-      </motion.div>
-    </section>
-  );
-});
+          {reviews.map((review, index) => (
+            <ReviewCard
+              key={`${review.name}-${index}`}
+              review={review}
+              index={index}
+              expanded={Boolean(expanded[index])}
+              onToggle={() => toggleExpanded(index)}
+            />
+          ))}
+        </motion.div>
+      </section>
+    );
+  },
+);
 
 export default HubTestimonialsSection;

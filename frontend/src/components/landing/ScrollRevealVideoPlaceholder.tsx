@@ -142,19 +142,38 @@ const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
           });
         }
 
-        // Video box cinematic pop-in
+        // Video box — scroll-scrubbed 3D reveal as you scroll down
         if (shellRef.current) {
           gsap.fromTo(
             shellRef.current,
-            { y: 72, scale: 0.88, opacity: 0, rotateX: 18, transformPerspective: 1000 },
             {
-              y: 0, scale: 1, opacity: 1, rotateX: 0,
-              duration: 1.1,
-              ease: "power3.out",
+              y: 96,
+              scale: 0.8,
+              opacity: 0.4,
+              rotateX: 45,
+              transformPerspective: 1000,
+              boxShadow: "0 24px 48px -12px rgba(11, 23, 42, 0.25)",
+            },
+            {
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              rotateX: 0,
+              boxShadow: "0 48px 96px -16px rgba(11, 23, 42, 0.55)",
+              ease: "none",
               scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top 88%",
-                toggleActions: "play none none reverse",
+                start: "start end",
+                end: "center center",
+                scrub: 1.2,
+                invalidateOnRefresh: true,
+                onToggle: ({ isActive }) => {
+                  if (shellRef.current) {
+                    shellRef.current.style.willChange = isActive
+                      ? "transform, opacity"
+                      : "auto";
+                  }
+                },
               },
             },
           );
@@ -185,7 +204,7 @@ const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
     <>
       <section
         ref={setRef}
-        className="relative bg-[#FDFAFA] pb-16 pt-8 sm:pb-20 sm:pt-10 md:pb-24 md:pt-12"
+        className="relative -mt-12 min-h-[72vh] bg-[#FDFAFA] pb-16 pt-8 sm:-mt-16 sm:pb-20 sm:pt-10 md:-mt-20 md:pb-24 md:pt-12"
         aria-label="Video presentation"
       >
         {/*
