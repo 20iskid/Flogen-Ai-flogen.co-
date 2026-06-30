@@ -56,9 +56,30 @@ export default function BaseHeroVideoSection({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const tryPlay = () => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    };
+
+    const onReady = () => tryPlay();
+
+    video.addEventListener("loadeddata", onReady);
+    video.addEventListener("canplay", onReady);
     video.load();
-    video.play().catch(() => {});
-  }, []);
+    tryPlay();
+
+    return () => {
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("canplay", onReady);
+    };
+  }, [videoSrc]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,6 +91,8 @@ export default function BaseHeroVideoSection({
     <section className="relative flex min-h-[100dvh] flex-col overflow-hidden text-brand-white">
       <video
         ref={videoRef}
+        key={videoSrc}
+        src={videoSrc}
         autoPlay
         muted
         loop
@@ -79,9 +102,7 @@ export default function BaseHeroVideoSection({
         fetchPriority="high"
         className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover"
         aria-hidden
-      >
-        <source src={videoSrc} type="video/mp4" />
-      </video>
+      />
 
       <div
         className="absolute inset-0 z-0 bg-zinc-950/80"
