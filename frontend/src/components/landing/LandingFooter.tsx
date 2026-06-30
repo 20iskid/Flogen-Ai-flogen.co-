@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { LogoLink } from "@/components/landing/Logo";
@@ -147,24 +146,24 @@ export default function LandingFooter() {
             &copy; 2026 Flogen. All rights reserved.
           </p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 transition-colors hover:text-[#FDFAFA]"
+              className="text-sm font-semibold text-gray-500 transition-colors hover:text-[#FDFAFA]"
               aria-label="LinkedIn"
             >
-              <Linkedin className="h-5 w-5" />
+              LinkedIn
             </a>
             <a
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 transition-colors hover:text-[#FDFAFA]"
+              className="text-sm font-semibold text-gray-500 transition-colors hover:text-[#FDFAFA]"
               aria-label="Twitter"
             >
-              <Twitter className="h-5 w-5" />
+              X
             </a>
           </div>
         </div>
