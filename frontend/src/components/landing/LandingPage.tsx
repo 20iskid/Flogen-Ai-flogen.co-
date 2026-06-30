@@ -7,6 +7,7 @@ import HubTestimonialsSection from "@/components/landing/HubTestimonialsSection"
 import PasSection from "@/components/landing/PasSection";
 import ScrollRevealVideoPlaceholder from "@/components/landing/ScrollRevealVideoPlaceholder";
 import SocialProofStrip from "@/components/landing/SocialProofStrip";
+import WhatWeDo from "@/components/landing/WhatWeDo";
 import UvpGrid from "@/components/landing/UvpGrid";
 import type { LandingContent } from "@/lib/landing/types";
 import { isHubHero } from "@/lib/landing/types";
@@ -28,6 +29,7 @@ export default function LandingPage({ content }: LandingPageProps) {
       <ScrollRevealVideoPlaceholder />
       <HubTestimonialsSection />
       <SocialProofStrip content={content.socialProof} />
+      <WhatWeDo />
       <PasSection content={content.pas} />
       <UvpGrid content={content.uvp} />
       <FinalCtaSection content={content.finalCta} />
