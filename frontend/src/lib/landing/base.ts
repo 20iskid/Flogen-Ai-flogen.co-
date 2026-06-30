@@ -56,7 +56,7 @@ export const baseLandingContent: HubLandingContent = {
     ctaHref: "#audit",
   } satisfies BaseHubHero,
   socialProof: {
-    label: "Trusted across industries",
+    label: "Ranked #1 where it counts",
     logos: ["FLOGEN", "PARTNERS", "OPERATORS", "FOUNDERS", "TEAMS"],
   },
   niches: {
@@ -67,23 +67,18 @@ export const baseLandingContent: HubLandingContent = {
   pas: {
     title: "Here's the brutal truth about your business right now.",
     paragraphs: [
-      "You didn't build a company to babysit manual processes while competitors with better systems eat your lunch.",
-      "The gap isn't talent or hustle — it's automation. And until you fix the machine underneath your revenue, every dollar you spend on growth is gasoline on a bonfire.",
+      "You didn't build this company to spend your nights chasing leads that should have closed themselves. You didn't build it to watch *competitors with worse products win* — because they just answered faster.",
+      "The gap isn't talent. It isn't effort. It's that your business runs on *manual processes* while theirs runs on *systems*. And every month that gap stays open, ~it costs you money you'll never see and never get back~.",
     ],
+    leadIn: "Right now, somewhere in your business",
     painPoints: [
-      "Leads slip through cracks because follow-up is manual, slow, or nonexistent.",
-      "Your team burns hours on repetitive admin instead of high-value work.",
-      "Tools don't talk to each other — so data lives in silos and deals die in the gaps.",
-      "Every month without a system costs compounding revenue you'll never recover.",
+      "A lead came in last week and nobody followed up in time. *They're already with someone else.*",
+      "Your team spends hours on repetitive admin instead of *the work that actually grows the business*.",
+      "Your tools don't talk to each other, so information falls through the cracks and *deals die in the silence*.",
+      "You paid for an agency before. They promised results, delivered a dashboard, and ~nothing changed~.",
     ],
-    bridge:
-      "Flogen doesn't sell software. We install profit engines tailored to your industry. Here's what changes:",
-    solutions: [
-      "Custom workflows that eliminate 60–80% of manual ops within 90 days.",
-      "Always-on intake and nurture that converts leads while you sleep.",
-      "Integrations built around the software you already use and trust.",
-      "Measurable ROI from day one — no vanity metrics, no excuses.",
-    ],
+    closing:
+      "Every week this continues is another week of revenue you'll never get back — and ~never even know you lost~.",
   },
   uvp: {
     title: "Why operators choose Flogen",

@@ -5,7 +5,6 @@ import BaseHeroVideoSection from "@/components/landing/BaseHeroVideoSection";
 import FinalCtaSection from "@/components/landing/FinalCtaSection";
 import LandingFooter from "@/components/landing/LandingFooter";
 import HubTestimonialsSection from "@/components/landing/HubTestimonialsSection";
-import NicheGridSection from "@/components/landing/NicheGridSection";
 import PasSection from "@/components/landing/PasSection";
 import ScrollRevealVideoPlaceholder from "@/components/landing/ScrollRevealVideoPlaceholder";
 import SocialProofStrip from "@/components/landing/SocialProofStrip";
@@ -97,18 +96,24 @@ export default function BaseLandingPage({ content }: BaseLandingPageProps) {
           const destY = () =>
             pageTop(testEl) + target.topPx - pageTop(parent);
 
+          // Each star gets slightly different scrub lag so they drift and settle
+          // organically instead of marching in lockstep — calmer, more natural.
+          const lag = 1.7 + (i % 5) * 0.18;
+
           gsap.fromTo(
             parent,
             { x: 0, y: 0 },
             {
               x: destX,
               y: destY,
-              ease: "none",
+              // sine.inOut eases out of the video layout and gently into the grid,
+              // so there's no abrupt start/stop — it feels like a soft glide.
+              ease: "sine.inOut",
               scrollTrigger: {
                 trigger: testEl,
                 start: "top bottom",   // travel begins as testimonials appears
-                end:   "top 55%",      // planted while the section is still entering
-                scrub: 1.2,
+                end:   "top 50%",      // planted while the section is still entering
+                scrub: lag,
                 invalidateOnRefresh: true,
                 onToggle: ({ isActive }) => {
                   parent.style.willChange = isActive ? "transform" : "auto";
@@ -136,7 +141,6 @@ export default function BaseLandingPage({ content }: BaseLandingPageProps) {
       <ScrollRevealVideoPlaceholder ref={videoRef} />
       <HubTestimonialsSection ref={testRef} />
       <SocialProofStrip content={content.socialProof} />
-      <NicheGridSection content={content.niches} />
       <PasSection content={content.pas} />
       <UvpGrid content={content.uvp} />
       <FinalCtaSection content={content.finalCta} />

@@ -91,7 +91,7 @@ const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
               trigger: sectionRef.current,
               start: "top bottom",
               end:   "bottom top",
-              scrub: 1.25,
+              scrub: 1.6,
               invalidateOnRefresh: true,
               onToggle: ({ isActive }) => {
                 innerEls.forEach((el) => {
@@ -114,28 +114,29 @@ const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
             gsap.set(labelEl, { autoAlpha: 1 });
             // xPercent/yPercent keep the * centered on the word's anchor point
             // (GSAP owns the transform, so no inline translate to collide with).
-            gsap.set(starEl,  { autoAlpha: 0, scale: 2, rotation: 20, xPercent: -50, yPercent: -50 });
+            gsap.set(starEl,  { autoAlpha: 0, scale: 1.45, rotation: 10, xPercent: -50, yPercent: -50 });
 
-            // ENTER: rise + fade up to the word's faint resting opacity.
-            const enterAt = (i / n) * 0.16;
+            // ENTER: a soft, slightly longer rise + fade to the word's faint opacity.
+            const enterAt = (i / n) * 0.18;
             tl.fromTo(
               inner,
-              { y: 40 * speed, autoAlpha: 0, scale: 0.9 },
-              { y: 0, autoAlpha: opacity, scale: 1, ease: "power2.out", duration: 0.14 },
+              { y: 30 * speed, autoAlpha: 0, scale: 0.94 },
+              { y: 0, autoAlpha: opacity, scale: 1, ease: "power2.out", duration: 0.2 },
               enterAt,
             );
 
-            // CONVERT: word label dissolves, asterisk pops + untwists into place.
-            // Finishes well before ~0.4 (when the cross-section travel begins) so
-            // the elements are already * — not words — while they fan out.
+            // CONVERT: word label gently dissolves while the asterisk eases in with
+            // a soft settle (back.out, low overshoot).  A long crossfade keeps it calm.
+            // Finishes well before ~0.4 (when the cross-section travel begins) so the
+            // elements are already * — not words — while they drift out.
             const convertAt = 0.22 + (i / n) * 0.05;
             if (labelEl) {
-              tl.to(labelEl, { autoAlpha: 0, duration: 0.07, ease: "none" }, convertAt);
+              tl.to(labelEl, { autoAlpha: 0, duration: 0.12, ease: "sine.inOut" }, convertAt);
             }
             if (starEl) {
               tl.to(
                 starEl,
-                { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.1, ease: "power2.out" },
+                { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.16, ease: "back.out(1.3)" },
                 convertAt,
               );
             }
@@ -246,6 +247,7 @@ const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
                   style={{
                     fontSize:   `calc(${w.size} * 1.1)`,
                     lineHeight: 1,
+                    textShadow: "0 0 14px rgba(153,27,27,0.22)",
                   }}
                 >
                   *

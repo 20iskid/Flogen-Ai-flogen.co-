@@ -69,9 +69,11 @@ export type LandingContent = {
   pas: {
     title: string;
     paragraphs: string[];
+    leadIn?: string;
     painPoints: string[];
-    bridge: string;
-    solutions: string[];
+    closing?: string;
+    bridge?: string;
+    solutions?: string[];
   };
   uvp: {
     title: string;
