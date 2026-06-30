@@ -32,14 +32,18 @@ const gridStagger = {
   },
 };
 
-const cardReveal = {
-  hidden: { opacity: 0, y: 40 },
+const cardSlam = {
+  hidden: { opacity: 0, y: 60, scale: 0.95, rotate: -2 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+    scale: 1,
+    rotate: 0,
+    transition: { type: "spring" as const, stiffness: 250, damping: 20 },
   },
 };
+
+const BADGE_ROTATIONS = ["-rotate-3", "rotate-2", "-rotate-2", "rotate-3"] as const;
 
 const ctaPulse = {
   scale: [1, 1.04, 1],
@@ -61,6 +65,35 @@ function renderRich(text: string, keyPrefix: string) {
     if (token.startsWith("~") && token.endsWith("~")) {
       return (
         <span key={key} className="font-bold text-[#991B1B]">
+          {token.slice(1, -1)}
+        </span>
+      );
+    }
+
+    if (token.startsWith("*") && token.endsWith("*")) {
+      return (
+        <strong key={key} className="font-bold text-[#0B172A]">
+          {token.slice(1, -1)}
+        </strong>
+      );
+    }
+
+    return <span key={key}>{token}</span>;
+  });
+}
+
+function renderPainRich(text: string, keyPrefix: string) {
+  const tokens = text.split(/(~[^~]+~|\*[^*]+\*)/g).filter(Boolean);
+
+  return tokens.map((token, i) => {
+    const key = `${keyPrefix}-${i}`;
+
+    if (token.startsWith("~") && token.endsWith("~")) {
+      return (
+        <span
+          key={key}
+          className="rounded-sm border border-[#991B1B]/20 bg-[#991B1B]/10 px-1.5 py-0.5 font-bold text-[#991B1B]"
+        >
           {token.slice(1, -1)}
         </span>
       );
@@ -141,28 +174,28 @@ export default function PasSection({ content }: PasSectionProps) {
           )}
         </motion.div>
 
-        {/* Pain point grid */}
+        {/* Pain point grid — brutalist error cards */}
         <motion.ul
           initial="hidden"
           whileInView="visible"
           viewport={scrollViewport}
           variants={gridStagger}
-          className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
+          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-12"
         >
           {content.painPoints.map((point, index) => (
             <motion.li
               key={point}
-              variants={cardReveal}
-              className="group relative overflow-hidden rounded-3xl bg-white p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] md:p-10"
+              variants={cardSlam}
+              className="group relative rounded-md border-2 border-[#0B172A] bg-white p-8 shadow-[6px_6px_0px_#0B172A] transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:border-[#991B1B] hover:shadow-[8px_8px_0px_#991B1B] md:p-8"
             >
               <span
-                className="pointer-events-none absolute -right-4 -top-4 z-0 select-none text-9xl font-black text-gray-50/80 transition-transform duration-500 group-hover:scale-110"
+                className={`absolute -left-4 -top-4 z-20 border-2 border-[#0B172A] bg-[#991B1B] px-4 py-2 text-xl font-black text-[#FDFAFA] shadow-[4px_4px_0px_#0B172A] ${BADGE_ROTATIONS[index % BADGE_ROTATIONS.length]}`}
                 aria-hidden
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <p className="relative z-10 text-lg font-medium leading-relaxed text-[#0B172A] md:text-xl">
-                {renderRich(point, `pain-${index}`)}
+              <p className="relative z-10 pt-2 text-lg font-medium leading-relaxed text-[#0B172A] md:text-xl">
+                {renderPainRich(point, `pain-${index}`)}
               </p>
             </motion.li>
           ))}

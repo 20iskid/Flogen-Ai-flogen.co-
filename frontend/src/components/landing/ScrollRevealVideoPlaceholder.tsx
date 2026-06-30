@@ -205,7 +205,7 @@ const ScrollRevealVideoPlaceholder = forwardRef<HTMLElement>(
     <>
       <section
         ref={setRef}
-        className="relative -mt-12 min-h-[72vh] bg-[#FDFAFA] pb-16 pt-8 sm:-mt-16 sm:pb-20 sm:pt-10 md:-mt-20 md:pb-24 md:pt-12"
+        className="relative z-0 -mt-12 min-h-[72vh] bg-[#FDFAFA] pb-16 pt-8 sm:-mt-16 sm:pb-20 sm:pt-10 md:-mt-20 md:pb-24 md:pt-12"
         aria-label="Video presentation"
       >
         {/*

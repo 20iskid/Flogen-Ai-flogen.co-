@@ -94,25 +94,28 @@ export default function BaseHeroVideoSection({
   };
 
   return (
-    <section className="relative isolate flex h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden text-brand-white">
+    <section className="relative z-20 isolate flex h-[100svh] min-h-[100svh] w-full max-h-[100dvh] flex-col overflow-hidden text-brand-white supports-[height:100dvh]:h-[100dvh] supports-[height:100dvh]:min-h-[100dvh]">
       <MenuOverlay isOpen={menuOpen} onClose={closeMenu} />
-      <video
-        ref={videoRef}
-        key={videoSrc}
-        src={videoSrc}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        // @ts-expect-error fetchPriority is valid on video elements
-        fetchPriority="high"
-        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover"
-        aria-hidden
-      />
 
-      <div className="absolute inset-0 z-[1] bg-zinc-950/80" aria-hidden />
-      <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
+      {/* Solid fallback + video layer — never rely on -z-10 bleeding to page bg */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[#0B172A]" aria-hidden>
+        <video
+          ref={videoRef}
+          key={videoSrc}
+          src={videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          // @ts-expect-error fetchPriority is valid on video elements
+          fetchPriority="high"
+          className="absolute left-1/2 top-1/2 h-full w-full min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
+        />
+      </div>
+
+      <div className="absolute inset-0 z-[1] bg-zinc-950/70" aria-hidden />
+      <div className="absolute inset-0 z-[1] bg-black/40" aria-hidden />
 
       <motion.header
         variants={slideDown}
