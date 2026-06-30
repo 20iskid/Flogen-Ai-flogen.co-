@@ -1,4 +1,4 @@
-import BaseLandingPage from "@/components/landing/BaseLandingPage";
+import SplashLandingPage from "@/components/landing/SplashLandingPage";
 import { baseLandingContent } from "@/lib/landing/base";
 import type { Metadata } from "next";
 
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <BaseLandingPage content={baseLandingContent} />;
+  return <SplashLandingPage content={baseLandingContent} />;
 }

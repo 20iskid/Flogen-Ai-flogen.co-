@@ -13,6 +13,7 @@ import type { HubLandingContent } from "@/lib/landing/types";
 
 type BaseLandingPageProps = {
   content: HubLandingContent;
+  splashComplete?: boolean;
 };
 
 /** Document-relative top (layout position, ignores any GSAP transform). */
@@ -57,7 +58,10 @@ const STAR_TARGETS = [
   { leftFrac: 0.92, topPx: 438 },
 ] as const;
 
-export default function BaseLandingPage({ content }: BaseLandingPageProps) {
+export default function BaseLandingPage({
+  content,
+  splashComplete = true,
+}: BaseLandingPageProps) {
   const videoRef = useRef<HTMLElement>(null);
   const testRef  = useRef<HTMLElement>(null);
 
@@ -137,7 +141,7 @@ export default function BaseLandingPage({ content }: BaseLandingPageProps) {
     // bg lives on the wrapper so it shows through the transparent testimonials
     // section, letting the video section's drifting * appear as its background.
     <div className="relative overflow-x-clip bg-[#FDFAFA]">
-      <BaseHeroVideoSection content={content.hero} />
+      <BaseHeroVideoSection content={content.hero} splashComplete={splashComplete} />
       <ScrollRevealVideoPlaceholder ref={videoRef} />
       <HubTestimonialsSection ref={testRef} />
       <SocialProofStrip content={content.socialProof} />

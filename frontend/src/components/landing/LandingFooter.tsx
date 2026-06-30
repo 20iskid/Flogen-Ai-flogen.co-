@@ -1,68 +1,174 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { LogoLink } from "@/components/landing/Logo";
+import { getNicheList } from "@/lib/landing/niches";
 
-export default function LandingFooter() {
-  const year = new Date().getFullYear();
-  const footerRef = useRef<HTMLElement>(null);
+const MARQUEE_PHRASE =
+  "BOOK YOUR AUDIT • LET'S BUILD SOMETHING GREAT TOGETHER • ";
 
-  const { scrollYProgress } = useScroll({
-    target: footerRef,
-    offset: ["start end", "end end"],
-  });
+const COMPANY_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Our System", href: "/our-accomplishments" },
+  { label: "Stories", href: "#stories" },
+  { label: "Book Audit", href: "/audit" },
+] as const;
 
-  const shellOpacity = useTransform(scrollYProgress, [0, 0.25, 1], [0, 0.9, 1]);
-  const shellY = useTransform(scrollYProgress, [0, 1], [24, 0]);
-  const shellWidth = useTransform(scrollYProgress, [0, 1], ["88%", "100%"]);
-  const shellScaleY = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
-  const shellRadius = useTransform(scrollYProgress, [0, 1], ["22px", "0px"]);
-  const shellBorderOpacity = useTransform(scrollYProgress, [0, 1], [0.22, 0.1]);
-  const shellBorderColor = useTransform(
-    shellBorderOpacity,
-    (v) => `rgba(255,255,255,${v})`,
-  );
+const LEGAL_LINKS = [
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Privacy Policy", href: "/privacy" },
+] as const;
+
+const footerLinkClass =
+  "text-sm text-gray-400 transition-colors duration-200 hover:text-[#991B1B]";
+
+function FooterMarquee() {
+  const track = MARQUEE_PHRASE.repeat(6);
 
   return (
-    <footer
-      ref={footerRef}
-      className="relative overflow-hidden bg-brand-navy py-10 text-brand-white sm:py-14"
+    <div
+      className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden border-b border-white/10 py-10 md:py-14"
+      aria-hidden
     >
       <motion.div
-        style={{
-          width: shellWidth,
-          opacity: shellOpacity,
-          y: shellY,
-          scaleY: shellScaleY,
-          borderRadius: shellRadius,
-          borderColor: shellBorderColor,
-        }}
-        className="mx-auto origin-center border bg-white/[0.03] shadow-[0_16px_46px_rgba(0,0,0,0.24)]"
+        className="flex w-max"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ repeat: Infinity, ease: "linear", duration: 50 }}
       >
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 px-5 py-8 text-center sm:gap-6 sm:px-8 sm:py-9 lg:flex-row lg:justify-between lg:text-left">
+        <p className="mega-footer-marquee shrink-0 pr-8">{track}</p>
+        <p className="mega-footer-marquee shrink-0 pr-8">{track}</p>
+      </motion.div>
+    </div>
+  );
+}
+
+function FooterColumn({
+  title,
+  children,
+  id,
+}: {
+  title: string;
+  children: ReactNode;
+  id?: string;
+}) {
+  return (
+    <div id={id}>
+      <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-white">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+export default function LandingFooter() {
+  const nicheList = getNicheList();
+  const midpoint = Math.ceil(nicheList.length / 2);
+  const industriesColA = nicheList.slice(0, midpoint);
+  const industriesColB = nicheList.slice(midpoint);
+
+  return (
+    <footer className="bg-[#0B172A] text-[#FDFAFA]">
+      <FooterMarquee />
+
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-8 px-4 py-16 md:grid-cols-4 md:gap-12 md:px-8 lg:grid-cols-5">
+        {/* Column 1 — Brand */}
+        <div className="col-span-2 lg:col-span-1">
           <LogoLink
             variant="full"
-            className="h-7 w-auto max-w-[min(100%,16rem)] sm:h-8 lg:max-w-[min(100%,18rem)]"
+            className="h-8 w-auto max-w-[min(100%,12rem)] brightness-0 invert md:h-9"
           />
-
-          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-brand-white/50 sm:gap-8">
-            <a href="/about-us" className="transition-colors hover:text-brand-white">
-              About
-            </a>
-            <a href="/careers" className="transition-colors hover:text-brand-white">
-              Careers
-            </a>
-            <a href="/audit" className="transition-colors hover:text-brand-white">
-              Audit
-            </a>
-          </nav>
-
-          <p className="text-xs text-brand-white/40 sm:text-sm">
-            &copy; {year} Flogen. All rights reserved.
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-gray-400">
+            Building elite digital systems, workflows, and integrations tailored
+            to your exact niche.
           </p>
         </div>
-      </motion.div>
+
+        {/* Column 2 — Industries (first half) */}
+        <FooterColumn title="Industries" id="industries">
+          <ul className="flex flex-col gap-4">
+            {industriesColA.map((niche) => (
+              <li key={niche.slug}>
+                <Link href={niche.href} className={footerLinkClass}>
+                  {niche.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </FooterColumn>
+
+        {/* Column 3 — Industries (second half) */}
+        <FooterColumn title="Industries">
+          <ul className="flex flex-col gap-4">
+            {industriesColB.map((niche) => (
+              <li key={niche.slug}>
+                <Link href={niche.href} className={footerLinkClass}>
+                  {niche.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </FooterColumn>
+
+        {/* Column 4 — Company */}
+        <FooterColumn title="Company">
+          <ul className="flex flex-col gap-4">
+            {COMPANY_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={footerLinkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </FooterColumn>
+
+        {/* Column 5 — Legal */}
+        <FooterColumn title="Legal">
+          <ul className="flex flex-col gap-4">
+            {LEGAL_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={footerLinkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </FooterColumn>
+      </div>
+
+      {/* Copyright bar */}
+      <div className="mt-12 border-t border-white/10 px-4 pb-12 pt-8 md:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
+          <p className="text-sm text-gray-500">
+            &copy; 2026 Flogen. All rights reserved.
+          </p>
+
+          <div className="flex items-center gap-4">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 transition-colors hover:text-[#FDFAFA]"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-5 w-5" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 transition-colors hover:text-[#FDFAFA]"
+              aria-label="Twitter"
+            >
+              <Twitter className="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }

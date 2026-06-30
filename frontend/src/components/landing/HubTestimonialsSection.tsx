@@ -170,20 +170,14 @@ const reviews = [
 
 const CLAMP_CHAR_THRESHOLD = 160;
 const BRAND_PRIMARY = "#991B1B";
-const BRAND_SECONDARY = "#0B172A";
-const BRAND_LIGHT = "#FDFAFA";
-const CARD_SPIN_DEG = 720;
-const CARD_SPIN_DURATION = 0.48;
+const CARD_TILT_DEG = 7;
 
 const sora = Sora({
   subsets: ["latin"],
   weight: ["700", "800"],
 });
 
-function StarRating({ rating, filled }: { rating: number; filled?: boolean }) {
-  const activeStar = filled ? BRAND_LIGHT : BRAND_PRIMARY;
-  const emptyStar = filled ? "rgba(253, 250, 250, 0.35)" : "#D1D5DB";
-
+function StarRating({ rating }: { rating: number }) {
   return (
     <div
       className="mt-4 flex items-center gap-0.5"
@@ -196,8 +190,7 @@ function StarRating({ rating, filled }: { rating: number; filled?: boolean }) {
           return (
             <Star
               key={i}
-              className="h-4 w-4 fill-current transition-colors duration-200"
-              style={{ color: activeStar }}
+              className="h-4 w-4 fill-[#991B1B] text-[#991B1B] transition-colors duration-200 group-hover:fill-[#FDFAFA] group-hover:text-[#FDFAFA]"
               strokeWidth={0}
             />
           );
@@ -207,8 +200,7 @@ function StarRating({ rating, filled }: { rating: number; filled?: boolean }) {
           return (
             <StarHalf
               key={i}
-              className="h-4 w-4 fill-current transition-colors duration-200"
-              style={{ color: activeStar }}
+              className="h-4 w-4 fill-[#991B1B] text-[#991B1B] transition-colors duration-200 group-hover:fill-[#FDFAFA] group-hover:text-[#FDFAFA]"
               strokeWidth={0}
             />
           );
@@ -217,8 +209,7 @@ function StarRating({ rating, filled }: { rating: number; filled?: boolean }) {
         return (
           <Star
             key={i}
-            className="h-4 w-4 fill-current transition-colors duration-200"
-            style={{ color: emptyStar }}
+            className="h-4 w-4 fill-[#D1D5DB] text-[#D1D5DB] transition-colors duration-200 group-hover:fill-[#FDFAFA]/35 group-hover:text-[#FDFAFA]/35"
             strokeWidth={0}
           />
         );
@@ -231,15 +222,9 @@ function getNameInitial(name: string) {
   return name.trim().charAt(0).toUpperCase();
 }
 
-function ReviewAvatar({
-  review,
-  filled,
-}: {
-  review: (typeof reviews)[number];
-  filled?: boolean;
-}) {
+function ReviewAvatar({ review }: { review: (typeof reviews)[number] }) {
   const sharedClassName =
-    "h-12 w-12 shrink-0 rounded-full border shadow-[0_4px_14px_rgba(11,23,42,0.14)] transition-colors duration-200";
+    "h-12 w-12 shrink-0 rounded-full border border-white object-cover shadow-[0_4px_14px_rgba(11,23,42,0.14)] transition-colors duration-200";
 
   if ("avatarUrl" in review && review.avatarUrl) {
     return (
@@ -248,7 +233,7 @@ function ReviewAvatar({
         alt={review.name}
         width={48}
         height={48}
-        className={`${sharedClassName} border-white object-cover`}
+        className={sharedClassName}
       />
     );
   }
@@ -257,11 +242,7 @@ function ReviewAvatar({
 
   return (
     <div
-      className={`${sharedClassName} flex items-center justify-center text-lg font-bold ${
-        filled
-          ? "border-white/30 bg-[#FDFAFA] text-[#0B172A]"
-          : "border-white bg-[#991B1B] text-[#FDFAFA]"
-      }`}
+      className={`${sharedClassName} flex items-center justify-center bg-[#991B1B] text-lg font-bold text-[#FDFAFA] group-hover:border-white/30 group-hover:bg-[#FDFAFA] group-hover:text-[#0B172A]`}
       role="img"
       aria-label={`${review.name} avatar`}
     >
@@ -279,67 +260,42 @@ type ReviewCardProps = {
 
 function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
   const isTruncatable = review.text.length > CLAMP_CHAR_THRESHOLD;
-  const [filled, setFilled] = useState(false);
 
   return (
     <motion.article
       variants={fadeSlideUp}
-      onHoverStart={() => setFilled(true)}
-      onHoverEnd={() => setFilled(false)}
-      animate={{
-        rotateX: filled ? [0, 360, CARD_SPIN_DEG] : 0,
-        y: filled ? -4 : 0,
-        backgroundColor: filled ? BRAND_PRIMARY : "rgba(255, 255, 255, 0.9)",
-        borderColor: filled ? BRAND_PRIMARY : "rgba(11, 23, 42, 0.1)",
-        boxShadow: filled
-          ? "0 22px 50px rgba(11, 23, 42, 0.22)"
-          : "0 10px 30px rgba(11, 23, 42, 0.07)",
+      whileHover={{
+        rotateX: CARD_TILT_DEG,
+        y: -6,
+        backgroundColor: BRAND_PRIMARY,
+        borderColor: BRAND_PRIMARY,
+        boxShadow: "0 22px 50px rgba(11, 23, 42, 0.22)",
       }}
-      transition={{
-        rotateX: { duration: CARD_SPIN_DURATION, ease: [0.22, 1, 0.36, 1] },
-        y: { duration: 0.2 },
-        backgroundColor: { duration: 0.22, delay: filled ? CARD_SPIN_DURATION * 0.55 : 0 },
-        borderColor: { duration: 0.22, delay: filled ? CARD_SPIN_DURATION * 0.55 : 0 },
-        boxShadow: { duration: 0.22, delay: filled ? CARD_SPIN_DURATION * 0.55 : 0 },
-      }}
+      transition={{ type: "spring", stiffness: 420, damping: 28 }}
       style={{ transformPerspective: 1200 }}
-      className="flex origin-center cursor-default flex-col rounded-3xl border p-6 backdrop-blur-[2px] transform-gpu [transform-style:preserve-3d]"
+      className="group flex origin-center cursor-default flex-col rounded-3xl border border-[#0B172A]/10 bg-white/90 p-6 shadow-[0_10px_30px_rgba(11,23,42,0.07)] backdrop-blur-[2px] transform-gpu [transform-style:preserve-3d]"
     >
       <header className="flex items-start gap-3">
-        <ReviewAvatar review={review} filled={filled} />
+        <ReviewAvatar review={review} />
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 items-center gap-2">
-            <p
-              className={`truncate text-[15px] font-semibold transition-colors duration-200 ${
-                filled ? "text-[#FDFAFA]" : "text-[#0B172A]"
-              }`}
-            >
+            <p className="truncate text-[15px] font-semibold text-[#0B172A] transition-colors duration-200 group-hover:text-[#FDFAFA]">
               {review.name}
             </p>
             <BadgeCheck
-              className={`h-3.5 w-3.5 shrink-0 transition-colors duration-200 ${
-                filled ? "text-[#FDFAFA]" : "text-[#991B1B]"
-              }`}
+              className="h-3.5 w-3.5 shrink-0 text-[#991B1B] transition-colors duration-200 group-hover:text-[#FDFAFA]"
               aria-label="Verified client"
             />
           </div>
-          <p
-            className={`mt-1 text-xs font-medium transition-colors duration-200 ${
-              filled ? "text-[#FDFAFA]/70" : "text-[#0B172A]/55"
-            }`}
-          >
+          <p className="mt-1 text-xs font-medium text-[#0B172A]/55 transition-colors duration-200 group-hover:text-[#FDFAFA]/70">
             {review.category} - {review.date}
           </p>
         </div>
       </header>
 
       <div className="mt-4 flex items-center gap-2.5">
-        <StarRating rating={review.rating} filled={filled} />
-        <span
-          className={`text-xs font-semibold transition-colors duration-200 ${
-            filled ? "text-[#FDFAFA]/75" : "text-[#0B172A]/55"
-          }`}
-        >
+        <StarRating rating={review.rating} />
+        <span className="text-xs font-semibold text-[#0B172A]/55 transition-colors duration-200 group-hover:text-[#FDFAFA]/75">
           {review.rating.toFixed(1)}
         </span>
       </div>
@@ -347,9 +303,9 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
       <div className="mt-4 flex flex-1 flex-col">
         <p
           id={`review-text-${index}`}
-          className={`text-sm leading-relaxed transition-all duration-300 md:text-base ${
-            filled ? "text-[#FDFAFA]/90" : "text-[#0B172A]/75"
-          } ${isTruncatable && !expanded ? "line-clamp-4" : ""}`}
+          className={`text-sm leading-relaxed text-[#0B172A]/75 transition-colors duration-200 group-hover:text-[#FDFAFA]/90 md:text-base ${
+            isTruncatable && !expanded ? "line-clamp-4" : ""
+          }`}
         >
           &ldquo;{review.text}&rdquo;
         </p>
@@ -358,9 +314,7 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
           <button
             type="button"
             onClick={onToggle}
-            className={`pt-2 text-left text-sm font-semibold underline-offset-4 hover:underline transition-colors duration-200 ${
-              filled ? "text-[#FDFAFA]" : "text-[#991B1B]"
-            }`}
+            className="pt-2 text-left text-sm font-semibold text-[#991B1B] underline-offset-4 transition-colors duration-200 hover:underline group-hover:text-[#FDFAFA]"
             aria-expanded={expanded}
             aria-controls={`review-text-${index}`}
           >
@@ -369,16 +323,8 @@ function ReviewCard({ review, index, expanded, onToggle }: ReviewCardProps) {
         ) : null}
       </div>
 
-      <footer
-        className={`mt-auto flex items-center justify-end border-t pt-4 transition-colors duration-200 ${
-          filled ? "border-[#FDFAFA]/15" : "border-[#0B172A]/8"
-        }`}
-      >
-        <span
-          className={`text-[11px] font-medium transition-colors duration-200 ${
-            filled ? "text-[#FDFAFA]/60" : "text-[#0B172A]/50"
-          }`}
-        >
+      <footer className="mt-auto flex items-center justify-end border-t border-[#0B172A]/8 pt-4 transition-colors duration-200 group-hover:border-[#FDFAFA]/15">
+        <span className="text-[11px] font-medium text-[#0B172A]/50 transition-colors duration-200 group-hover:text-[#FDFAFA]/60">
           Verified review
         </span>
       </footer>

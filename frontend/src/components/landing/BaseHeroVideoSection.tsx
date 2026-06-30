@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Sora } from "next/font/google";
-import { useEffect, useRef, useState } from "react";
-import { LogoLink } from "@/components/landing/Logo";
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import FlogenLogo from "@/components/landing/FlogenLogo";
+import MenuOverlay from "@/components/landing/MenuOverlay";
 import type { BaseHubHero } from "@/lib/landing/types";
 import { revealUp, slideDown, springReveal, staggerContainer } from "@/lib/motion";
 
@@ -42,15 +44,19 @@ const sora = Sora({
 type BaseHeroVideoSectionProps = {
   content: BaseHubHero;
   videoSrc?: string;
+  splashComplete?: boolean;
 };
 
 export default function BaseHeroVideoSection({
   content,
   videoSrc = HERO_VIDEO,
+  splashComplete = true,
 }: BaseHeroVideoSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [email, setEmail] = useState("");
   const [isAmountHovered, setIsAmountHovered] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
   const subheadlineLines = content.subheadline.split("\n");
 
   useEffect(() => {
@@ -88,27 +94,29 @@ export default function BaseHeroVideoSection({
   };
 
   return (
-    <section className="relative flex min-h-[100dvh] flex-col overflow-hidden text-brand-white">
-      <video
-        ref={videoRef}
-        key={videoSrc}
-        src={videoSrc}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        // @ts-expect-error fetchPriority is valid on video elements
-        fetchPriority="high"
-        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover"
-        aria-hidden
-      />
-
+    <section className="relative isolate flex min-h-[100dvh] w-full flex-col overflow-hidden text-brand-white">
+      <MenuOverlay isOpen={menuOpen} onClose={closeMenu} />
       <div
-        className="absolute inset-0 z-0 bg-zinc-950/80"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         aria-hidden
-      />
-      <div className="absolute inset-0 z-0 bg-black/50" aria-hidden />
+      >
+        <video
+          ref={videoRef}
+          key={videoSrc}
+          src={videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          // @ts-expect-error fetchPriority is valid on video elements
+          fetchPriority="high"
+          className="absolute left-1/2 top-1/2 block h-auto w-auto min-h-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center"
+        />
+      </div>
+
+      <div className="absolute inset-0 z-[1] bg-zinc-950/80" aria-hidden />
+      <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 
       <motion.header
         variants={slideDown}
@@ -119,8 +127,10 @@ export default function BaseHeroVideoSection({
         <div className="flex flex-1 items-center justify-start">
           <button
             type="button"
+            onClick={() => setMenuOpen(true)}
             className="hub-hero-menu flex items-center gap-2 font-bold text-[#FDFAFA] transition-opacity hover:opacity-80"
             aria-label="Open menu"
+            aria-expanded={menuOpen}
           >
             <Image
               src="/icons/menu.svg"
@@ -133,17 +143,33 @@ export default function BaseHeroVideoSection({
           </button>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ ...springReveal, delay: 0.15 }}
-          className="flex flex-none items-center justify-center"
-        >
-          <LogoLink
-            variant="full"
-            className="h-10 w-auto max-w-[10.5rem] sm:h-14 sm:max-w-[15rem] lg:h-[4.5rem] lg:max-w-[19rem]"
-          />
-        </motion.div>
+        <div className="flex h-10 flex-none items-center justify-center sm:h-14 lg:h-[4.5rem]">
+          {splashComplete ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35, duration: 0.45, ease: "easeOut" }}
+              className="flex items-center justify-center"
+            >
+              <Link
+                href="/"
+                className="inline-flex max-w-full shrink-0 justify-center"
+              >
+                <FlogenLogo
+                  layoutId="flogen-logo"
+                  className="h-10 w-auto max-w-[10.5rem] sm:h-14 sm:max-w-[15rem] lg:h-[4.5rem] lg:max-w-[19rem]"
+                  transition={{
+                    layout: {
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 28,
+                    },
+                  }}
+                />
+              </Link>
+            </motion.div>
+          ) : null}
+        </div>
 
         <div className="flex flex-1 items-center justify-end">
           <motion.a

@@ -74,6 +74,11 @@ export type LandingContent = {
     closing?: string;
     bridge?: string;
     solutions?: string[];
+    cta?: {
+      label: string;
+      subtext?: string;
+      href?: string;
+    };
   };
   uvp: {
     title: string;

@@ -67,18 +67,23 @@ export const baseLandingContent: HubLandingContent = {
   pas: {
     title: "Here's the brutal truth about your business right now.",
     paragraphs: [
-      "You didn't build this company to spend your nights chasing leads that should have closed themselves. You didn't build it to watch *competitors with worse products win* — because they just answered faster.",
-      "The gap isn't talent. It isn't effort. It's that your business runs on *manual processes* while theirs runs on *systems*. And every month that gap stays open, ~it costs you money you'll never see and never get back~.",
+      "You didn't build this company to spend your nights *chasing leads that should have closed themselves*. You didn't build it to watch *competitors with worse products win* — because they just *answered faster*.",
+      "The gap isn't talent. It isn't effort. It is the fact that your business is running on *manual processes* while theirs is running on *systems*. And every month that gap stays open, ~it costs you money you will never see and never get back~.",
     ],
-    leadIn: "Right now, somewhere in your business",
+    leadIn: "Right now, somewhere in your business:",
     painPoints: [
-      "A lead came in last week and nobody followed up in time. *They're already with someone else.*",
-      "Your team spends hours on repetitive admin instead of *the work that actually grows the business*.",
-      "Your tools don't talk to each other, so information falls through the cracks and *deals die in the silence*.",
-      "You paid for an agency before. They promised results, delivered a dashboard, and ~nothing changed~.",
+      "A lead came in last week and *nobody followed up in time*. ~They're already with someone else.~",
+      "Your team is spending hours on the same *repetitive admin work* instead of *the work that actually grows the business*.",
+      "Your tools *do not talk to each other*, so information falls through the cracks and ~deals die in the silence~.",
+      "You paid for an agency before. ~They promised results.~ They delivered a dashboard. ~Nothing changed.~",
     ],
     closing:
-      "Every week this continues is another week of revenue you'll never get back — and ~never even know you lost~.",
+      "Every week this continues is another week of ~revenue you will never get back and never even know you lost~.",
+    cta: {
+      label: "See What This Is Costing You",
+      subtext: "It's completely free",
+      href: "#audit",
+    },
   },
   uvp: {
     title: "Why operators choose Flogen",
