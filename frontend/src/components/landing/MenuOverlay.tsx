@@ -9,7 +9,7 @@ import FlogenLogo from "@/components/landing/FlogenLogo";
 import { MENU_LINKS } from "@/lib/site/navigation";
 
 const linkClass =
-  "block text-center font-black uppercase leading-[0.95] tracking-tighter transition-all duration-300 ease-out text-[clamp(2rem,9vmin,5.5rem)] sm:text-[clamp(2.25rem,8vmin,7rem)] md:text-[clamp(2.5rem,7vmin,8rem)] lg:text-[clamp(3rem,6vw,9rem)]";
+  "block text-center font-black uppercase leading-[0.88] tracking-tighter transition-all duration-300 ease-out text-[clamp(1.5rem,5.2vmin,3.75rem)] sm:text-[clamp(1.65rem,4.8vmin,4.5rem)] md:text-[clamp(1.85rem,4.2vmin,5.25rem)] lg:text-[clamp(2rem,3.5vw,6rem)]";
 
 type MenuOverlayProps = {
   isOpen: boolean;
@@ -103,7 +103,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            <div className="flex min-h-full flex-col items-center justify-center gap-2 px-4 py-4 sm:gap-3 sm:py-6 md:gap-5 md:py-8 lg:gap-7">
+            <div className="flex w-full flex-col items-center gap-0.5 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[clamp(0.5rem,4vh,3rem)] sm:gap-1 sm:pb-[max(2rem,env(safe-area-inset-bottom))] md:gap-1.5 md:pb-10">
               {MENU_LINKS.map((link, index) => {
                 const isHovered = hoveredIndex === index;
                 const isDimmed =
