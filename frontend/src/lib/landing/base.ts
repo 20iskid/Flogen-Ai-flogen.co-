@@ -53,7 +53,7 @@ export const baseLandingContent: HubLandingContent = {
     submitLabel: "Do it",
     disclaimer: "*The audit is free. The leads you are losing are not.",
     rating: "4.8 stars out of 93+ clients",
-    ctaHref: "#audit",
+    ctaHref: "/audit",
   } satisfies BaseHubHero,
   socialProof: {
     label: "Ranked #1 where it counts",
@@ -82,7 +82,7 @@ export const baseLandingContent: HubLandingContent = {
     cta: {
       label: "See What This Is Costing You",
       subtext: "It's completely free",
-      href: "#audit",
+      href: "/audit",
     },
   },
   uvp: {

@@ -58,7 +58,7 @@ export default function FinalCtaSection({ content }: FinalCtaSectionProps) {
         </motion.p>
 
         <motion.div variants={revealUp} className="mt-8 sm:mt-10">
-          <PrimaryButton href={content.ctaHref ?? "#audit"} dark>
+          <PrimaryButton href={content.ctaHref ?? "/audit"} dark>
             {content.ctaLabel}
           </PrimaryButton>
         </motion.div>

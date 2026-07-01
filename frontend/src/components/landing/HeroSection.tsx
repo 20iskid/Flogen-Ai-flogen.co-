@@ -35,7 +35,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
         </MaskReveal>
 
         <motion.div variants={revealUp} className="mt-8 sm:mt-10">
-          <PrimaryButton href={content.ctaHref ?? "#audit"}>
+          <PrimaryButton href={content.ctaHref ?? "/audit"}>
             {content.ctaLabel}
           </PrimaryButton>
         </motion.div>

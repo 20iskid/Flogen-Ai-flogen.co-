@@ -12,7 +12,7 @@ const MARQUEE_PHRASE =
 const COMPANY_LINKS = [
   { label: "Home", href: "/" },
   { label: "Our System", href: "/our-accomplishments" },
-  { label: "Stories", href: "#stories" },
+  { label: "Stories", href: "/reviews" },
   { label: "Book Audit", href: "/audit" },
 ] as const;
 

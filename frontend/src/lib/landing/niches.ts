@@ -6,7 +6,7 @@ const HUB_HERO_DEFAULTS = {
   submitLabel: "Do it",
   disclaimer: "*The audit is free. The leads you are losing are not.",
   rating: "4.8 stars out of 93+ clients",
-  ctaHref: "#audit",
+  ctaHref: "/audit",
 };
 
 function hubHero(

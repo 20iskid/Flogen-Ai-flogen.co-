@@ -10,8 +10,8 @@ import FlogenLogo from "@/components/landing/FlogenLogo";
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Audit", href: "/audit" },
-  { label: "Industries", href: "#industries" },
-  { label: "Stories", href: "#stories" },
+  { label: "Industries", href: "/#industries" },
+  { label: "Stories", href: "/#stories" },
   { label: "Contact", href: "/audit" },
 ] as const;
 

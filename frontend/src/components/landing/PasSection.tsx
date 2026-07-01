@@ -228,7 +228,7 @@ export default function PasSection({ content }: PasSectionProps) {
             {content.cta && (
               <div className="relative z-10 mt-10 flex flex-col items-center md:mt-12">
                 <motion.a
-                  href={content.cta.href ?? "#audit"}
+                  href={content.cta.href ?? "/audit"}
                   animate={ctaPulse}
                   transition={{
                     duration: 2.2,

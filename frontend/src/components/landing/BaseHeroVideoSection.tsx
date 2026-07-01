@@ -90,7 +90,7 @@ export default function BaseHeroVideoSection({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
-    window.location.href = content.ctaHref ?? "#audit";
+    window.location.href = content.ctaHref ?? "/audit";
   };
 
   return (
@@ -165,7 +165,7 @@ export default function BaseHeroVideoSection({
 
         <div className="flex flex-1 items-center justify-end">
           <motion.a
-            href={content.ctaHref ?? "#audit"}
+            href={content.ctaHref ?? "/audit"}
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ ...springReveal, delay: 0.2 }}
