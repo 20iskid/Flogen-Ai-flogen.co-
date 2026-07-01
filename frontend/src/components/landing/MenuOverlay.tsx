@@ -6,14 +6,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import FlogenLogo from "@/components/landing/FlogenLogo";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Audit", href: "/audit" },
-  { label: "Industries", href: "/#industries" },
-  { label: "Stories", href: "/#stories" },
-  { label: "Contact", href: "/audit" },
-] as const;
+import { MENU_LINKS } from "@/lib/site/navigation";
 
 const linkClass =
   "block text-center font-black uppercase leading-[0.95] tracking-tighter transition-all duration-300 ease-out text-[clamp(2rem,9vmin,5.5rem)] sm:text-[clamp(2.25rem,8vmin,7rem)] md:text-[clamp(2.5rem,7vmin,8rem)] lg:text-[clamp(3rem,6vw,9rem)]";
@@ -111,7 +104,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             onMouseLeave={() => setHoveredIndex(null)}
           >
             <div className="flex min-h-full flex-col items-center justify-center gap-2 px-4 py-4 sm:gap-3 sm:py-6 md:gap-5 md:py-8 lg:gap-7">
-              {NAV_LINKS.map((link, index) => {
+              {MENU_LINKS.map((link, index) => {
                 const isHovered = hoveredIndex === index;
                 const isDimmed =
                   hoveredIndex !== null && hoveredIndex !== index;

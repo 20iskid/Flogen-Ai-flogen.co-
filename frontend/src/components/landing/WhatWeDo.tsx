@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { BarChart3, Cpu, Layers, Zap, type LucideIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 const scrollViewport = { once: true, margin: "-100px" as const };
 
@@ -115,6 +117,22 @@ export default function WhatWeDo() {
             large
             className="md:col-span-2 md:row-span-1"
           />
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={scrollViewport}
+          variants={cardReveal}
+          className="mt-12 flex justify-center md:mt-16"
+        >
+          <Link
+            href="/our-accomplishments"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-[#FDFAFA]/20 px-8 py-4 text-sm font-black uppercase tracking-widest text-[#FDFAFA] transition-colors hover:border-[#991B1B] hover:text-[#991B1B]"
+          >
+            Explore our system
+            <Image src="/icons/arrow-doit.svg" alt="" width={10} height={18} className="h-4 w-2 brightness-0 invert" />
+          </Link>
         </motion.div>
       </div>
     </section>

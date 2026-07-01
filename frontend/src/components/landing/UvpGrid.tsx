@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Bot, Gauge, Layers, Shield, Zap } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
 import type { LandingContent, UvpIcon } from "@/lib/landing/types";
 import type { LucideIcon } from "lucide-react";
@@ -63,6 +65,16 @@ export default function UvpGrid({ content }: UvpGridProps) {
                 </motion.article>
               );
             })}
+          </motion.div>
+
+          <motion.div variants={fadeSlideUp} className="mt-12 flex justify-center sm:mt-16">
+            <Link
+              href="/our-accomplishments"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-white/20 px-8 py-4 text-sm font-black uppercase tracking-widest text-brand-white transition-colors hover:border-brand-red hover:text-brand-red"
+            >
+              See how we build it
+              <Image src="/icons/arrow-doit.svg" alt="" width={10} height={18} className="h-4 w-2 brightness-0 invert" />
+            </Link>
           </motion.div>
         </motion.div>
       </div>

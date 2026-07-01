@@ -5,21 +5,13 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { LogoLink } from "@/components/landing/Logo";
 import { getNicheList } from "@/lib/landing/niches";
+import {
+  FOOTER_COMPANY_LINKS,
+  FOOTER_LEGAL_LINKS,
+} from "@/lib/site/navigation";
 
 const MARQUEE_PHRASE =
   "BOOK YOUR AUDIT • LET'S BUILD SOMETHING GREAT TOGETHER • ";
-
-const COMPANY_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Our System", href: "/our-accomplishments" },
-  { label: "Stories", href: "/reviews" },
-  { label: "Book Audit", href: "/audit" },
-] as const;
-
-const LEGAL_LINKS = [
-  { label: "Terms of Service", href: "/terms" },
-  { label: "Privacy Policy", href: "/privacy" },
-] as const;
 
 const footerLinkClass =
   "text-sm text-gray-400 transition-colors duration-200 hover:text-[#991B1B]";
@@ -115,7 +107,7 @@ export default function LandingFooter() {
         {/* Column 4 — Company */}
         <FooterColumn title="Company">
           <ul className="flex flex-col gap-4">
-            {COMPANY_LINKS.map((link) => (
+            {FOOTER_COMPANY_LINKS.map((link) => (
               <li key={link.label}>
                 <Link href={link.href} className={footerLinkClass}>
                   {link.label}
@@ -128,7 +120,7 @@ export default function LandingFooter() {
         {/* Column 5 — Legal */}
         <FooterColumn title="Legal">
           <ul className="flex flex-col gap-4">
-            {LEGAL_LINKS.map((link) => (
+            {FOOTER_LEGAL_LINKS.map((link) => (
               <li key={link.label}>
                 <Link href={link.href} className={footerLinkClass}>
                   {link.label}

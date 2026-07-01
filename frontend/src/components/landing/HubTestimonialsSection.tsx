@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { BadgeCheck, Star, StarHalf } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Sora } from "next/font/google";
 import { forwardRef, useRef, useState } from "react";
 import { fadeSlideUp, staggerContainer, viewportOnce } from "@/lib/motion";
@@ -411,6 +412,22 @@ const HubTestimonialsSection = forwardRef<HTMLElement>(
               onToggle={() => toggleExpanded(index)}
             />
           ))}
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={fadeSlideUp}
+          className="relative z-10 mx-auto mt-14 flex justify-center px-4"
+        >
+          <Link
+            href="/reviews"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-[#0B172A] bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-[#0B172A] shadow-[4px_4px_0px_#0B172A] transition-all hover:border-[#991B1B] hover:text-[#991B1B] hover:shadow-[4px_4px_0px_#991B1B]"
+          >
+            See all stories
+            <Image src="/icons/arrow-doit.svg" alt="" width={10} height={18} className="h-4 w-2" />
+          </Link>
         </motion.div>
       </section>
     );
