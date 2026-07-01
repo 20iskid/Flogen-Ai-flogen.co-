@@ -124,4 +124,9 @@
       min-height: 680px;
     }
   }
+
+  .hub-menu-link {
+    font-size: var(--menu-link-size, clamp(2.25rem, 7vmin, 7rem));
+    line-height: 0.92;
+  }
 }

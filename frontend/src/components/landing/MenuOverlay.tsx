@@ -8,8 +8,13 @@ import { createPortal } from "react-dom";
 import FlogenLogo from "@/components/landing/FlogenLogo";
 import { MENU_LINKS } from "@/lib/site/navigation";
 
+const linkCount = MENU_LINKS.length;
+
+/** Scales with viewport height so 7 links stay large but never clip */
+const menuLinkSize = `clamp(2.25rem, min(8vmin, calc((100svh - 9.5rem) / ${linkCount * 1.1})), 8.5rem)`;
+
 const linkClass =
-  "block text-center font-black uppercase leading-[0.88] tracking-tighter transition-all duration-300 ease-out text-[clamp(1.5rem,5.2vmin,3.75rem)] sm:text-[clamp(1.65rem,4.8vmin,4.5rem)] md:text-[clamp(1.85rem,4.2vmin,5.25rem)] lg:text-[clamp(2rem,3.5vw,6rem)]";
+  "hub-menu-link block text-center font-black uppercase tracking-tighter transition-all duration-300 ease-out";
 
 type MenuOverlayProps = {
   isOpen: boolean;
@@ -103,7 +108,10 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
             className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            <div className="flex w-full flex-col items-center gap-0.5 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[clamp(0.5rem,4vh,3rem)] sm:gap-1 sm:pb-[max(2rem,env(safe-area-inset-bottom))] md:gap-1.5 md:pb-10">
+            <div
+              className="flex w-full flex-col items-center gap-[0.28em] px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[clamp(0.25rem,3vh,2.5rem)]"
+              style={{ ["--menu-link-size" as string]: menuLinkSize }}
+            >
               {MENU_LINKS.map((link, index) => {
                 const isHovered = hoveredIndex === index;
                 const isDimmed =
