@@ -19,8 +19,10 @@ export default function CareersPageContent() {
     <HubPageLayout>
       <HubPageHero
         kicker="Careers"
-        title="Build systems that print profit."
+        title="Build systems that"
+        titleAccent="print profit."
         description="We're a small, elite team obsessed with automation, speed, and measurable outcomes. If that's you, we want to hear from you."
+        badges={["Remote", "Elite", "Build"]}
       />
 
       <section className="bg-[#FDFAFA] px-4 py-16 md:px-8 md:py-24 lg:px-12">

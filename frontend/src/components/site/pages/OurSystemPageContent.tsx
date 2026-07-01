@@ -18,8 +18,10 @@ export default function OurSystemPageContent() {
     <HubPageLayout>
       <HubPageHero
         kicker="Our system"
-        title="The revenue engine we install in 30 days."
+        title="The revenue engine we install"
+        titleAccent="in 30 days."
         description="Not another agency retainer. A custom automation system wired into your stack — intake, follow-up, integrations, and ROI tracking from day one."
+        badges={["Custom", "Automate", "Track"]}
       />
 
       <section className="bg-[#FDFAFA] px-4 py-16 md:px-8 md:py-24 lg:px-12">

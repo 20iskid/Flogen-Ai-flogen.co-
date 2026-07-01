@@ -21,8 +21,10 @@ export default function AboutPageContent() {
     <HubPageLayout>
       <HubPageHero
         kicker="About flogen"
-        title="We build revenue engines, not websites."
+        title="We build revenue engines,"
+        titleAccent="not websites."
         description="Flogen is a custom automation studio for high-growth businesses tired of manual processes, cold leads, and agencies that overpromise."
+        badges={["30 days", "ROI", "Systems"]}
       />
 
       <section className="bg-[#FDFAFA] px-4 py-16 md:px-8 md:py-24 lg:px-12">

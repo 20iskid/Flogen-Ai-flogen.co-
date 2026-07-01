@@ -18,8 +18,10 @@ export default function AuditPageContent() {
     <HubPageLayout>
       <HubPageHero
         kicker="Free audit"
-        title="See exactly what your broken systems are costing you."
+        title="See exactly what your broken systems"
+        titleAccent="are costing you."
         description="Book a 30-minute call with our CEO. We map your leaks, quantify the damage, and show you the system we'd build to fix it — in 30 days or less."
+        badges={["Free", "30 min", "NDA"]}
       />
 
       <section className="bg-[#FDFAFA] px-4 py-14 md:px-8 md:py-20 lg:px-12">

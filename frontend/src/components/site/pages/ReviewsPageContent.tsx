@@ -10,8 +10,10 @@ export default function ReviewsPageContent() {
     <HubPageLayout>
       <HubPageHero
         kicker="Client proof"
-        title="Real operators. Real numbers."
+        title="Real operators."
+        titleAccent="Real numbers."
         description="Every client came to us with the same problem — leads going cold, manual chaos, and revenue walking out the door. Here's what changed."
+        badges={["Verified", "ROI", "Proof"]}
       />
 
       <section className="bg-[#FDFAFA] px-4 py-16 md:px-8 md:py-24 lg:px-12">

@@ -46,8 +46,10 @@ export default function TermsPageContent() {
       <HubPageHero
         dark={false}
         kicker="Legal"
-        title="Terms of Service"
+        title="Terms of"
+        titleAccent="Service"
         description="Last updated: March 2026"
+        badges={["Legal", "Policy", "Flogen"]}
       />
       <LegalBody sections={termsSections} />
     </HubPageLayout>
@@ -95,8 +97,10 @@ export function PrivacyPageContent() {
       <HubPageHero
         dark={false}
         kicker="Legal"
-        title="Privacy Policy"
+        title="Privacy"
+        titleAccent="Policy"
         description="Last updated: March 2026"
+        badges={["Privacy", "Data", "NDA"]}
       />
       <LegalBody sections={privacySections} />
     </HubPageLayout>
