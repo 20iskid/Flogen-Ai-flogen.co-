@@ -113,4 +113,15 @@
     color: rgba(253, 250, 250, 0.06);
     -webkit-text-stroke: 1px rgba(153, 27, 27, 0.35);
   }
+
+  .calendly-audit-embed iframe {
+    width: 100% !important;
+    min-height: 620px;
+  }
+
+  @media (min-width: 768px) {
+    .calendly-audit-embed iframe {
+      min-height: 680px;
+    }
+  }
 }
