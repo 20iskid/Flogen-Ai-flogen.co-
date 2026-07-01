@@ -8,13 +8,8 @@ import { createPortal } from "react-dom";
 import FlogenLogo from "@/components/landing/FlogenLogo";
 import { MENU_LINKS } from "@/lib/site/navigation";
 
-const linkCount = MENU_LINKS.length;
-
-/** Scales with viewport height so 7 links stay large but never clip */
-const menuLinkSize = `clamp(2.25rem, min(8vmin, calc((100svh - 9.5rem) / ${linkCount * 1.1})), 8.5rem)`;
-
 const linkClass =
-  "hub-menu-link block text-center font-black uppercase tracking-tighter transition-all duration-300 ease-out";
+  "hub-menu-link font-black uppercase tracking-tighter transition-all duration-300 ease-out";
 
 type MenuOverlayProps = {
   isOpen: boolean;
@@ -68,15 +63,13 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="fixed inset-0 z-[200] flex flex-col bg-[#0B172A]/90 backdrop-blur-3xl"
+          className="fixed inset-0 z-[200] flex h-[100dvh] max-h-[100dvh] flex-col bg-[#0B172A]/90 backdrop-blur-3xl"
           style={{
-            height: "100svh",
-            maxHeight: "100dvh",
             paddingTop: "env(safe-area-inset-top)",
             paddingBottom: "env(safe-area-inset-bottom)",
           }}
         >
-          <header className="relative z-10 flex w-full shrink-0 items-center justify-between px-3 py-3 sm:px-4 sm:py-4 md:px-8 md:py-5">
+          <header className="relative z-10 flex w-full shrink-0 items-center justify-between px-3 py-2.5 sm:px-4 sm:py-3 md:px-8 md:py-4">
             <div className="flex flex-1 items-center justify-start">
               <span className="hidden w-[4.5rem] sm:inline sm:w-[5.5rem]" aria-hidden />
             </div>
@@ -87,7 +80,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                 onClick={handleClose}
                 className="inline-flex max-w-full shrink-0 justify-center"
               >
-                <FlogenLogo className="h-8 w-auto max-w-[9rem] sm:h-10 sm:max-w-[11rem] md:h-12 md:max-w-[14rem] lg:h-14 lg:max-w-[16rem]" />
+                <FlogenLogo className="h-8 w-auto max-w-[9rem] sm:h-10 sm:max-w-[11rem] md:h-11 md:max-w-[13rem]" />
               </Link>
             </div>
 
@@ -95,60 +88,55 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
               <button
                 type="button"
                 onClick={handleClose}
-                className="group flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#FDFAFA] transition-colors hover:text-[#991B1B] sm:text-sm md:text-base"
+                className="group flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#FDFAFA] transition-colors hover:text-[#991B1B] sm:text-sm"
                 aria-label="Close menu"
               >
                 <span className="hidden sm:inline">Close</span>
-                <X className="h-6 w-6 stroke-[2.5] transition-colors group-hover:text-[#991B1B] sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                <X className="h-6 w-6 stroke-[2.5] transition-colors group-hover:text-[#991B1B] sm:h-7 sm:w-7" />
               </button>
             </div>
           </header>
 
           <nav
-            className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex min-h-0 flex-1 flex-col overflow-hidden px-3 sm:px-4 md:px-8"
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            <div
-              className="flex w-full flex-col items-center gap-[0.28em] px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[clamp(0.25rem,3vh,2.5rem)]"
-              style={{ ["--menu-link-size" as string]: menuLinkSize }}
-            >
-              {MENU_LINKS.map((link, index) => {
-                const isHovered = hoveredIndex === index;
-                const isDimmed =
-                  hoveredIndex !== null && hoveredIndex !== index;
+            {MENU_LINKS.map((link, index) => {
+              const isHovered = hoveredIndex === index;
+              const isDimmed =
+                hoveredIndex !== null && hoveredIndex !== index;
 
-                return (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: 0, y: 48 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 24 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 380,
-                      damping: 28,
-                      delay: 0.06 + index * 0.08,
-                    }}
-                    className="w-full shrink-0"
+              return (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 16 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 380,
+                    damping: 28,
+                    delay: 0.04 + index * 0.05,
+                  }}
+                  className="hub-menu-row"
+                >
+                  <Link
+                    href={link.href}
+                    onClick={handleClose}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    className={`${linkClass} ${
+                      isHovered
+                        ? "text-[#991B1B] opacity-100 blur-none grayscale-0"
+                        : isDimmed
+                          ? "text-[#FDFAFA] opacity-20 blur-md grayscale"
+                          : "text-[#FDFAFA] opacity-100 blur-none grayscale-0"
+                    }`}
                   >
-                    <Link
-                      href={link.href}
-                      onClick={handleClose}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      className={`${linkClass} ${
-                        isHovered
-                          ? "text-[#991B1B] opacity-100 blur-none grayscale-0"
-                          : isDimmed
-                            ? "text-[#FDFAFA] opacity-20 blur-md grayscale"
-                            : "text-[#FDFAFA] opacity-100 blur-none grayscale-0"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
+                    {link.label}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </nav>
         </motion.div>
       ) : null}

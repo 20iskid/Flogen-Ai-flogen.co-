@@ -125,8 +125,21 @@
     }
   }
 
+  .hub-menu-row {
+    container-type: size;
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
   .hub-menu-link {
-    font-size: var(--menu-link-size, clamp(2.25rem, 7vmin, 7rem));
-    line-height: 0.92;
+    font-size: clamp(1.35rem, min(60cqh, 9vw), 8.5rem);
+    line-height: 0.9;
+    white-space: nowrap;
+    max-width: 100%;
+    text-align: center;
   }
 }
